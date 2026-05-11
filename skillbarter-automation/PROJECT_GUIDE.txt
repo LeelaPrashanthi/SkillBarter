@@ -1,0 +1,553 @@
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║           SKILLBARTER AUTOMATION FRAMEWORK – COMPLETE PROJECT GUIDE            ║
+║           Selenium WebDriver 4 + TestNG 7 + Java 11 + Maven + POM              ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+Application Under Test : SkillBarter – https://skill-barter-wine-theta.vercel.app/
+GitHub (AUT)           : https://github.com/anshikabatri/SkillBarter.git
+Package                : com.cts.mfrp.skillbarter
+Author                 : CTS MFRP QA Team
+Created                : 2026
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 1 – PROJECT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+skillbarter-automation/
+├── pom.xml                                       ← Maven build & all dependencies
+│
+├── src/
+│   ├── main/java/com/cts/mfrp/skillbarter/
+│   │   ├── base/
+│   │   │   └── BaseTest.java                     ← WebDriver lifecycle, @Before/@After
+│   │   │
+│   │   ├── constants/
+│   │   │   └── AppConstants.java                 ← All URLs, timeouts, messages
+│   │   │
+│   │   ├── pages/                                ← Page Object Model (one class per page)
+│   │   │   ├── HomePage.java
+│   │   │   ├── SignInPage.java
+│   │   │   ├── SignUpPage.java
+│   │   │   ├── ProfileCreationPage.java
+│   │   │   ├── DashboardPage.java
+│   │   │   ├── ProfileDropdownPage.java
+│   │   │   ├── NotificationsPage.java
+│   │   │   ├── UserProfilePage.java
+│   │   │   ├── SavedProfilesPage.java
+│   │   │   ├── SubscriptionsPage.java
+│   │   │   ├── MatchesPage.java
+│   │   │   ├── MessengerPage.java
+│   │   │   ├── CalendarPage.java
+│   │   │   ├── ProgressPage.java
+│   │   │   └── CommunityPage.java
+│   │   │
+│   │   └── utils/
+│   │       ├── ConfigReader.java                 ← Reads config.properties
+│   │       ├── ExcelUtils.java                   ← Apache POI test-data reader
+│   │       ├── ExtentManager.java                ← ExtentReports singleton factory
+│   │       ├── ExtentReportListener.java         ← TestNG ITestListener → HTML report
+│   │       └── RetryAnalyzer.java                ← Retries failed tests up to 2×
+│   │
+│   └── test/
+│       ├── java/com/cts/mfrp/skillbarter/tests/
+│       │   ├── HomePageTest.java                 ← TC_001 – TC_007
+│       │   ├── SignInTest.java                   ← TC_008 – TC_014
+│       │   ├── SignUpTest.java                   ← TC_015 – TC_020
+│       │   ├── ProfileCreationTest.java          ← TC_021 – TC_025
+│       │   ├── DashboardTest.java                ← TC_026 – TC_034
+│       │   ├── ProfileDropdownTest.java          ← TC_035 – TC_040
+│       │   ├── NotificationsTest.java            ← TC_041 – TC_042
+│       │   ├── UserProfileTest.java              ← TC_043 – TC_046
+│       │   ├── SavedProfilesTest.java            ← TC_047 – TC_050
+│       │   ├── SubscriptionsTest.java            ← TC_051 – TC_055
+│       │   ├── MatchesTest.java                  ← TC_056 – TC_060
+│       │   ├── MessengerTest.java                ← TC_061 – TC_065
+│       │   ├── CalendarTest.java                 ← TC_066 – TC_068
+│       │   ├── ProgressTest.java                 ← TC_069 – TC_073
+│       │   ├── CommunityTest.java                ← TC_074 – TC_077
+│       │   ├── NonFunctionalTest.java            ← TC_078 – TC_081
+│       │   └── TransactionFlowTest.java          ← TC_082 – TC_083 (E2E)
+│       │
+│       └── resources/
+│           ├── config.properties                 ← Default (prod) config
+│           ├── config-staging.properties         ← Staging overrides
+│           ├── testdata/
+│           │   ├── TestData.xlsx                 ← All test data (Apache POI)
+│           │   └── test_avatar.png               ← Dummy image for upload tests
+│           └── suites/
+│               ├── testng.xml                    ← Full sequential suite (all 83 TCs)
+│               ├── parallel-testng.xml           ← Mixed parallel/sequential suite
+│               └── smoke-testng.xml              ← Quick smoke suite (~5 min)
+│
+└── test-output/
+    ├── reports/ExtentReport.html                 ← Auto-generated after each run
+    └── screenshots/                              ← Captured on test failure
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 2 – PREREQUISITES & SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Software Required
+─────────────────
+  • Java JDK 11+            (https://adoptium.net)
+  • Apache Maven 3.8+       (https://maven.apache.org/download.cgi)
+  • Google Chrome (latest)  (default browser; Edge/Firefox also supported)
+  • Git                     (to clone the repo)
+
+Check installations:
+  java  -version       → should show 11.x or higher
+  mvn   -version       → should show 3.8.x or higher
+  git   --version
+
+NOTE: WebDriverManager (io.github.bonigarcia:webdrivermanager) downloads the
+correct ChromeDriver/GeckoDriver automatically at runtime — no manual driver
+installation is required.
+
+Step-by-Step Setup
+──────────────────
+  1. Clone this repository:
+       git clone <this-repo-url>
+       cd skillbarter-automation
+
+  2. Open  src/test/resources/config.properties  and set:
+       valid.email=<your-test-account-email>
+       valid.password=<your-test-account-password>
+
+     Use a dedicated test account on https://skill-barter-wine-theta.vercel.app/
+     Register one manually if you don't have one.
+
+  3. Install Maven dependencies (one-time; downloads from Maven Central):
+       mvn dependency:resolve
+
+  4. (Optional) For headless CI runs, set headless=true in config.properties
+     or pass -Dheadless=true on the Maven command line.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 3 – HOW TO RUN TESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+All commands are run from the project root: skillbarter-automation/
+
+──────────────────────────────────────────────────────────────────────────────
+  3.1  RUN THE ENTIRE SUITE (all 83 test cases, sequential)
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test
+
+  • Uses: src/test/resources/suites/testng.xml  (referenced in pom.xml)
+  • All 17 test classes run one after the other on a single browser thread.
+  • Duration: approximately 25–40 minutes depending on network speed.
+  • Report: test-output/reports/ExtentReport.html   (open in any browser)
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.2  RUN WITH A SPECIFIC SUITE FILE
+──────────────────────────────────────────────────────────────────────────────
+
+  # Full sequential suite (explicit)
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/testng.xml
+
+  # Parallel suite (11 modules in parallel, 6 sequential)
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/parallel-testng.xml
+
+  # Quick smoke suite (6 smoke tests, ~5 minutes)
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/smoke-testng.xml
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.3  RUN A SINGLE TEST CLASS
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test -Dtest=HomePageTest
+  mvn clean test -Dtest=SignInTest
+  mvn clean test -Dtest=SignUpTest
+  mvn clean test -Dtest=ProfileCreationTest
+  mvn clean test -Dtest=DashboardTest
+  mvn clean test -Dtest=ProfileDropdownTest
+  mvn clean test -Dtest=NotificationsTest
+  mvn clean test -Dtest=UserProfileTest
+  mvn clean test -Dtest=SavedProfilesTest
+  mvn clean test -Dtest=SubscriptionsTest
+  mvn clean test -Dtest=MatchesTest
+  mvn clean test -Dtest=MessengerTest
+  mvn clean test -Dtest=CalendarTest
+  mvn clean test -Dtest=ProgressTest
+  mvn clean test -Dtest=CommunityTest
+  mvn clean test -Dtest=NonFunctionalTest
+  mvn clean test -Dtest=TransactionFlowTest
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.4  RUN A SINGLE TEST METHOD (one specific test case)
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test -Dtest=SignInTest#tc008_validLoginRedirectsToDashboard
+  mvn clean test -Dtest=HomePageTest#tc001_verifyTopNavigationLinks
+  mvn clean test -Dtest=TransactionFlowTest#tc082_customerBookingFlow
+
+  Pattern: -Dtest=<ClassName>#<methodName>
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.5  RUN BY GROUP (TestNG group tags)
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test -Dgroups=smoke
+  mvn clean test -Dgroups=regression
+  mvn clean test -Dgroups=sign-in
+  mvn clean test -Dgroups=dashboard
+  mvn clean test -Dgroups=e2e
+  mvn clean test -Dgroups=non-functional
+  mvn clean test -Dgroups=performance
+  mvn clean test -Dgroups=security
+  mvn clean test -Dgroups=accessibility
+
+  Note: Pass groups via Maven Surefire; requires groups to be configured
+  in the pom.xml or the active testng.xml. For direct group filtering, use:
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/testng.xml -Dgroups=smoke
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.6  RUN WITH A DIFFERENT BROWSER
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test -Dbrowser=firefox
+  mvn clean test -Dbrowser=edge
+  mvn clean test -Dbrowser=chrome    ← default
+
+  (ConfigReader picks this up automatically)
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.7  RUN IN HEADLESS MODE (for CI/CD pipelines)
+──────────────────────────────────────────────────────────────────────────────
+
+  mvn clean test -Dheadless=true
+  mvn clean test -Dheadless=true -Dbrowser=chrome
+
+
+──────────────────────────────────────────────────────────────────────────────
+  3.8  RUN WITH STAGING CONFIG
+──────────────────────────────────────────────────────────────────────────────
+
+  Set SPRING_CONFIG_LOCATION or copy config-staging.properties values
+  into config.properties before running, then execute normally.
+  Alternatively extend ConfigReader to pick up -Denv=staging.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 4 – COMPLETE TEST CASE INVENTORY  (83 Test Cases)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TC ID   │ Test Class              │ Priority │ Type                 │ Groups
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_001  │ HomePageTest            │ Low      │ UI/Functional        │ home-page, smoke, regression
+TC_002  │ HomePageTest            │ Low      │ UI/Functional        │ home-page, smoke, regression
+TC_003  │ HomePageTest            │ Low      │ UI                   │ home-page, regression
+TC_004  │ HomePageTest            │ Medium   │ UI/Functional        │ home-page, regression
+TC_005  │ HomePageTest            │ Low      │ UI                   │ home-page, regression
+TC_006  │ HomePageTest            │ Medium   │ Functional           │ home-page, regression
+TC_007  │ HomePageTest            │ Low      │ UI                   │ home-page, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_008  │ SignInTest              │ Medium   │ Functional/Positive  │ sign-in, smoke, regression
+TC_009  │ SignInTest              │ Low      │ Functional/Negative  │ sign-in, regression
+TC_010  │ SignInTest              │ Low      │ Functional           │ sign-in, regression
+TC_011  │ SignInTest              │ Medium   │ Functional (OAuth)   │ sign-in, regression
+TC_012  │ SignInTest              │ Low      │ UI/Navigation        │ sign-in, regression
+TC_013  │ SignInTest              │ Low      │ Validation/Negative  │ sign-in, regression
+TC_014  │ SignInTest              │ Low      │ Validation/Negative  │ sign-in, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_015  │ SignUpTest              │ Medium   │ Functional/Positive  │ sign-up, regression
+TC_016  │ SignUpTest              │ Low      │ Functional/Negative  │ sign-up, regression
+TC_017  │ SignUpTest              │ Low      │ Validation/Negative  │ sign-up, regression
+TC_018  │ SignUpTest              │ Low      │ Validation/Negative  │ sign-up, regression
+TC_019  │ SignUpTest              │ Low      │ Validation/Negative  │ sign-up, regression
+TC_020  │ SignUpTest              │ Low      │ UI/Navigation        │ sign-up, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_021  │ ProfileCreationTest     │ Medium   │ Functional/Positive  │ profile-creation, regression
+TC_022  │ ProfileCreationTest     │ Low      │ Validation/Negative  │ profile-creation, regression
+TC_023  │ ProfileCreationTest     │ Medium   │ Functional           │ profile-creation, regression
+TC_024  │ ProfileCreationTest     │ Low      │ UI/Functional        │ profile-creation, regression
+TC_025  │ ProfileCreationTest     │ Low      │ Functional/Navigation│ profile-creation, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_026  │ DashboardTest           │ Low      │ Functional           │ dashboard, smoke, regression
+TC_027  │ DashboardTest           │ Low      │ Functional           │ dashboard, regression
+TC_028  │ DashboardTest           │ Medium   │ Functional           │ dashboard, regression
+TC_029  │ DashboardTest           │ Low      │ UI/Functional        │ dashboard, regression
+TC_030  │ DashboardTest           │ Medium   │ Functional           │ dashboard, regression
+TC_031  │ DashboardTest           │ Low      │ UI/Functional        │ dashboard, smoke, regression
+TC_032  │ DashboardTest           │ Low      │ UI/Functional        │ nav-bar, regression
+TC_033  │ DashboardTest           │ Low      │ UI/Functional        │ nav-bar, regression
+TC_034  │ DashboardTest           │ Low      │ UI/Functional        │ nav-bar, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_035  │ ProfileDropdownTest     │ Low      │ UI                   │ profile-dropdown, regression
+TC_036  │ ProfileDropdownTest     │ Low      │ Navigation           │ profile-dropdown, regression
+TC_037  │ ProfileDropdownTest     │ Low      │ Navigation           │ profile-dropdown, regression
+TC_038  │ ProfileDropdownTest     │ Low      │ Navigation           │ profile-dropdown, regression
+TC_039  │ ProfileDropdownTest     │ Medium   │ Functional/Security  │ profile-dropdown, regression
+TC_040  │ ProfileDropdownTest     │ Low      │ UI                   │ profile-dropdown, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_041  │ NotificationsTest       │ Low      │ UI                   │ notifications, regression
+TC_042  │ NotificationsTest       │ Medium   │ Functional           │ notifications, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_043  │ UserProfileTest         │ Medium   │ Functional/Positive  │ user-profile, regression
+TC_044  │ UserProfileTest         │ Medium   │ Functional           │ user-profile, regression
+TC_045  │ UserProfileTest         │ Low      │ Functional           │ user-profile, regression
+TC_046  │ UserProfileTest         │ Low      │ Validation/Negative  │ user-profile, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_047  │ SavedProfilesTest       │ Medium   │ Functional           │ saved-profiles, regression
+TC_048  │ SavedProfilesTest       │ Low      │ Navigation           │ saved-profiles, regression
+TC_049  │ SavedProfilesTest       │ Low      │ Functional           │ saved-profiles, regression
+TC_050  │ SavedProfilesTest       │ Medium   │ Functional           │ saved-profiles, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_051  │ SubscriptionsTest       │ Low      │ UI                   │ subscriptions, regression
+TC_052  │ SubscriptionsTest       │ High     │ Functional           │ subscriptions, regression
+TC_053  │ SubscriptionsTest       │ Low      │ UI/Functional        │ subscriptions, regression
+TC_054  │ SubscriptionsTest       │ High     │ Functional           │ subscriptions, regression
+TC_055  │ SubscriptionsTest       │ Medium   │ Functional           │ subscriptions, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_056  │ MatchesTest             │ Medium   │ Functional           │ matches, regression
+TC_057  │ MatchesTest             │ Low      │ Functional           │ matches, regression
+TC_058  │ MatchesTest             │ Medium   │ Functional           │ matches, regression
+TC_059  │ MatchesTest             │ Low      │ Functional           │ matches, regression
+TC_060  │ MatchesTest             │ Low      │ Functional           │ matches, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_061  │ MessengerTest           │ Low      │ UI                   │ messenger, regression
+TC_062  │ MessengerTest           │ Low      │ Functional           │ messenger, regression
+TC_063  │ MessengerTest           │ Medium   │ Functional           │ messenger, regression
+TC_064  │ MessengerTest           │ Medium   │ Functional           │ messenger, regression
+TC_065  │ MessengerTest           │ Medium   │ Functional           │ messenger, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_066  │ CalendarTest            │ Low      │ UI/Functional        │ calendar, regression
+TC_067  │ CalendarTest            │ Medium   │ UI/Functional        │ calendar, regression
+TC_068  │ CalendarTest            │ Medium   │ Functional           │ calendar, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_069  │ ProgressTest            │ Low      │ UI                   │ progress, regression
+TC_070  │ ProgressTest            │ Medium   │ Functional           │ progress, regression
+TC_071  │ ProgressTest            │ Low      │ UI                   │ progress, regression
+TC_072  │ ProgressTest            │ Low      │ UI                   │ progress, regression
+TC_073  │ ProgressTest            │ Low      │ Navigation           │ progress, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_074  │ CommunityTest           │ Low      │ UI                   │ community, regression
+TC_075  │ CommunityTest           │ Medium   │ Functional           │ community, regression
+TC_076  │ CommunityTest           │ Low      │ UI                   │ community, regression
+TC_077  │ CommunityTest           │ Low      │ Navigation           │ community, regression
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_078  │ NonFunctionalTest       │ Medium   │ Performance          │ non-functional, performance
+TC_079  │ NonFunctionalTest       │ High     │ Security             │ non-functional, security
+TC_080  │ NonFunctionalTest       │ Medium   │ Validation           │ non-functional, validation
+TC_081  │ NonFunctionalTest       │ Medium   │ Accessibility        │ non-functional, accessibility
+────────┼─────────────────────────┼──────────┼──────────────────────┼──────────────────────────
+TC_082  │ TransactionFlowTest     │ High     │ End-to-End           │ e2e, transaction-flow
+TC_083  │ TransactionFlowTest     │ High     │ End-to-End           │ e2e, transaction-flow
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 5 – PARALLEL vs SEQUENTIAL STRATEGY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tests that CAN run in PARALLEL (stateless, read-only)
+──────────────────────────────────────────────────────
+These tests only READ the application state. Each spins up its own
+browser instance via ThreadLocal<WebDriver> in BaseTest.
+
+  ✅ HomePageTest            – Public page, no login required
+  ✅ SignInTest               – Submits with wrong creds; no state change
+  ✅ SignUpTest               – Uses unique UUID emails; no shared state
+  ✅ ProfileCreationTest      – Navigates to creation page; no persistent writes
+  ✅ DashboardTest            – Read-only dashboard checks; sidebar navigation
+  ✅ MatchesTest              – Browse/filter matches; no DB write
+  ✅ CalendarTest             – View calendar tabs; New Session form open only
+  ✅ ProgressTest             – View-only page
+  ✅ CommunityTest            – Story submission uses a new unique story
+  ✅ SubscriptionsTest        – View plan cards; payment modal only
+  ✅ NonFunctionalTest        – Performance, security (logout + redirect), accessibility
+
+Tests that MUST run SEQUENTIALLY (stateful, session-mutating)
+──────────────────────────────────────────────────────────────
+These tests modify shared state (DB records, session) and must not
+interfere with each other or with parallel tests.
+
+  ⛔ ProfileDropdownTest     – TC_039 logs out, TC_040 closes dropdown (session state)
+  ⛔ NotificationsTest        – Bell-click state changes read count
+  ⛔ UserProfileTest          – TC_043/044 write Name/Avatar to the DB
+  ⛔ SavedProfilesTest        – TC_050 deletes a saved profile
+  ⛔ MessengerTest            – TC_063 sends a real message; TC_064/065 accept/decline requests
+  ⛔ TransactionFlowTest      – Multi-step E2E; modifies calendar, connections, skills
+
+How parallel execution is structured (parallel-testng.xml)
+───────────────────────────────────────────────────────────
+  parallel="tests" thread-count="4"
+
+  • TestNG creates a thread pool of 4.
+  • Each <test> block gets its own thread and its own browser instance.
+  • The 11 parallel <test> blocks run concurrently across 4 threads.
+  • The 6 sequential <test> blocks (marked [S]) each have their own <test>
+    element; TestNG will schedule them but they complete one at a time
+    (no shared state risk since each still gets a fresh browser).
+  • Total wall-clock time with parallel-testng.xml: ~10–15 minutes.
+
+Thread safety in BaseTest
+──────────────────────────
+  private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+
+  Each thread stores its own WebDriver. @BeforeMethod creates a fresh
+  driver per test method; @AfterMethod quits it. This means even
+  "sequential" tests in a parallel suite never share a driver.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 6 – DESIGN PATTERNS & FRAMEWORK DETAILS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Page Object Model (POM)
+────────────────────────
+  Every page of the application has exactly one corresponding Page class
+  under src/main/java/.../pages/.  Page classes:
+    • Hold @FindBy WebElement locators (CSS selectors preferred over XPath)
+    • Expose public action methods (click, enter, get text)
+    • Never contain Assert statements — those live in test classes
+    • Use WebDriverWait for dynamic elements instead of Thread.sleep()
+
+BaseTest
+─────────
+  • Sets up and tears down WebDriver in @BeforeMethod / @AfterMethod
+  • Uses ThreadLocal<WebDriver> for parallel-safe driver access
+  • Supports chrome / firefox / edge via the browser property
+  • Provides navigation helpers: navigateTo(), navigateToSignIn(), etc.
+  • Provides JS helpers: executeScript(), scrollToBottom()
+
+RetryAnalyzer
+──────────────
+  • Implements IRetryAnalyzer; retries a failing test up to 2 times
+  • Attached to every @Test via retryAnalyzer = RetryAnalyzer.class
+  • Reduces flaky-test false positives caused by network/timing issues
+
+ExtentReportListener (ITestListener)
+─────────────────────────────────────
+  • Listens for onTestStart / onTestSuccess / onTestFailure / onTestSkipped
+  • Creates a rich HTML report at test-output/reports/ExtentReport.html
+  • Captures and embeds a screenshot on every failure
+  • Uses ThreadLocal<ExtentTest> so parallel tests each write to their
+    own report node
+
+ExcelUtils (Apache POI)
+────────────────────────
+  • getSheetData(filePath, sheetName) → List<Map<String,String>>
+  • getDataProviderArray(...)         → Object[][] for @DataProvider
+  • First row of each sheet is treated as the header
+  • Used wherever test data varies across iterations (login, sign-up, etc.)
+
+AppConstants
+─────────────
+  • Central store for every URL, timeout value, expected error message,
+    and success message used across the framework
+  • No magic strings scattered across tests
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 7 – REPORTS & SCREENSHOTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After every run:
+  • Open  test-output/reports/ExtentReport.html  in Chrome or Firefox.
+  • The report shows: suite name, environment, browser, total pass/fail/skip,
+    execution timeline, and per-test step logs.
+  • Failed tests embed a screenshot inline in the report.
+  • Screenshots are also saved individually to  test-output/screenshots/
+    with the naming pattern:  <MethodName>_yyyyMMdd_HHmmss.png
+
+Native TestNG reports (XML + HTML) are also created by Maven Surefire in:
+  target/surefire-reports/
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 8 – KNOWN LIMITATIONS & NOTES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. CSS Selectors vs Application Reality
+   The SkillBarter front-end uses dynamically generated class names (React /
+   Next.js). If a CSS selector stops matching after a UI update, update the
+   @FindBy locator in the relevant Page class.  Do NOT use XPath unless CSS
+   is genuinely unavailable.
+
+2. Google OAuth (TC_011)
+   Full automation of third-party OAuth popups is not possible with plain
+   Selenium. TC_011 verifies the button is present. Complete OAuth coverage
+   requires a dedicated tool (Cypress, Playwright with cookies, or a mock
+   OAuth provider in the test environment).
+
+3. Payment Flow (TC_052, TC_055)
+   Stripe/Razorpay payment modals are iframes from a third-party domain.
+   Selenium can confirm the modal opens; it cannot enter credit card details
+   in the hosted iframe without exposing real payment credentials. Mock
+   payment environment or Stripe test-mode keys are recommended for CI.
+
+4. Real-Time Features (TC_063, TC_064, TC_065, TC_042)
+   WebSocket-based real-time messaging and live notifications require two
+   simultaneous browser sessions to test end-to-end. The current tests
+   verify UI state from a single session; full duplex testing requires a
+   two-driver setup (driver A + driver B communicating with each other).
+
+5. Seeded Test Data
+   Tests that check "existing matches", "saved profiles", "conversations",
+   and "session requests" depend on the test account having pre-seeded data
+   in the live environment. If the test account is fresh, those tests will
+   gracefully skip assertions rather than fail hard.
+
+6. Performance Threshold (TC_078)
+   The 3-second threshold is measured from Selenium's  driver.get()  call
+   to document.readyState == "complete". It includes DNS, TLS, and React
+   hydration time. Results will vary with network speed. For reliable
+   performance testing consider Apache JMeter or k6.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 9 – QUICK REFERENCE: ALL MAVEN COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  # Download dependencies only
+  mvn dependency:resolve
+
+  # Compile sources without running tests
+  mvn clean compile
+
+  # Run FULL suite (all 83 TCs, sequential)
+  mvn clean test
+
+  # Run SMOKE suite (~5 min)
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/smoke-testng.xml
+
+  # Run PARALLEL suite (~12 min)
+  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/suites/parallel-testng.xml
+
+  # Run ONE class
+  mvn clean test -Dtest=SignInTest
+
+  # Run ONE method
+  mvn clean test -Dtest=SignInTest#tc009_invalidCredentialsShowError
+
+  # Run on Firefox
+  mvn clean test -Dbrowser=firefox
+
+  # Run headless on Chrome (CI mode)
+  mvn clean test -Dheadless=true
+
+  # Run headless + parallel
+  mvn clean test -Dheadless=true \
+      -Dsurefire.suiteXmlFiles=src/test/resources/suites/parallel-testng.xml
+
+  # Skip tests (build only)
+  mvn clean package -DskipTests
+
+  # View Surefire plain-text results
+  cat target/surefire-reports/*.txt
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  END OF GUIDE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

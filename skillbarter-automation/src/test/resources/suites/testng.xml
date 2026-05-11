@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  SkillBarter Automation – MASTER TEST SUITE (Sequential)
+  Runs all 83 test cases across all 16 modules in order.
+  Execution mode : SEQUENTIAL (thread-count="1")
+  Use parallel-testng.xml for parallel runs.
+-->
+<suite name="SkillBarter – Full Regression Suite" verbose="2" thread-count="1">
+
+    <!-- Attach listeners globally -->
+    <listeners>
+        <listener class-name="com.cts.mfrp.skillbarter.utils.ExtentReportListener"/>
+    </listeners>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 1 – HOME PAGE  (TC_001 – TC_007)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Home Page Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="home-page"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 2 – SIGN IN  (TC_008 – TC_014)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Sign In Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="sign-in"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SignInTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 3 – SIGN UP  (TC_015 – TC_020)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Sign Up Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="sign-up"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SignUpTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 4 – PROFILE CREATION  (TC_021 – TC_025)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Profile Creation Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="profile-creation"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileCreationTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 5 – DASHBOARD + NAV BAR  (TC_026 – TC_034)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Dashboard Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="dashboard"/>
+                <include name="nav-bar"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.DashboardTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 6 – PROFILE DROPDOWN  (TC_035 – TC_040)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Profile Dropdown Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="profile-dropdown"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileDropdownTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 7 – NOTIFICATIONS  (TC_041 – TC_042)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Notifications Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="notifications"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.NotificationsTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 8 – USER PROFILE  (TC_043 – TC_046)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="User Profile Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="user-profile"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.UserProfileTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 9 – SAVED PROFILES  (TC_047 – TC_050)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Saved Profiles Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="saved-profiles"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SavedProfilesTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 10 – SUBSCRIPTIONS  (TC_051 – TC_055)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Subscriptions Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="subscriptions"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SubscriptionsTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 11 – MATCHES  (TC_056 – TC_060)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Matches Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="matches"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 12 – MESSENGER  (TC_061 – TC_065)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Messenger Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="messenger"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.MessengerTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 13 – CALENDAR  (TC_066 – TC_068)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Calendar Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="calendar"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.CalendarTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 14 – PROGRESS  (TC_069 – TC_073)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Progress Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="progress"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.ProgressTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 15 – COMMUNITY  (TC_074 – TC_077)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Community Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="community"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.CommunityTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 16 – NON-FUNCTIONAL  (TC_078 – TC_081)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Non-Functional Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="non-functional"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.NonFunctionalTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 17 – TRANSACTION FLOWS E2E  (TC_082 – TC_083)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Transaction Flow Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="e2e"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.TransactionFlowTest"/>
+        </classes>
+    </test>
+
+</suite>
