@@ -13,6 +13,7 @@ public class AppConstants {
     public static final String SIGNUP_URL            = BASE_URL + "signup";
     public static final String DASHBOARD_URL         = BASE_URL + "dashboard";
     public static final String PROFILE_CREATION_URL  = BASE_URL + "profile-creation";
+    public static final String PROFILE_SETUP_URL     = BASE_URL + "profile-setup";
     public static final String MATCHES_URL           = BASE_URL + "matches";
     public static final String MESSENGER_URL         = BASE_URL + "messenger";
     public static final String CALENDAR_URL          = BASE_URL + "calendar";
