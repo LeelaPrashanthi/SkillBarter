@@ -120,27 +120,27 @@ public class BaseTest {
     // ── Driver factory ────────────────────────────────────────────────────────
 
     private WebDriver createDriver(String browser, boolean headless) {
-        return switch (browser.toLowerCase()) {
-            case AppConstants.BROWSER_FIREFOX -> {
+        switch (browser.toLowerCase()) {
+            case AppConstants.BROWSER_FIREFOX: {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions opts = new FirefoxOptions();
                 if (headless) opts.addArguments("--headless");
-                yield new FirefoxDriver(opts);
+                return new FirefoxDriver(opts);
             }
-            case AppConstants.BROWSER_EDGE -> {
+            case AppConstants.BROWSER_EDGE: {
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions opts = new EdgeOptions();
                 if (headless) opts.addArguments("--headless");
-                yield new EdgeDriver(opts);
+                return new EdgeDriver(opts);
             }
-            default -> {
+            default: {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions opts = new ChromeOptions();
                 if (headless) opts.addArguments("--headless=new");
                 opts.addArguments("--no-sandbox", "--disable-dev-shm-usage",
                         "--disable-gpu", "--window-size=1920,1080");
-                yield new ChromeDriver(opts);
+                return new ChromeDriver(opts);
             }
-        };
+        }
     }
 }

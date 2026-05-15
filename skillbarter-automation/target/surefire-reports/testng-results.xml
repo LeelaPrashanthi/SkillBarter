@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="7" passed="7" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-05-15T09:34:39 IST" name="Surefire suite" finished-at="2026-05-15T09:35:45 IST" duration-ms="65367">
+    <groups>
+      <group name="home-page">
+        <method signature="HomePageTest.tc001_verifyTopNavigationLinks()[pri:1, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc001_verifyTopNavigationLinks" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc002_verifyHeroSection()[pri:2, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc002_verifyHeroSection" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc003_verifyPreviewCards()[pri:3, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc003_verifyPreviewCards" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc004_verifyFeatureHighlights()[pri:4, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc004_verifyFeatureHighlights" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc005_verifyAboutAndCtaSections()[pri:5, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc005_verifyAboutAndCtaSections" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc006_verifyChatbotAndDarkMode()[pri:6, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc006_verifyChatbotAndDarkMode" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc007_verifyFooterSection()[pri:7, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc007_verifyFooterSection" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+      </group> <!-- home-page -->
+      <group name="regression">
+        <method signature="HomePageTest.tc001_verifyTopNavigationLinks()[pri:1, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc001_verifyTopNavigationLinks" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc002_verifyHeroSection()[pri:2, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc002_verifyHeroSection" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc003_verifyPreviewCards()[pri:3, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc003_verifyPreviewCards" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc004_verifyFeatureHighlights()[pri:4, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc004_verifyFeatureHighlights" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc005_verifyAboutAndCtaSections()[pri:5, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc005_verifyAboutAndCtaSections" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc006_verifyChatbotAndDarkMode()[pri:6, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc006_verifyChatbotAndDarkMode" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc007_verifyFooterSection()[pri:7, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc007_verifyFooterSection" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+      </group> <!-- regression -->
+      <group name="smoke">
+        <method signature="HomePageTest.tc001_verifyTopNavigationLinks()[pri:1, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc001_verifyTopNavigationLinks" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        <method signature="HomePageTest.tc002_verifyHeroSection()[pri:2, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" name="tc002_verifyHeroSection" class="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+      </group> <!-- smoke -->
+    </groups>
+    <test started-at="2026-05-15T09:34:39 IST" name="Surefire test" finished-at="2026-05-15T09:35:45 IST" duration-ms="65367">
+      <class name="com.cts.mfrp.skillbarter.tests.HomePageTest">
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:39 IST" name="setUp" finished-at="2026-05-15T09:34:43 IST" duration-ms="3854" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:43 IST" name="openHomePage" finished-at="2026-05-15T09:34:44 IST" duration-ms="917" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc001_verifyTopNavigationLinks()[pri:1, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:44 IST" name="tc001_verifyTopNavigationLinks" description="Verify top navigation shows SkillBarter brand, About, Features, theme toggle, and Get Started button; clicking Get Started navigates to an auth page" finished-at="2026-05-15T09:34:45 IST" duration-ms="1218" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc001_verifyTopNavigationLinks -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:45 IST" name="tearDown" finished-at="2026-05-15T09:34:49 IST" duration-ms="4037" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:49 IST" name="setUp" finished-at="2026-05-15T09:34:52 IST" duration-ms="2100" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:52 IST" name="openHomePage" finished-at="2026-05-15T09:34:52 IST" duration-ms="783" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc002_verifyHeroSection()[pri:2, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:52 IST" name="tc002_verifyHeroSection" description="Verify Hero badge, headline, subtext, and that &#039;Get Started Free&#039; navigates to /signup and &#039;Sign In&#039; navigates to /login" finished-at="2026-05-15T09:34:55 IST" duration-ms="2326" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc002_verifyHeroSection -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:55 IST" name="tearDown" finished-at="2026-05-15T09:34:59 IST" duration-ms="4384" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:34:59 IST" name="setUp" finished-at="2026-05-15T09:35:01 IST" duration-ms="2130" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:01 IST" name="openHomePage" finished-at="2026-05-15T09:35:02 IST" duration-ms="1038" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc003_verifyPreviewCards()[pri:3, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:02 IST" name="tc003_verifyPreviewCards" description="Verify the three floating preview cards (Top Matches, Brand, Momentum) render with the expected copy and progress indicator" finished-at="2026-05-15T09:35:03 IST" duration-ms="576" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc003_verifyPreviewCards -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:03 IST" name="tearDown" finished-at="2026-05-15T09:35:11 IST" duration-ms="7920" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:11 IST" name="setUp" finished-at="2026-05-15T09:35:13 IST" duration-ms="2304" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:13 IST" name="openHomePage" finished-at="2026-05-15T09:35:14 IST" duration-ms="1424" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc004_verifyFeatureHighlights()[pri:4, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:14 IST" name="tc004_verifyFeatureHighlights" description="Verify Features heading and that all four feature cards (Smart Matching, Built-in Chat, Calendar, Earn XP) are rendered in order" finished-at="2026-05-15T09:35:16 IST" duration-ms="1244" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc004_verifyFeatureHighlights -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:16 IST" name="tearDown" finished-at="2026-05-15T09:35:21 IST" duration-ms="5214" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:21 IST" name="setUp" finished-at="2026-05-15T09:35:24 IST" duration-ms="3429" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:24 IST" name="openHomePage" finished-at="2026-05-15T09:35:25 IST" duration-ms="1038" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc005_verifyAboutAndCtaSections()[pri:5, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:25 IST" name="tc005_verifyAboutAndCtaSections" description="Verify About section heading + subtext and CTA section heading + Create Free Account button navigates to /signup" finished-at="2026-05-15T09:35:27 IST" duration-ms="2070" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc005_verifyAboutAndCtaSections -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:27 IST" name="tearDown" finished-at="2026-05-15T09:35:31 IST" duration-ms="3706" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:31 IST" name="setUp" finished-at="2026-05-15T09:35:33 IST" duration-ms="2155" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:33 IST" name="openHomePage" finished-at="2026-05-15T09:35:34 IST" duration-ms="845" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc006_verifyChatbotAndDarkMode()[pri:6, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:34 IST" name="tc006_verifyChatbotAndDarkMode" description="Verify floating chatbot button is visible at bottom-right, and the theme toggle flips the page between dark and light modes" finished-at="2026-05-15T09:35:35 IST" duration-ms="699" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc006_verifyChatbotAndDarkMode -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:35 IST" name="tearDown" finished-at="2026-05-15T09:35:38 IST" duration-ms="3495" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:38 IST" name="setUp" finished-at="2026-05-15T09:35:40 IST" duration-ms="1736" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:40 IST" name="openHomePage" finished-at="2026-05-15T09:35:41 IST" duration-ms="667" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="tc007_verifyFooterSection()[pri:7, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:41 IST" name="tc007_verifyFooterSection" description="Verify Footer shows SkillBarter brand on the left and © 2026 SkillBarter copyright text on the right" finished-at="2026-05-15T09:35:41 IST" duration-ms="343" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc007_verifyFooterSection -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.HomePageTest@34158c08]" started-at="2026-05-15T09:35:41 IST" name="tearDown" finished-at="2026-05-15T09:35:45 IST" duration-ms="3596" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.cts.mfrp.skillbarter.tests.HomePageTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
