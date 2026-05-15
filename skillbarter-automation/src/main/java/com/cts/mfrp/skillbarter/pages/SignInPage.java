@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 /**
- * Page Object for the Sign In page.
+ * Page Object for the Sign In page (/login).
  * Covers TC_008 – TC_014 (TS_002).
  */
 public class SignInPage {
@@ -21,28 +21,28 @@ public class SignInPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(css = "h1, h2, .heading, [class*='title']")
+    @FindBy(xpath = "//*[contains(@class,'auth-card')]//h1")
     private WebElement pageHeading;
 
-    @FindBy(css = "input[type='email'], input[name='email'], #email")
+    @FindBy(xpath = "//input[@type='email']")
     private WebElement emailField;
 
-    @FindBy(css = "input[type='password'], input[name='password'], #password")
+    @FindBy(xpath = "//input[@type='password']")
     private WebElement passwordField;
 
-    @FindBy(css = "button[type='submit'], button.sign-in-btn, button[class*='signin']")
+    @FindBy(xpath = "//button[contains(@class,'btn-primary') and normalize-space()='Sign In']")
     private WebElement signInBtn;
 
-    @FindBy(css = "[class*='error'], .alert-danger, [class*='invalid'], [role='alert']")
+    @FindBy(xpath = "//*[contains(@class,'error-box')]")
     private WebElement errorMessage;
 
-    @FindBy(css = "a[href*='forgot'], button[class*='forgot'], [class*='forgot-password']")
+    @FindBy(xpath = "//a[contains(@href,'forgot-password')]")
     private WebElement forgotPasswordLink;
 
-    @FindBy(css = "button[class*='google'], [class*='google-signin'], a[class*='google']")
+    @FindBy(xpath = "//button[contains(translate(., 'GOOGLE', 'google'),'google')] | //a[contains(translate(., 'GOOGLE', 'google'),'google')]")
     private WebElement googleSignInBtn;
 
-    @FindBy(css = "a[href*='signup'], [class*='signup-link'], a[class*='register']")
+    @FindBy(xpath = "//*[contains(@class,'switch')]//a[contains(@href,'/signup')]")
     private WebElement signUpLink;
 
     public SignInPage(WebDriver driver) {
