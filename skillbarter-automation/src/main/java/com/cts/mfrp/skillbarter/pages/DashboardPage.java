@@ -2,6 +2,7 @@ package com.cts.mfrp.skillbarter.pages;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,10 +12,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Page Object for the User Dashboard.
- * Covers TC_026 – TC_031 (TS_005) and sidebar navigation (TC_032–TC_034, TS_006).
+ * Covers TC_026 – TC_034 (TS_005 + TS_006).
+ *
+ * All locators use XPath. Multi-element / dynamic lookups go through
+ * driver.findElements(...) so they always see fresh DOM state after
+ * Angular re-renders.
  */
 public class DashboardPage {
 
@@ -22,64 +28,92 @@ public class DashboardPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    // ── Sidebar Navigation ────────────────────────────────────────────────────
-    @FindBy(css = "[class*='sidebar'] a[href*='dashboard'], nav a[class*='dashboard']")
+    // ── Sidebar (static, single elements) ─────────────────────────────────────
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]")
+    private WebElement sidebar;
+
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//*[contains(@class,'brand-name')]")
+    private WebElement sidebarBrand;
+
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/dashboard')]")
     private WebElement sidebarDashboard;
 
-    @FindBy(css = "[class*='sidebar'] a[href*='matches'], nav a[class*='matches']")
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/matches')]")
     private WebElement sidebarMatches;
 
-    @FindBy(css = "[class*='sidebar'] a[href*='chat'], [class*='sidebar'] a[href*='messenger']")
-    private WebElement sidebarChat;
-
-    @FindBy(css = "[class*='sidebar'] a[href*='calendar']")
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/calendar')]")
     private WebElement sidebarCalendar;
 
-    @FindBy(css = "[class*='sidebar'] a[href*='progress']")
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/chat')]")
+    private WebElement sidebarChat;
+
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/progress')]")
     private WebElement sidebarProgress;
 
-    @FindBy(css = "[class*='sidebar'] a[href*='community']")
+    @FindBy(xpath = "//*[contains(@class,'sidebar')]//a[contains(@href,'/community')]")
     private WebElement sidebarCommunity;
 
-    // ── Top Nav Bar ───────────────────────────────────────────────────────────
-    @FindBy(css = "[class*='sp-counter'], [class*='skill-points'], [class*='sp-balance']")
-    private WebElement spCounter;
+    // ── Topbar ────────────────────────────────────────────────────────────────
+    @FindBy(xpath = "//*[contains(@class,'topbar')]")
+    private WebElement topbar;
 
-    @FindBy(css = "[class*='sp-add'], [class*='earn-sp'], button[class*='plus']")
-    private WebElement spPlusIcon;
+    @FindBy(xpath = "//*[contains(@class,'sp-badge')]")
+    private WebElement spBadge;
 
-    @FindBy(css = "[class*='notification-bell'], button[class*='bell'], [class*='notif-btn']")
-    private WebElement notificationBell;
+    @FindBy(xpath = "//*[contains(@class,'sp-value')]")
+    private WebElement spValue;
 
-    @FindBy(css = "[class*='user-profile'], [class*='profile-pic'], [class*='avatar-btn']")
-    private WebElement userProfileNav;
+    @FindBy(xpath = "//*[contains(@class,'topbar')]//button[contains(@class,'theme-btn')]")
+    private WebElement themeToggleBtn;
 
-    // ── Activity Section ──────────────────────────────────────────────────────
-    @FindBy(css = "button[class*='schedule'], a[class*='schedule'], " +
-            "[class*='activity'] button, [class*='session-cta']")
-    private WebElement scheduleSessionBtn;
+    @FindBy(xpath = "//*[contains(@class,'topbar')]//button[contains(@class,'icon-btn') and not(contains(@class,'theme-btn'))]")
+    private WebElement notificationBellBtn;
 
-    // ── Matches Section ───────────────────────────────────────────────────────
-    @FindBy(css = "[class*='matches-section'], [class*='suggested-matches'], " +
-            "[class*='match-list']")
-    private WebElement matchesSection;
+    @FindBy(xpath = "//*[contains(@class,'user-btn')]")
+    private WebElement userBtn;
 
-    @FindBy(css = "[class*='match-card'], [class*='profile-card']")
-    private List<WebElement> matchCards;
+    @FindBy(xpath = "//*[contains(@class,'user-name')]")
+    private WebElement userName;
 
-    @FindBy(css = "button[class*='match'], button[class*='connect']")
-    private List<WebElement> matchButtons;
+    // ── Activity Card ─────────────────────────────────────────────────────────
+    @FindBy(xpath = "//h2[normalize-space()='Activity']")
+    private WebElement activityHeading;
 
-    // ── Calendar Section ──────────────────────────────────────────────────────
-    @FindBy(css = "[class*='calendar-section'], [class*='mini-calendar'], " +
-            "[class*='calendar-widget']")
-    private WebElement calendarSection;
+    @FindBy(xpath = "//*[contains(@class,'empty')]//h3[contains(normalize-space(),'Ready for your first session')]")
+    private WebElement activityEmptyHeading;
 
-    @FindBy(css = "[class*='calendar'] td, [class*='day-cell']")
-    private List<WebElement> calendarDays;
+    @FindBy(xpath = "//a[normalize-space()='Schedule a session']")
+    private WebElement scheduleSessionLink;
 
-    @FindBy(css = "[class*='empty-state'], [class*='no-session'], [class*='no-lessons']")
-    private WebElement emptyStateMessage;
+    // ── Top Matches Card ──────────────────────────────────────────────────────
+    @FindBy(xpath = "//h2[normalize-space()='Top Matches']")
+    private WebElement topMatchesHeading;
+
+    @FindBy(xpath = "//a[contains(@class,'link') and contains(normalize-space(),'see all')]")
+    private WebElement seeAllMatchesLink;
+
+    // ── Mini Calendar ─────────────────────────────────────────────────────────
+    @FindBy(xpath = "//*[contains(@class,'cal-card')]")
+    private WebElement calendarCard;
+
+    @FindBy(xpath = "//*[contains(@class,'calh')]//*[contains(@class,'ct')]")
+    private WebElement calendarMonthLabel;
+
+    @FindBy(xpath = "//*[contains(@class,'cal-card')]//*[contains(@class,'cd') and contains(@class,'today')]")
+    private WebElement calendarTodayCell;
+
+    @FindBy(xpath = "//*[contains(@class,'upcoming')]//h4[normalize-space()='Upcoming']")
+    private WebElement upcomingHeading;
+
+    // ── XPath By constants (re-queried each call) ─────────────────────────────
+    private static final By SIDEBAR_NAV_ITEMS    = By.xpath("//*[contains(@class,'sidebar')]//a[contains(@class,'nav-item')]");
+    private static final By DROPDOWN_PANEL       = By.xpath("//*[contains(@class,'user-btn')]//*[contains(@class,'dropdown')]");
+    private static final By DROPDOWN_ITEMS       = By.xpath("//*[contains(@class,'user-btn')]//*[contains(@class,'dropdown')]//*[contains(@class,'dd-item')]");
+    private static final By NOTIF_PANEL          = By.xpath("//*[contains(@class,'notif-panel')]");
+    private static final By MATCH_CARDS          = By.xpath("//*[contains(@class,'mrow')]//*[contains(@class,'mc')]");
+    private static final By CALENDAR_DAY_CELLS   = By.xpath("//*[contains(@class,'cal-card')]//*[contains(@class,'cd') and not(contains(@class,'other'))]");
+    private static final By UPCOMING_ITEMS       = By.xpath("//*[contains(@class,'upcoming')]//*[contains(@class,'ui')]");
+    private static final By ACTIVITY_STAT_VALUES = By.xpath("//*[contains(@class,'stat')]//strong");
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -87,121 +121,217 @@ public class DashboardPage {
         PageFactory.initElements(driver, this);
     }
 
-    // ── Sidebar ───────────────────────────────────────────────────────────────
+    // ── Page-level waits ──────────────────────────────────────────────────────
+
+    public boolean waitForDashboardLoaded() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(topbar));
+            wait.until(ExpectedConditions.visibilityOf(sidebar));
+            wait.until(ExpectedConditions.visibilityOf(spBadge));
+            return true;
+        } catch (Exception e) {
+            log.warn("Dashboard not loaded within wait window: {}", e.getMessage());
+            return false;
+        }
+    }
 
     public boolean isSidebarVisible() {
-        return isDisplayed(sidebarDashboard);
+        return isVisibleWithWait(sidebar);
     }
 
-    public boolean areAllSidebarItemsPresent() {
-        return isDisplayed(sidebarDashboard)
-                && isDisplayed(sidebarMatches)
-                && isDisplayed(sidebarCalendar)
-                && isDisplayed(sidebarProgress)
-                && isDisplayed(sidebarCommunity);
+    public boolean isTopbarVisible() {
+        return isVisibleWithWait(topbar);
     }
 
-    public void clickSidebarMatches() {
-        click(sidebarMatches, "Sidebar Matches");
+    // ── Sidebar nav ───────────────────────────────────────────────────────────
+
+    public boolean areAllSidebarNavItemsPresent() {
+        return isVisibleWithWait(sidebarDashboard)
+                && isVisibleWithWait(sidebarMatches)
+                && isVisibleWithWait(sidebarCalendar)
+                && isVisibleWithWait(sidebarChat)
+                && isVisibleWithWait(sidebarProgress)
+                && isVisibleWithWait(sidebarCommunity);
     }
 
-    public void clickSidebarChat() {
-        click(sidebarChat, "Sidebar Chat");
+    public int getSidebarNavItemCount() {
+        return driver.findElements(SIDEBAR_NAV_ITEMS).size();
     }
 
-    public void clickSidebarCalendar() {
-        click(sidebarCalendar, "Sidebar Calendar");
-    }
+    public void clickSidebarDashboard() { click(sidebarDashboard, "Sidebar: Dashboard"); }
+    public void clickSidebarMatches()   { click(sidebarMatches,   "Sidebar: Matches"); }
+    public void clickSidebarCalendar()  { click(sidebarCalendar,  "Sidebar: Calendar"); }
+    public void clickSidebarChat()      { click(sidebarChat,      "Sidebar: Chat"); }
+    public void clickSidebarProgress()  { click(sidebarProgress,  "Sidebar: Progress"); }
+    public void clickSidebarCommunity() { click(sidebarCommunity, "Sidebar: Community"); }
 
-    public void clickSidebarProgress() {
-        click(sidebarProgress, "Sidebar Progress");
-    }
-
-    public void clickSidebarCommunity() {
-        click(sidebarCommunity, "Sidebar Community");
-    }
-
-    // ── SP Counter ────────────────────────────────────────────────────────────
-
-    public boolean isSpCounterDisplayed() {
-        return isDisplayed(spCounter);
-    }
-
-    public String getSpCounterText() {
+    public boolean waitForUrlToContain(String fragment) {
         try {
-            return spCounter.getText().trim();
+            return wait.until(ExpectedConditions.urlContains(fragment));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // ── SP badge ──────────────────────────────────────────────────────────────
+
+    public boolean isSpBadgeVisible() {
+        return isVisibleWithWait(spBadge);
+    }
+
+    public String getSpValue() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(spValue)).getText().trim();
         } catch (Exception e) {
             return "";
         }
     }
 
-    public void clickSpPlusIcon() {
-        click(spPlusIcon, "SP + icon");
+    public boolean spValueIsNumeric() {
+        String text = getSpValue();
+        return text.matches("^\\d+\\s*SP$");
     }
 
-    // ── Notifications ─────────────────────────────────────────────────────────
+    // ── Theme / notification bell ─────────────────────────────────────────────
+
+    public boolean isThemeToggleVisible() {
+        return isVisibleWithWait(themeToggleBtn);
+    }
+
+    public boolean isNotificationBellVisible() {
+        return isVisibleWithWait(notificationBellBtn);
+    }
 
     public void clickNotificationBell() {
-        click(notificationBell, "Notification bell");
+        click(notificationBellBtn, "Notification bell");
     }
 
-    public boolean isNotificationBellDisplayed() {
-        return isDisplayed(notificationBell);
+    public boolean waitForNotificationPanelVisible() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(NOTIF_PANEL)) != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    // ── User Profile Nav ──────────────────────────────────────────────────────
+    // ── User button / dropdown ────────────────────────────────────────────────
 
-    public void clickUserProfileNav() {
-        click(userProfileNav, "User Profile nav");
+    public boolean isUserButtonVisible() {
+        return isVisibleWithWait(userBtn);
     }
 
-    // ── Activity / Schedule ───────────────────────────────────────────────────
+    public String getUserName() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(userName)).getText().trim();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public void clickUserButton() {
+        click(userBtn, "User button (topbar)");
+    }
+
+    public boolean waitForUserDropdownVisible() {
+        try {
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(DROPDOWN_PANEL)) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public List<String> getDropdownItemTexts() {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(DROPDOWN_PANEL));
+            return driver.findElements(DROPDOWN_ITEMS).stream()
+                    .map(el -> el.getText().trim())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            return List.of();
+        }
+    }
+
+    // ── Activity ──────────────────────────────────────────────────────────────
+
+    public boolean isActivitySectionVisible() {
+        return isVisibleWithWait(activityHeading);
+    }
+
+    public boolean isActivityEmptyState() {
+        return isVisibleWithWait(activityEmptyHeading);
+    }
+
+    public boolean isScheduleSessionVisible() {
+        return isVisibleWithWait(scheduleSessionLink);
+    }
 
     public void clickScheduleSession() {
-        click(scheduleSessionBtn, "Schedule a Session button");
+        click(scheduleSessionLink, "Schedule a session link");
     }
 
-    // ── Matches ───────────────────────────────────────────────────────────────
+    public int getStatValueByOffset(int index) {
+        try {
+            List<WebElement> values = driver.findElements(ACTIVITY_STAT_VALUES);
+            if (index >= values.size()) return -1;
+            return Integer.parseInt(values.get(index).getText().trim());
+        } catch (Exception e) {
+            return -1;
+        }
+    }
 
-    public boolean isMatchesSectionVisible() {
-        return isDisplayed(matchesSection);
+    // ── Top Matches ───────────────────────────────────────────────────────────
+
+    public boolean isTopMatchesSectionVisible() {
+        return isVisibleWithWait(topMatchesHeading);
+    }
+
+    public boolean isSeeAllMatchesLinkVisible() {
+        return isVisibleWithWait(seeAllMatchesLink);
+    }
+
+    public void clickSeeAllMatches() {
+        click(seeAllMatchesLink, "See all matches link");
     }
 
     public int getMatchCardCount() {
-        return matchCards.size();
+        return driver.findElements(MATCH_CARDS).size();
     }
 
-    public void clickFirstMatchButton() {
-        if (!matchButtons.isEmpty()) {
-            click(matchButtons.get(0), "First Match button");
-        }
+    // ── Mini Calendar ─────────────────────────────────────────────────────────
+
+    public boolean isCalendarCardVisible() {
+        return isVisibleWithWait(calendarCard);
     }
 
-    // ── Calendar Section ──────────────────────────────────────────────────────
-
-    public boolean isCalendarSectionVisible() {
-        return isDisplayed(calendarSection);
-    }
-
-    public void clickCalendarDay(int dayIndex) {
-        if (dayIndex < calendarDays.size()) {
-            click(calendarDays.get(dayIndex), "Calendar day " + dayIndex);
-        }
-    }
-
-    public String getEmptyStateMessage() {
+    public String getCalendarMonthLabel() {
         try {
-            return wait.until(ExpectedConditions.visibilityOf(emptyStateMessage)).getText().trim();
+            return wait.until(ExpectedConditions.visibilityOf(calendarMonthLabel)).getText().trim();
         } catch (Exception e) {
             return "";
         }
     }
 
-    // ── helpers ───────────────────────────────────────────────────────────────
+    public boolean isTodayHighlighted() {
+        return isVisibleWithWait(calendarTodayCell);
+    }
 
-    private boolean isDisplayed(WebElement el) {
+    public int getCalendarDayCellCount() {
+        return driver.findElements(CALENDAR_DAY_CELLS).size();
+    }
+
+    public boolean isUpcomingSectionVisible() {
+        return isVisibleWithWait(upcomingHeading);
+    }
+
+    public int getUpcomingItemCount() {
+        return driver.findElements(UPCOMING_ITEMS).size();
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    private boolean isVisibleWithWait(WebElement el) {
         try {
-            return el.isDisplayed();
+            return wait.until(ExpectedConditions.visibilityOf(el)).isDisplayed();
         } catch (Exception e) {
             return false;
         }

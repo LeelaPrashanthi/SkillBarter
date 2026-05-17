@@ -9,15 +9,16 @@ public class AppConstants {
 
     // ── URLs ────────────────────────────────────────────────────────────────
     public static final String BASE_URL              = "https://skill-barter-wine-theta.vercel.app/";
-    public static final String SIGNIN_URL            = BASE_URL + "signin";
+    public static final String SIGNIN_URL            = BASE_URL + "login";
     public static final String SIGNUP_URL            = BASE_URL + "signup";
-    public static final String DASHBOARD_URL         = BASE_URL + "dashboard";
+    public static final String DASHBOARD_URL         = BASE_URL + "app/dashboard";
     public static final String PROFILE_CREATION_URL  = BASE_URL + "profile-creation";
-    public static final String MATCHES_URL           = BASE_URL + "matches";
+    public static final String PROFILE_SETUP_URL     = BASE_URL + "profile-setup";
+    public static final String MATCHES_URL           = BASE_URL + "app/matches";
     public static final String MESSENGER_URL         = BASE_URL + "messenger";
     public static final String CALENDAR_URL          = BASE_URL + "calendar";
     public static final String PROGRESS_URL          = BASE_URL + "progress";
-    public static final String COMMUNITY_URL         = BASE_URL + "community";
+    public static final String COMMUNITY_URL         = BASE_URL + "app/community";
     public static final String SUBSCRIPTIONS_URL     = BASE_URL + "subscriptions";
     public static final String SAVED_PROFILES_URL    = BASE_URL + "saved-profiles";
     public static final String USER_PROFILE_URL      = BASE_URL + "profile";
@@ -44,8 +45,8 @@ public class AppConstants {
     public static final String SHEET_COMMUNITY = "CommunityData";
 
     // ── Valid Test Credentials ────────────────────────────────────────────────
-    public static final String VALID_EMAIL    = "testing@gmail.com";
-    public static final String VALID_PASSWORD = "testing";
+    public static final String VALID_EMAIL    = "hello3@cognizant.com";
+    public static final String VALID_PASSWORD = "cog@123";
 
     // ── Titles & Headings ────────────────────────────────────────────────────
     public static final String DASHBOARD_TITLE    = "Dashboard";
