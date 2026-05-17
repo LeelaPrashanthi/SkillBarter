@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"><suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/2480014/Desktop/skillbartertestingscript/SkillBarter/skillbarter-automation">
+<classes>
+<class name="com.cts.mfrp.skillbarter.tests.HomePageTest">
+<methods><include name="page"/>
+</methods>
+</class><class name="com.cts.mfrp.skillbarter.tests.NonFunctionalTest"><methods>
+<include name="pages"/></methods>
+</class>
+<class name="com.cts.mfrp.skillbarter.tests.SignUpTest">
+<methods>
+<include name="tc015_validSignUpCreatesAccount"/><include name="tc016_duplicateEmailShowsError"/>
+<include name="tc017_passwordMismatchShowsError"/>
+<include name="tc018_emptyFieldsValidation"/><include name="tc019_weakPasswordValidation"/>
+<include name="tc020_backToSignInNavigation"/></methods>
+</class>
+</classes>
+</test>
+</suite>

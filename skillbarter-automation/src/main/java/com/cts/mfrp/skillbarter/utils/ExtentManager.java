@@ -5,9 +5,16 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.cts.mfrp.skillbarter.constants.AppConstants;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Singleton factory for the ExtentReports instance.
  * Call ExtentManager.getInstance() from the listener to get a shared reporter.
+ *
+ * Each suite run produces a timestamped file inside the reports folder so
+ * prior reports are not overwritten.
  */
 public class ExtentManager {
 
@@ -23,7 +30,9 @@ public class ExtentManager {
     }
 
     private static ExtentReports createInstance() {
-        ExtentSparkReporter spark = new ExtentSparkReporter(AppConstants.REPORTS_PATH);
+        String reportPath = resolveTimestampedReportPath();
+
+        ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
         spark.config().setTheme(Theme.DARK);
         spark.config().setDocumentTitle("SkillBarter Automation Report");
         spark.config().setReportName("SkillBarter – Functional Test Results");
@@ -37,6 +46,20 @@ public class ExtentManager {
         er.setSystemInfo("Browser",      ConfigReader.getBrowser());
         er.setSystemInfo("Author",       "CTS MFRP QA Team");
         er.setSystemInfo("Framework",    "Selenium 4 + TestNG 7 + POM");
+        er.setSystemInfo("ReportFile",   reportPath);
         return er;
+    }
+
+    /** Returns "<reports-folder>/ExtentReport_<yyyy-MM-dd_HH-mm-ss>.html". */
+    private static String resolveTimestampedReportPath() {
+        File configured = new File(AppConstants.REPORTS_PATH);
+        File reportDir = configured.getParentFile() != null
+                ? configured.getParentFile()
+                : new File("test-output/reports");
+        if (!reportDir.exists()) reportDir.mkdirs();
+
+        String stamp = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        return new File(reportDir, "ExtentReport_" + stamp + ".html").getPath();
     }
 }

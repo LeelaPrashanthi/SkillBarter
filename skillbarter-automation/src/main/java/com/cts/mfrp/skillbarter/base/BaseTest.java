@@ -4,6 +4,7 @@ import com.cts.mfrp.skillbarter.constants.AppConstants;
 import com.cts.mfrp.skillbarter.utils.ConfigReader;
 import com.cts.mfrp.skillbarter.utils.ExtentReportListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.testng.annotations.Listeners;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,7 +26,11 @@ import java.time.Duration;
  *
  * Thread-safety: driver is stored in a ThreadLocal so parallel test runs
  * each get their own isolated browser instance.
+ *
+ * The ExtentReportListener is attached here so reports are also generated
+ * when running a single test method from the IDE (which bypasses testng.xml).
  */
+@Listeners(ExtentReportListener.class)
 public class BaseTest {
 
     private static final Logger log = LogManager.getLogger(BaseTest.class);
@@ -94,7 +99,9 @@ public class BaseTest {
     protected void navigateToDashboard() {
         navigateTo(AppConstants.DASHBOARD_URL);
     }
-
+    protected void navigateToMatches() {
+        navigateTo(AppConstants.MATCHES_URL);
+    }
     protected String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
@@ -120,27 +127,24 @@ public class BaseTest {
     // ── Driver factory ────────────────────────────────────────────────────────
 
     private WebDriver createDriver(String browser, boolean headless) {
-        return switch (browser.toLowerCase()) {
-            case AppConstants.BROWSER_FIREFOX -> {
-                WebDriverManager.firefoxdriver().setup();
-                FirefoxOptions opts = new FirefoxOptions();
-                if (headless) opts.addArguments("--headless");
-                yield new FirefoxDriver(opts);
-            }
-            case AppConstants.BROWSER_EDGE -> {
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions opts = new EdgeOptions();
-                if (headless) opts.addArguments("--headless");
-                yield new EdgeDriver(opts);
-            }
-            default -> {
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions opts = new ChromeOptions();
-                if (headless) opts.addArguments("--headless=new");
-                opts.addArguments("--no-sandbox", "--disable-dev-shm-usage",
-                        "--disable-gpu", "--window-size=1920,1080");
-                yield new ChromeDriver(opts);
-            }
-        };
+        String b = browser.toLowerCase();
+        if (AppConstants.BROWSER_FIREFOX.equals(b)) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions opts = new FirefoxOptions();
+            if (headless) opts.addArguments("--headless");
+            return new FirefoxDriver(opts);
+        }
+        if (AppConstants.BROWSER_EDGE.equals(b)) {
+            WebDriverManager.edgedriver().setup();
+            EdgeOptions opts = new EdgeOptions();
+            if (headless) opts.addArguments("--headless");
+            return new EdgeDriver(opts);
+        }
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions opts = new ChromeOptions();
+        if (headless) opts.addArguments("--headless=new");
+        opts.addArguments("--no-sandbox", "--disable-dev-shm-usage",
+                "--disable-gpu", "--window-size=1920,1080");
+        return new ChromeDriver(opts);
     }
 }

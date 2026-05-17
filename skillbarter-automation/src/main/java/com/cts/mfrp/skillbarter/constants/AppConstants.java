@@ -9,13 +9,13 @@ public class AppConstants {
 
     // ── URLs ────────────────────────────────────────────────────────────────
     public static final String BASE_URL              = "https://skill-barter-wine-theta.vercel.app/";
-    public static final String SIGNIN_URL            = BASE_URL + "signin";
+    public static final String SIGNIN_URL            = BASE_URL + "login";
     public static final String SIGNUP_URL            = BASE_URL + "signup";
-    public static final String DASHBOARD_URL         = BASE_URL + "dashboard";
+    public static final String DASHBOARD_URL         = BASE_URL + "app/dashboard";
     public static final String PROFILE_CREATION_URL  = BASE_URL + "profile-creation";
     public static final String PROFILE_SETUP_URL     = BASE_URL + "profile-setup";
-    public static final String MATCHES_URL           = BASE_URL + "matches";
-    public static final String MESSENGER_URL         = BASE_URL + "messenger";
+    public static final String MATCHES_URL           = BASE_URL + "app/matches";
+    public static final String MESSENGER_URL         = BASE_URL + "app/chat";
     public static final String CALENDAR_URL          = BASE_URL + "calendar";
     public static final String PROGRESS_URL          = BASE_URL + "progress";
     public static final String COMMUNITY_URL         = BASE_URL + "community";
@@ -30,7 +30,7 @@ public class AppConstants {
     public static final int SCRIPT_WAIT     = 30;   // seconds
 
     // ── Test Data ────────────────────────────────────────────────────────────
-    public static final String TEST_DATA_PATH  = "src/test/resources/testdata/TestData.xlsx";
+    public static final String TEST_DATA_PATH  = "src/test/resources/testdata/TestData - Copy.xlsx";
     public static final String CONFIG_PATH     = "src/test/resources/config.properties";
 
     // ── Report & Screenshot Paths ─────────────────────────────────────────
@@ -42,6 +42,7 @@ public class AppConstants {
     public static final String SHEET_SIGNUP    = "SignUpData";
     public static final String SHEET_PROFILE   = "ProfileData";
     public static final String SHEET_MATCHES   = "MatchesData";
+    public static final String SHEET_MATCHESSEARCH   = "MatchesDataForSearching";
     public static final String SHEET_COMMUNITY = "CommunityData";
 
     // ── Valid Test Credentials ────────────────────────────────────────────────

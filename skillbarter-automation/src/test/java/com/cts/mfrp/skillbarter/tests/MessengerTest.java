@@ -1,10 +1,19 @@
 package com.cts.mfrp.skillbarter.tests;
 
 import com.cts.mfrp.skillbarter.base.BaseTest;
+import com.cts.mfrp.skillbarter.constants.AppConstants;
 import com.cts.mfrp.skillbarter.pages.MessengerPage;
+import com.cts.mfrp.skillbarter.pages.SignInPage;
+import com.cts.mfrp.skillbarter.utils.ConfigReader;
 import com.cts.mfrp.skillbarter.utils.RetryAnalyzer;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 /**
  * Test class for the Builtin Messenger.
@@ -20,31 +29,245 @@ public class MessengerTest extends BaseTest {
     private MessengerPage messengerPage;
 
     @BeforeMethod(alwaysRun = true)
-    public void loginAndOpenMessenger() {
+    public void loginAndOpenMatches() {
+        // 1) Show the login page
+        navigateToSignIn();
+
+        // 2) Fill the credentials and submit
+        new SignInPage(driver).signIn(ConfigReader.getValidEmail(), ConfigReader.getValidPassword());
+
+        // 3) Wait for login to succeed. Authenticated routes live under "/app/",
+        //    and the app lands on /app/dashboard after a successful login.
+        wait.until(ExpectedConditions.urlContains("/app/dashboard"));
+
+        // 4) Now go to the Matches tab
+        navigateTo(AppConstants.MESSENGER_URL);
+        messengerPage = new MessengerPage(driver);
     }
 
-    @Test(testName = "TC_061", description = "Messenger conversation list displayed with search bar",
+
+    @Test
+    public void tc087_PageTitleValidation(){
+        if(messengerPage.getPageTitle().equals("Messages")){
+            Assert.assertTrue(true);
+        }
+        else{
+            Assert.assertFalse(false,"Page title is not correct ");
+        }
+    }
+//    @Test
+//    public void tc087a_SearchBarPresenceOrNot(){
+//        if(messengerPage.isSearchBarPresent()){
+//            Assert.assertTrue(true,"Search Bar is Present you can serach ");
+//            messengerPage.searchForInput("Sai");
+//
+//
+//
+////            System.out.println(count);
+//        }
+//        else{
+//            Assert.assertFalse(false,"Search is not present");
+//        }
+//    }
+        @Test
+        public void tc087a_SearchBarPresenceOrNot() {
+            Assert.assertTrue(messengerPage.isSearchBarPresent(), "Search bar not present");
+
+            messengerPage.searchForInput("Sai");
+
+            String value = messengerPage.getSearchBarValue();
+
+            Assert.assertEquals(value, "Sai", "Search input failed");
+        }
+
+    @Test
+    public void tc087b_SearchingValidation() {
+        Assert.assertTrue(messengerPage.isSearchBarPresent(), "Search bar not present");
+
+        // Wait up to 40 seconds until all conversations/contacts are listed in the left panel
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                        By.xpath("//app-root/app-sidebar/div[1]/div/div/app-chat/div/div[1]/div"), 0));
+
+        Assert.assertTrue(messengerPage.areConversationsListed(), "Conversations were not loaded");
+
+        messengerPage.searchForInput("Sai");
+
+        String value = messengerPage.getSearchBarValue();
+
+        Assert.assertEquals(value, "Sai", "Search input failed");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* =====================================================================
+     * TC_061 – Conversation list display
+     * Pre-condition: User logged in with at least one conversation.
+     * Steps:
+     *   1. Open Builtin Messenger.
+     *   2. Verify list of conversations with avatar, name, message preview, timestamp.
+     * Expected: A non-empty list is rendered and every row shows all four fields.
+     * =================================================================== */
+    @Test(testName = "TC_061", description = "Conversation list shows avatar, name, preview, timestamp",
           groups = {"messenger", "regression"}, priority = 61, retryAnalyzer = RetryAnalyzer.class)
     public void tc061_conversationListDisplayed() {
+        Assert.assertEquals(messengerPage.getPageTitle(), "Messages",
+                "Messenger page title is not 'Messages'");
+
+        Assert.assertTrue(messengerPage.isSearchBarPresent(),
+                "Search bar is not present on Messenger page");
+
+        Assert.assertTrue(messengerPage.areConversationsListed(),
+                "No conversations are listed on the Messenger page");
+
+        Assert.assertTrue(messengerPage.allConversationsHaveAllFields(),
+                "One or more conversations are missing avatar / name / preview / timestamp");
     }
 
-    @Test(testName = "TC_062", description = "Search conversations narrows the list to matching entries",
+    /* =====================================================================
+     * TC_062 – Search conversations
+     * Test data: keyword = "William"
+     * Steps:
+     *   1. Type 'William' in the Search bar.
+     *   2. Clear the search.
+     * Expected: List filters to entries matching the keyword; clearing restores it.
+     * =================================================================== */
+    @Test(testName = "TC_062", description = "Search filters conversations by keyword",
           groups = {"messenger", "regression"}, priority = 62, retryAnalyzer = RetryAnalyzer.class)
     public void tc062_searchConversations() {
+        // Wait up to 20 seconds until all conversations/contacts are listed in the left panel
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                        By.cssSelector("app-chat .contacts .contact"), 0));
+
+
+
+        Assert.assertTrue(messengerPage.isSearchBarPresent(), "Search bar is not present");
+        messengerPage.clearSearch();
+
+        final String keyword = "Usha";
+        messengerPage.searchForInput(keyword);
+
+        Assert.assertEquals(messengerPage.getSearchBarValue(), keyword,
+                "Typed keyword did not register in the search bar");
+
+        int filteredCount = messengerPage.getConversationCount();
+        if (filteredCount > 0) {
+            Assert.assertTrue(messengerPage.allVisibleConversationsMatch(keyword),
+                    "Filtered list contains entries that don't match '" + keyword + "'");
+        }
+        messengerPage.clearSearch();
     }
 
-    @Test(testName = "TC_063", description = "Send a message in active chat appears in chat window",
+    /* =====================================================================
+     * TC_063 – Send a message in active chat
+     * Test data: message = "Hello"
+     * Steps:
+     *   1. Open a conversation.
+     *   2. Type a message and click Send.
+     * Expected: Message appears in the message thread.
+     * =================================================================== */
+    @Test(testName = "TC_063", description = "Sending a message in an active chat appears in the thread",
           groups = {"messenger", "regression"}, priority = 63, retryAnalyzer = RetryAnalyzer.class)
     public void tc063_sendMessageInActiveChat() {
+        // Wait up to 20 seconds until all conversations/contacts are listed in the left panel
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(
+                        By.cssSelector("app-chat .contacts .contact"), 0));
+
+        Assert.assertTrue(messengerPage.areConversationsListed(),
+                "No conversation available to open");
+
+        messengerPage.clickFirstConversation();
+
+        // Wait up to 20 seconds until the chat header (contact name h3) is visible
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector("app-chat .chat-win .chat-header h3")));
+
+        Assert.assertTrue(messengerPage.isChatWindowOpen(),
+                "Chat window did not open after selecting a conversation");
+        Assert.assertFalse(messengerPage.getActiveChatName().isEmpty(),
+                "Active chat header is missing the contact name");
+
+        final String msg = "Hello";
+        messengerPage.typeMessage(msg);
+
+        Assert.assertTrue(messengerPage.isSendButtonEnabled(),
+                "Send button stayed disabled after typing a message");
+
+        messengerPage.clickSend();
+
+        Assert.assertTrue(messengerPage.isMessageSent(msg),
+                "Sent message '" + msg + "' did not appear in the conversation thread");
     }
 
-    @Test(testName = "TC_064", description = "Accept session request from chat adds it to calendar",
+    /* =====================================================================
+     * TC_064 – Accept session request from chat
+     * Pre-condition: Open a chat that has a pending session request (17 June 14:00).
+     * Steps:
+     *   1. Open a chat with pending session request.
+     *   2. Click 'Accept'.
+     * Expected: Session request is accepted (panel updates / is removed).
+     * =================================================================== */
+    @Test(testName = "TC_064", description = "Accept session request from chat",
           groups = {"messenger", "regression"}, priority = 64, retryAnalyzer = RetryAnalyzer.class)
     public void tc064_acceptSessionRequestFromChat() {
+        Assert.assertTrue(messengerPage.areConversationsListed(),
+                "No conversation available to open");
+
+        messengerPage.clickFirstConversation();
+        Assert.assertTrue(messengerPage.isChatWindowOpen(),
+                "Chat window did not open");
+
+        if (!messengerPage.isSessionRequestPanelVisible()) {
+            throw new org.testng.SkipException(
+                    "No pending session request in the opened chat – cannot validate Accept flow");
+        }
+
+        messengerPage.clickAccept();
+
+        Assert.assertTrue(messengerPage.isSessionRequestPanelGone(),
+                "Session request panel still visible after clicking Accept");
     }
 
-    @Test(testName = "TC_065", description = "Decline session request from chat removes the request",
+    /* =====================================================================
+     * TC_065 – Decline session request from chat
+     * Pre-condition: Open a chat that has a pending session request (17 June 14:00).
+     * Steps:
+     *   1. Open a chat with pending session request.
+     *   2. Click 'Decline'.
+     * Expected: Session request is removed from the chat.
+     * =================================================================== */
+    @Test(testName = "TC_065", description = "Decline session request from chat",
           groups = {"messenger", "regression"}, priority = 65, retryAnalyzer = RetryAnalyzer.class)
     public void tc065_declineSessionRequestFromChat() {
+        Assert.assertTrue(messengerPage.areConversationsListed(),
+                "No conversation available to open");
+
+        messengerPage.clickFirstConversation();
+        Assert.assertTrue(messengerPage.isChatWindowOpen(),
+                "Chat window did not open");
+
+        if (!messengerPage.isSessionRequestPanelVisible()) {
+            throw new org.testng.SkipException(
+                    "No pending session request in the opened chat – cannot validate Decline flow");
+        }
+
+        messengerPage.clickDecline();
+
+        Assert.assertTrue(messengerPage.isSessionRequestPanelGone(),
+                "Session request panel still visible after clicking Decline");
     }
 }

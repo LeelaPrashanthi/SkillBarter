@@ -6,7 +6,10 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -26,8 +29,9 @@ public class ExcelUtils {
      */
     public static List<Map<String, String>> getSheetData(String filePath, String sheetName) {
         List<Map<String, String>> data = new ArrayList<>();
+        String resolved = resolvePath(filePath);
 
-        try (FileInputStream fis = new FileInputStream(filePath);
+        try (FileInputStream fis = new FileInputStream(resolved);
              Workbook wb = new XSSFWorkbook(fis)) {
 
             Sheet sheet = wb.getSheet(sheetName);
@@ -81,5 +85,86 @@ public class ExcelUtils {
         if (cell == null) return "";
         DataFormatter formatter = new DataFormatter();
         return formatter.formatCellValue(cell).trim();
+    }
+
+    /**
+     * Writes a value to a cell, identified by sheet name + 1-based data row
+     * index (1 = first row under the header) + column header. If the column
+     * does not exist it is added at the end of the header row. Not
+     * thread-safe — only call from sequential suites (thread-count="1").
+     */
+    public static synchronized void writeCellValue(String filePath,
+                                                   String sheetName,
+                                                   int dataRowIndex,
+                                                   String columnHeader,
+                                                   String value) {
+        String resolved = resolvePath(filePath);
+        try (FileInputStream fis = new FileInputStream(resolved);
+             Workbook wb = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = wb.getSheet(sheetName);
+            if (sheet == null) {
+                log.warn("writeCellValue: sheet '{}' not found in '{}'", sheetName, filePath);
+                return;
+            }
+
+            Row headerRow = sheet.getRow(0);
+            if (headerRow == null) {
+                log.warn("writeCellValue: header row missing in sheet '{}'", sheetName);
+                return;
+            }
+
+            int colIndex = -1;
+            for (Cell h : headerRow) {
+                if (columnHeader.equalsIgnoreCase(getCellValue(h))) {
+                    colIndex = h.getColumnIndex();
+                    break;
+                }
+            }
+            if (colIndex == -1) {
+                colIndex = headerRow.getLastCellNum();
+                headerRow.createCell(colIndex).setCellValue(columnHeader);
+            }
+
+            Row row = sheet.getRow(dataRowIndex);
+            if (row == null) row = sheet.createRow(dataRowIndex);
+            Cell cell = row.getCell(colIndex, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+            cell.setCellValue(value);
+
+            try (FileOutputStream fos = new FileOutputStream(resolved)) {
+                wb.write(fos);
+            }
+            log.debug("Wrote '{}' → {}!R{}C{} ('{}') in {}",
+                    value, sheetName, dataRowIndex, colIndex, columnHeader, resolved);
+
+        } catch (IOException e) {
+            log.error("writeCellValue failed for '{}'!R{}/'{}': {}",
+                    sheetName, dataRowIndex, columnHeader, e.getMessage());
+        }
+    }
+
+    /**
+     * Resolve a (possibly relative) file path robustly:
+     *   1. If the path is absolute or already resolves from CWD → use it.
+     *   2. Walk up from System.getProperty("user.dir") looking for the
+     *      file under each ancestor — this handles IDE runners that set
+     *      the working directory to a sub-folder of the project.
+     * Returns the original path as a last resort so the caller sees a
+     * meaningful error message.
+     */
+    private static String resolvePath(String filePath) {
+        java.io.File f = new java.io.File(filePath);
+        if (f.exists()) {
+            return f.getAbsolutePath();
+        }
+        java.io.File cwd = new java.io.File(System.getProperty("user.dir"));
+        while (cwd != null) {
+            java.io.File candidate = new java.io.File(cwd, filePath);
+            if (candidate.exists()) {
+                return candidate.getAbsolutePath();
+            }
+            cwd = cwd.getParentFile();
+        }
+        return filePath;
     }
 }

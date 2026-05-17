@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results retried="2" ignored="2" total="5" passed="0" failed="1" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-05-15T10:02:03 IST" name="Surefire suite" finished-at="2026-05-15T10:05:23 IST" duration-ms="199906">
+    <groups>
+      <group name="regression">
+        <method signature="MatchesTest.tc058b_searchNoResultsShowsMessage()[pri:58, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" name="tc058b_searchNoResultsShowsMessage" class="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+      </group> <!-- regression -->
+      <group name="matches">
+        <method signature="MatchesTest.tc058b_searchNoResultsShowsMessage()[pri:58, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" name="tc058b_searchNoResultsShowsMessage" class="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+      </group> <!-- matches -->
+    </groups>
+    <test started-at="2026-05-15T10:02:03 IST" name="Surefire test" finished-at="2026-05-15T10:05:23 IST" duration-ms="199906">
+      <class name="com.cts.mfrp.skillbarter.tests.MatchesTest">
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:02:03 IST" name="setUp" finished-at="2026-05-15T10:02:11 IST" duration-ms="7877" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="loginAndOpenMatches()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:02:11 IST" name="loginAndOpenMatches" finished-at="2026-05-15T10:02:19 IST" duration-ms="7789" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginAndOpenMatches -->
+        <test-method retried="true" signature="tc058b_searchNoResultsShowsMessage()[pri:58, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:02:19 IST" name="tc058b_searchNoResultsShowsMessage" description="Searching for a non-existent user shows &#039;No user is found&#039; message" finished-at="2026-05-15T10:03:01 IST" duration-ms="41937" status="SKIP">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Search for 'zzzznouser1778819578238' should produce no matching cards expected [0] but found [48]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Search for 'zzzznouser1778819578238' should produce no matching cards expected [0] but found [48]
+at org.testng.Assert.fail(Assert.java:111)
+at org.testng.Assert.failNotEquals(Assert.java:1578)
+at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+at org.testng.Assert.assertEquals(Assert.java:132)
+at org.testng.Assert.assertEquals(Assert.java:1419)
+at org.testng.Assert.assertEquals(Assert.java:1383)
+at com.cts.mfrp.skillbarter.tests.MatchesTest.tc058b_searchNoResultsShowsMessage(MatchesTest.java:240)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:819)
+at org.testng.TestRunner.run(TestRunner.java:619)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
+at org.testng.SuiteRunner.run(SuiteRunner.java:336)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
+at org.testng.TestNG.runSuites(TestNG.java:1134)
+at org.testng.TestNG.run(TestNG.java:1101)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc058b_searchNoResultsShowsMessage -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:03:01 IST" name="tearDown" finished-at="2026-05-15T10:03:10 IST" duration-ms="9257" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:03:10 IST" name="setUp" finished-at="2026-05-15T10:03:14 IST" duration-ms="4210" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="loginAndOpenMatches()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:03:14 IST" name="loginAndOpenMatches" finished-at="2026-05-15T10:03:22 IST" duration-ms="7947" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginAndOpenMatches -->
+        <test-method retried="true" signature="tc058b_searchNoResultsShowsMessage()[pri:58, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:03:22 IST" name="tc058b_searchNoResultsShowsMessage" description="Searching for a non-existent user shows &#039;No user is found&#039; message" finished-at="2026-05-15T10:04:06 IST" duration-ms="43791" status="SKIP">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Search for 'zzzznouser1778819640910' should produce no matching cards expected [0] but found [48]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Search for 'zzzznouser1778819640910' should produce no matching cards expected [0] but found [48]
+at org.testng.Assert.fail(Assert.java:111)
+at org.testng.Assert.failNotEquals(Assert.java:1578)
+at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+at org.testng.Assert.assertEquals(Assert.java:132)
+at org.testng.Assert.assertEquals(Assert.java:1419)
+at org.testng.Assert.assertEquals(Assert.java:1383)
+at com.cts.mfrp.skillbarter.tests.MatchesTest.tc058b_searchNoResultsShowsMessage(MatchesTest.java:240)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
+at org.testng.internal.invokers.TestInvoker.retryFailed(TestInvoker.java:249)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:76)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:819)
+at org.testng.TestRunner.run(TestRunner.java:619)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
+at org.testng.SuiteRunner.run(SuiteRunner.java:336)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
+at org.testng.TestNG.runSuites(TestNG.java:1134)
+at org.testng.TestNG.run(TestNG.java:1101)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc058b_searchNoResultsShowsMessage -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:04:06 IST" name="tearDown" finished-at="2026-05-15T10:04:20 IST" duration-ms="13923" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+        <test-method is-config="true" signature="setUp(java.lang.String)[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:04:20 IST" name="setUp" finished-at="2026-05-15T10:04:24 IST" duration-ms="4446" status="PASS">
+          <params>
+            <param index="0">
+              <value is-null="true"/>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method is-config="true" signature="loginAndOpenMatches()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:04:24 IST" name="loginAndOpenMatches" finished-at="2026-05-15T10:04:33 IST" duration-ms="8114" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginAndOpenMatches -->
+        <test-method signature="tc058b_searchNoResultsShowsMessage()[pri:58, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:04:33 IST" name="tc058b_searchNoResultsShowsMessage" description="Searching for a non-existent user shows &#039;No user is found&#039; message" finished-at="2026-05-15T10:05:13 IST" duration-ms="40835" status="FAIL">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[Search for 'zzzznouser1778819710813' should produce no matching cards expected [0] but found [48]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: Search for 'zzzznouser1778819710813' should produce no matching cards expected [0] but found [48]
+at org.testng.Assert.fail(Assert.java:111)
+at org.testng.Assert.failNotEquals(Assert.java:1578)
+at org.testng.Assert.assertEqualsImpl(Assert.java:150)
+at org.testng.Assert.assertEquals(Assert.java:132)
+at org.testng.Assert.assertEquals(Assert.java:1419)
+at org.testng.Assert.assertEquals(Assert.java:1383)
+at com.cts.mfrp.skillbarter.tests.MatchesTest.tc058b_searchNoResultsShowsMessage(MatchesTest.java:240)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
+at org.testng.internal.invokers.TestInvoker.retryFailed(TestInvoker.java:249)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:76)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:819)
+at org.testng.TestRunner.run(TestRunner.java:619)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
+at org.testng.SuiteRunner.run(SuiteRunner.java:336)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
+at org.testng.TestNG.runSuites(TestNG.java:1134)
+at org.testng.TestNG.run(TestNG.java:1101)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tc058b_searchNoResultsShowsMessage -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.cts.mfrp.skillbarter.tests.MatchesTest@12f9af83]" started-at="2026-05-15T10:05:14 IST" name="tearDown" finished-at="2026-05-15T10:05:23 IST" duration-ms="9091" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.cts.mfrp.skillbarter.tests.MatchesTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
