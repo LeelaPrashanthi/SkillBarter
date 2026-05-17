@@ -18,6 +18,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base test class – all test classes extend this.
@@ -81,6 +83,8 @@ public class BaseTest {
     protected void navigateTo(String url) {
         driver.get(url);
         log.debug("Navigated to: {}", url);
+        // ── DEBUG: uncomment to slow down tests so you can see each navigation ──
+        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
     }
 
     protected void navigateToBase() {
@@ -120,27 +124,39 @@ public class BaseTest {
     // ── Driver factory ────────────────────────────────────────────────────────
 
     private WebDriver createDriver(String browser, boolean headless) {
-        return switch (browser.toLowerCase()) {
-            case AppConstants.BROWSER_FIREFOX -> {
+        switch (browser.toLowerCase()) {
+            case AppConstants.BROWSER_FIREFOX: {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions opts = new FirefoxOptions();
                 if (headless) opts.addArguments("--headless");
-                yield new FirefoxDriver(opts);
+                return new FirefoxDriver(opts);
             }
-            case AppConstants.BROWSER_EDGE -> {
+            case AppConstants.BROWSER_EDGE: {
                 WebDriverManager.edgedriver().setup();
                 EdgeOptions opts = new EdgeOptions();
                 if (headless) opts.addArguments("--headless");
-                yield new EdgeDriver(opts);
+                return new EdgeDriver(opts);
             }
-            default -> {
+            default: {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions opts = new ChromeOptions();
                 if (headless) opts.addArguments("--headless=new");
                 opts.addArguments("--no-sandbox", "--disable-dev-shm-usage",
                         "--disable-gpu", "--window-size=1920,1080");
-                yield new ChromeDriver(opts);
+
+                // Disable Chrome's "Save password?" bubble and leak-detection popup —
+                // these are native browser UI, not JS alerts, so Selenium can't dismiss them.
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("autofill.profile_enabled", false);
+                opts.setExperimentalOption("prefs", prefs);
+                opts.addArguments(
+                        "--disable-save-password-bubble",
+                        "--disable-features=PasswordLeakDetection,PasswordCheck,AutofillServerCommunication");
+
+                return new ChromeDriver(opts);
             }
-        };
+        }
     }
 }
