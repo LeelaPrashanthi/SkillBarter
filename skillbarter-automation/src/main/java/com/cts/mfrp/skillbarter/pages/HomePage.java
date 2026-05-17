@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Page Object for the SkillBarter Landing Page (REQ-2.1).
@@ -248,7 +249,7 @@ public class HomePage {
         try {
             wait.until(ExpectedConditions.visibilityOfAllElements(featureCardTitles));
         } catch (Exception ignored) {}
-        return featureCardTitles.stream().map(this::getText).toList();
+        return featureCardTitles.stream().map(this::getText).collect(Collectors.toList());
     }
 
     // ── CTA ───────────────────────────────────────────────────────────────────
