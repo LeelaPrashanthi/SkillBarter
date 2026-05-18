@@ -1,55 +1,24 @@
 package com.cts.mfrp.skillbarter.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Page Object for the Progress page.
- * Covers TC_069 – TC_073 (TS_015).
+ * Page Object for the Progress page (TC_069 – TC_078).
+ * Each method returns the section's text, or "no <thing>" if missing.
  */
 public class ProgressPage {
 
-    private static final Logger log = LogManager.getLogger(ProgressPage.class);
     private final WebDriver driver;
     private final WebDriverWait wait;
-
-    @FindBy(css = "h1, h2, [class*='page-title']")
-    private WebElement pageTitle;
-
-    @FindBy(css = "[class*='level'], [class*='xp-level'], [class*='user-level']")
-    private WebElement levelDisplay;
-
-    @FindBy(css = "[class*='xp'], [class*='experience-points']")
-    private WebElement xpDisplay;
-
-    @FindBy(css = "[class*='hours-learning'], [class*='learning-hours'], " +
-            "[class*='activity-stat']:first-of-type")
-    private WebElement hoursLearning;
-
-    @FindBy(css = "[class*='hours-teaching'], [class*='teaching-hours'], " +
-            "[class*='activity-stat']:last-of-type")
-    private WebElement hoursTeaching;
-
-    @FindBy(css = "[class*='badge'], [class*='achievement']")
-    private List<WebElement> badges;
-
-    @FindBy(css = "[class*='locked-badge'], [class*='badge-locked']")
-    private List<WebElement> lockedBadges;
-
-    @FindBy(css = "[class*='next-goal'], [class*='goals-section']")
-    private WebElement nextGoalsSection;
-
-    @FindBy(css = "button[class*='schedule'], a[class*='schedule']")
-    private WebElement scheduleSessionBtn;
 
     public ProgressPage(WebDriver driver) {
         this.driver = driver;
@@ -57,49 +26,76 @@ public class ProgressPage {
         PageFactory.initElements(driver, this);
     }
 
-    public String getPageTitle() {
-        try {
-            return wait.until(ExpectedConditions.visibilityOf(pageTitle)).getText().trim();
-        } catch (Exception e) { return ""; }
+    public String getXpText() {
+        return readSection("//*[contains(text(),'XP')]/..", "no xp");
     }
-
-    public boolean isLevelDisplayed() { return isDisplayed(levelDisplay); }
-    public boolean isXpDisplayed()    { return isDisplayed(xpDisplay); }
 
     public String getLevelText() {
-        try { return levelDisplay.getText().trim(); } catch (Exception e) { return ""; }
+        return readSection("//*[contains(text(),'Your level')]/..", "no level");
     }
 
-    public boolean isHoursLearningDisplayed() { return isDisplayed(hoursLearning); }
-    public boolean isHoursTeachingDisplayed() { return isDisplayed(hoursTeaching); }
-
-    public int getBadgeCount() { return badges.size(); }
-    public int getLockedBadgeCount() { return lockedBadges.size(); }
-
-    public boolean isBadgeSectionVisible() {
-        return !badges.isEmpty() && badges.get(0).isDisplayed();
+    public String getActivityText() {
+        return readSection("//*[contains(text(),'Activity')]/following::div", "no activity");
     }
 
-    public boolean isNextGoalsSectionVisible() { return isDisplayed(nextGoalsSection); }
+    public String getTotalSessionsText() {
+        return readSection("//*[contains(text(),'Total sessions')]/..", "no sessions");
+    }
+
+    public String getCompletedText() {
+        return readSection("/html/body/app-root/app-sidebar/div[1]/div/div/app-progress/div/div[2]/div[1]/div[3]/div[2]", "no completed sessions");
+    }
+
+    public String getCompletionRateText() {
+        return readSection("//*[contains(text(),'Completion rate')]/..", "no completion rate");
+    }
+
+    public String getRatingsText() {
+        return readSection("//*[contains(text(),'Ratings')]/..", "no ratings");
+    }
+
+    public String getReviewsReceivedText() {
+        return readSection("//*[contains(text(),'Reviews Received')]/..", "no reviews received");
+    }
 
     public String getNextGoalsText() {
-        try { return nextGoalsSection.getText().trim(); } catch (Exception e) { return ""; }
+        return readSection("//*[contains(text(),'Next Goals')]/..", "no next goals");
     }
 
-    public void clickScheduleSession() {
-        click(scheduleSessionBtn, "Schedule a Session");
-    }
-
-    private void click(WebElement el, String name) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(el)).click();
-            log.debug("Clicked: {}", name);
-        } catch (Exception e) {
-            log.warn("Click failed on '{}': {}", name, e.getMessage());
+    /** Returns each badge's text. Use {@link #isBadgeEnabled(String)} to classify enabled/locked. */
+    public List<String> getBadgeTexts() {
+        List<String> result = new ArrayList<>();
+        List<WebElement> badges = driver.findElements(By.xpath(
+                "//div[contains(@class,'badge') "
+                + "and not(contains(@class,'sp-badge')) "
+                + "and not(contains(@class,'badges')) "
+                + "and not(contains(@class,'section')) "
+                + "and not(contains(@class,'panel'))]"));
+        for (WebElement b : badges) {
+            try {
+                result.add(b.getText().trim().replaceAll("\\s+", " "));
+            } catch (Exception e) {
+                result.add("(stale)");
+            }
         }
+        return result;
     }
 
-    private boolean isDisplayed(WebElement el) {
-        try { return el.isDisplayed(); } catch (Exception e) { return false; }
+    /** A badge is enabled if its text contains "Unlocked" (case-insensitive). */
+    public boolean isBadgeEnabled(String badgeText) {
+        return badgeText != null && badgeText.toLowerCase().contains("unlocked");
+    }
+
+    // ── private helper ────────────────────────────────────────────────────────
+
+    /** Finds the first visible element matching xpath and returns its text; fallback if missing. */
+    private String readSection(String xpath, String missingMsg) {
+        try {
+            WebElement el = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            String text = el.getText().trim().replaceAll("\\s+", " ");
+            return text.isEmpty() ? missingMsg : text;
+        } catch (Exception e) {
+            return missingMsg;
+        }
     }
 }

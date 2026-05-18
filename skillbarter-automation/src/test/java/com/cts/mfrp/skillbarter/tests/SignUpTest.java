@@ -2,6 +2,7 @@ package com.cts.mfrp.skillbarter.tests;
 
 import com.cts.mfrp.skillbarter.base.BaseTest;
 import com.cts.mfrp.skillbarter.constants.AppConstants;
+import com.cts.mfrp.skillbarter.pages.ProfileSetupPage;
 import com.cts.mfrp.skillbarter.pages.SignUpPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -23,16 +24,21 @@ public class SignUpTest extends BaseTest {
         signUpPage = new SignUpPage(driver);
     }
 
-    @Test(testName = "TC_015", description = "Sign Up with valid data creates a new account")
+    @Test(testName = "TC_015", description = "Sign Up with valid data, complete profile setup, lands on dashboard")
     public void tc015_validSignUpCreatesAccount() {
         String uniqueEmail = "testuser+" + UUID.randomUUID().toString().substring(0, 8) + "@test.com";
         signUpPage.signUp("John Test", uniqueEmail, "Test@1234", "Test@1234");
 
+        ProfileSetupPage profileSetupPage = new ProfileSetupPage(driver);
+        profileSetupPage.completeProfileSetup(
+            "John Test",
+            "Automation test user exploring skill barter."
+        );
+
         String url = getCurrentUrl();
         Assert.assertTrue(
-            url.contains("signin") || url.contains("login") || url.contains("dashboard")
-                || !signUpPage.getSuccessMessage().isEmpty(),
-            "Expected redirect or success message after signup. URL: " + url
+            url.contains("dashboard"),
+            "Expected redirect to dashboard after profile setup. URL: " + url
         );
     }
 
