@@ -12,8 +12,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 /**
- * Page Object for the Sign In page (/login).
+ * Page Object for the Sign In page.
  * Covers TC_008 – TC_014 (TS_002).
+ *
+ * Locators verified against the actual SkillBarter Angular login page (/login).
+ * The Sign In button is initially disabled and only becomes clickable once the
+ * email/password fields pass Angular's form validation.
  */
 public class SignInPage {
 
@@ -21,28 +25,31 @@ public class SignInPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(xpath = "//*[contains(@class,'auth-card')]//h1")
+    @FindBy(css = "h1")
     private WebElement pageHeading;
 
-    @FindBy(xpath = "//input[@type='email']")
+    @FindBy(css = "input[type='email']")
     private WebElement emailField;
 
-    @FindBy(xpath = "//input[@type='password']")
+    @FindBy(css = "input[type='password']")
     private WebElement passwordField;
 
-    @FindBy(xpath = "//button[contains(@class,'btn-primary') and normalize-space()='Sign In']")
+    // Button has no type='submit'; locate by visible text.
+    @FindBy(xpath = "//button[normalize-space()='Sign In']")
     private WebElement signInBtn;
 
-    @FindBy(xpath = "//*[contains(@class,'error-box')]")
+    @FindBy(css = ".error-box, [class*='error'], [role='alert']")
     private WebElement errorMessage;
 
-    @FindBy(xpath = "//a[contains(@href,'forgot-password')]")
+    @FindBy(css = "a[href*='forgot']")
     private WebElement forgotPasswordLink;
 
-    @FindBy(xpath = "//button[contains(translate(., 'GOOGLE', 'google'),'google')] | //a[contains(translate(., 'GOOGLE', 'google'),'google')]")
+    // Page currently has no Google sign-in button; selector left defensive
+    // so existing TC_011 doesn't NPE.
+    @FindBy(css = "button[class*='google'], [class*='google-signin'], a[class*='google']")
     private WebElement googleSignInBtn;
 
-    @FindBy(xpath = "//*[contains(@class,'switch')]//a[contains(@href,'/signup')]")
+    @FindBy(css = "a[href*='signup']")
     private WebElement signUpLink;
 
     public SignInPage(WebDriver driver) {

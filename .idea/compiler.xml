@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="skillbarter-automation" />
-        <module name="skillbarter-api-tests" />
-      </profile>
-    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="skillbarter-api-tests" target="11" />
+      <module name="skillbarter-automation" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
