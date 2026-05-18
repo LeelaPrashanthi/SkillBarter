@@ -1,5 +1,7 @@
 package com.cts.mfrp.skillbarter.utils;
 
+import org.testng.SkipException;
+
 /**
  * TestContext – thread-safe shared state bag for IDs and tokens
  * produced during the test run and consumed by later tests.
@@ -34,6 +36,8 @@ public class TestContext {
 
     // ── Review IDs ───────────────────────────────────────────────────────────
     public static String reviewId;
+    public static String reviewReviewerId;   // userId of the reviewer on the seeded review
+    public static String reviewSessionId;    // sessionId tied to the seeded review
 
     // ── Calendar Event IDs ───────────────────────────────────────────────────
     public static String calendarEventId;
@@ -45,11 +49,23 @@ public class TestContext {
     public static String storyId;
 
     // ── Guards ───────────────────────────────────────────────────────────────
-    public static void requireAuth() { }
+    public static void requireAuth() {
+        if (authToken == null || registeredUserId == null) {
+            throw new SkipException("Auth not initialised — Bootstrap.ensureFirstUser() must run first");
+        }
+    }
 
-    public static void requireSecondUser() { }
+    public static void requireSecondUser() {
+        if (secondUserToken == null || secondUserId == null) {
+            throw new SkipException("Second user not initialised — Bootstrap.ensureSecondUser() must run first");
+        }
+    }
 
-    public static void requireSession() { }
+    public static void requireSession() {
+        if (sessionId == null) {
+            throw new SkipException("Session not initialised — Bootstrap.ensureSession() must run first");
+        }
+    }
 
     private TestContext() { }
 }

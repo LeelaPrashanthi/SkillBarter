@@ -1,6 +1,7 @@
 package com.cts.mfrp.skillbarter.base;
 
 import com.cts.mfrp.skillbarter.utils.ConfigReader;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
@@ -24,11 +25,35 @@ public class BaseTest {
     private static RequestSpecification requestSpec;
 
     @BeforeSuite(alwaysRun = true)
-    public void initSpec() { }
+    public void initSpec() {
+        String baseUrl = ConfigReader.getBaseUrl();
+        RestAssured.baseURI = baseUrl;
 
-    protected RequestSpecification spec() { return null; }
+        // Trust all certs — needed for self-signed / corporate-proxy intercepted HTTPS.
+        RestAssured.useRelaxedHTTPSValidation();
 
-    protected RequestSpecification authSpec(String token) { return null; }
+        requestSpec = new RequestSpecBuilder()
+                .setBaseUri(baseUrl)
+                .setContentType(ContentType.JSON)
+                .setAccept(ContentType.JSON)
+                .setRelaxedHTTPSValidation()
+                .log(LogDetail.METHOD)
+                .log(LogDetail.URI)
+                .build();
 
-    protected String getBaseUrl() { return null; }
+        log.info("API base URL: {}", baseUrl);
+    }
+
+    /** Unauthenticated spec — for register / login / public endpoints. */
+    protected RequestSpecification spec() {
+        if (requestSpec == null) initSpec();
+        return RestAssured.given().spec(requestSpec);
+    }
+
+    /** Authenticated spec — adds Bearer token header. */
+    protected RequestSpecification authSpec(String token) {
+        return spec().header("Authorization", "Bearer " + token);
+    }
+
+    protected String getBaseUrl() { return ConfigReader.getBaseUrl(); }
 }
