@@ -14,6 +14,10 @@ import java.time.Duration;
 /**
  * Page Object for the Sign In page.
  * Covers TC_008 – TC_014 (TS_002).
+ *
+ * Locators verified against the actual SkillBarter Angular login page (/login).
+ * The Sign In button is initially disabled and only becomes clickable once the
+ * email/password fields pass Angular's form validation.
  */
 public class SignInPage {
 
@@ -21,28 +25,31 @@ public class SignInPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(css = "h1, h2, .heading, [class*='title']")
+    @FindBy(css = "h1")
     private WebElement pageHeading;
 
-    @FindBy(css = "input[type='email'], input[name='email'], #email")
+    @FindBy(css = "input[type='email']")
     private WebElement emailField;
 
-    @FindBy(css = "input[type='password'], input[name='password'], #password")
+    @FindBy(css = "input[type='password']")
     private WebElement passwordField;
 
-    @FindBy(css = "button[type='submit'], button.sign-in-btn, button[class*='signin']")
+    // Button has no type='submit'; locate by visible text.
+    @FindBy(xpath = "//button[normalize-space()='Sign In']")
     private WebElement signInBtn;
 
-    @FindBy(css = "[class*='error'], .alert-danger, [class*='invalid'], [role='alert']")
+    @FindBy(css = ".error-box, [class*='error'], [role='alert']")
     private WebElement errorMessage;
 
-    @FindBy(css = "a[href*='forgot'], button[class*='forgot'], [class*='forgot-password']")
+    @FindBy(css = "a[href*='forgot']")
     private WebElement forgotPasswordLink;
 
+    // Page currently has no Google sign-in button; selector left defensive
+    // so existing TC_011 doesn't NPE.
     @FindBy(css = "button[class*='google'], [class*='google-signin'], a[class*='google']")
     private WebElement googleSignInBtn;
 
-    @FindBy(css = "a[href*='signup'], [class*='signup-link'], a[class*='register']")
+    @FindBy(css = "a[href*='signup']")
     private WebElement signUpLink;
 
     public SignInPage(WebDriver driver) {

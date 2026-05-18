@@ -18,6 +18,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Base test class – all test classes extend this.
@@ -137,8 +139,28 @@ public class BaseTest {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions opts = new ChromeOptions();
                 if (headless) opts.addArguments("--headless=new");
-                opts.addArguments("--no-sandbox", "--disable-dev-shm-usage",
-                        "--disable-gpu", "--window-size=1920,1080");
+                opts.addArguments(
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--disable-gpu",
+                        "--window-size=1920,1080",
+                        // Kill Chrome's password-leak and password-save popups
+                        // that interrupt automated logins.
+                        "--disable-features=PasswordLeakDetection,PasswordCheck,AutofillServerCommunication",
+                        "--disable-save-password-bubble",
+                        "--disable-blink-features=AutomationControlled");
+
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("profile.password_manager_leak_detection", false);
+                prefs.put("autofill.profile_enabled", false);
+                opts.setExperimentalOption("prefs", prefs);
+
+                // Silence the "Chrome is being controlled by automated software" infobar.
+                opts.setExperimentalOption("excludeSwitches",
+                        new String[]{"enable-automation"});
+
                 yield new ChromeDriver(opts);
             }
         };
