@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/skillbarter-automation/pom.xml" />
+        <option value="$PROJECT_DIR$/skillbarter-api-tests/pom.xml" />
       </list>
     </option>
   </component>

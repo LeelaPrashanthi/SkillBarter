@@ -9,8 +9,15 @@ import org.testng.ITestResult;
  */
 public class RetryAnalyzer implements IRetryAnalyzer {
 
-    private static final int MAX_RETRY = 2;
+    private static final int MAX_RETRY = 0;
+    private int attempts = 0;
 
     @Override
-    public boolean retry(ITestResult result) { return false; }
+    public boolean retry(ITestResult result) {
+        if (attempts < MAX_RETRY) {
+            attempts++;
+            return true;
+        }
+        return false;
+    }
 }

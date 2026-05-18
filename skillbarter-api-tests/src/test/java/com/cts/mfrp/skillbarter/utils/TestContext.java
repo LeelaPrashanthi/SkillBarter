@@ -1,55 +1,50 @@
 package com.cts.mfrp.skillbarter.utils;
 
+import org.testng.SkipException;
+
 /**
  * TestContext – thread-safe shared state bag for IDs and tokens
  * produced during the test run and consumed by later tests.
- *
- * Fields are populated by Bootstrap helpers and read by test methods.
  */
 public class TestContext {
 
-    // ── Auth tokens ───────────────────────────────────────────────────────────
-    public static String authToken;
-    public static String secondUserToken;
+    public static volatile String authToken;
+    public static volatile String secondUserToken;
 
-    // ── User IDs ──────────────────────────────────────────────────────────────
-    public static String registeredUserId;
-    public static String secondUserId;
+    public static volatile String registeredUserId;
+    public static volatile String secondUserId;
 
-    // ── Skill IDs ─────────────────────────────────────────────────────────────
-    public static String skillId;
-    public static String userSkillId;
+    public static volatile String skillId;
+    public static volatile String userSkillId;
 
-    // ── Match IDs ─────────────────────────────────────────────────────────────
-    public static String matchId;
+    public static volatile String matchId;
+    public static volatile String sessionId;
+    public static volatile String messageId;
+    public static volatile String notificationId;
+    public static volatile String reviewId;
+    public static volatile String calendarEventId;
+    public static volatile String transactionId;
+    public static volatile String storyId;
 
-    // ── Session IDs ───────────────────────────────────────────────────────────
-    public static String sessionId;
+    public static volatile String resetToken;
 
-    // ── Message IDs ───────────────────────────────────────────────────────────
-    public static String messageId;
+    public static void requireAuth() {
+        if (authToken == null || authToken.isEmpty()) {
+            throw new SkipException("Auth token not available – Bootstrap.ensureFirstUser() likely failed");
+        }
+    }
 
-    // ── Notification IDs ─────────────────────────────────────────────────────
-    public static String notificationId;
+    public static void requireSecondUser() {
+        if (secondUserToken == null || secondUserId == null) {
+            throw new SkipException("Second user not available – Bootstrap.ensureSecondUser() likely failed");
+        }
+    }
 
-    // ── Review IDs ───────────────────────────────────────────────────────────
-    public static String reviewId;
-
-    // ── Calendar Event IDs ───────────────────────────────────────────────────
-    public static String calendarEventId;
-
-    // ── Transaction IDs ──────────────────────────────────────────────────────
-    public static String transactionId;
-
-    // ── Story IDs ────────────────────────────────────────────────────────────
-    public static String storyId;
-
-    // ── Guards ───────────────────────────────────────────────────────────────
-    public static void requireAuth() { }
-
-    public static void requireSecondUser() { }
-
-    public static void requireSession() { }
+    public static void requireSession() {
+        if (sessionId == null) {
+            throw new SkipException("Session ID not available");
+        }
+    }
 
     private TestContext() { }
 }
