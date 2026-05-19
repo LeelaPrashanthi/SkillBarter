@@ -22,6 +22,8 @@ public class TestContext {
     public static volatile String messageId;
     public static volatile String notificationId;
     public static volatile String reviewId;
+    public static volatile String reviewReviewerId;
+    public static volatile String reviewSessionId;
     public static volatile String calendarEventId;
     public static volatile String transactionId;
     public static volatile String storyId;
@@ -29,20 +31,20 @@ public class TestContext {
     public static volatile String resetToken;
 
     public static void requireAuth() {
-        if (authToken == null || authToken.isEmpty()) {
-            throw new SkipException("Auth token not available – Bootstrap.ensureFirstUser() likely failed");
+        if (authToken == null || registeredUserId == null) {
+            throw new SkipException("Auth not initialised — Bootstrap.ensureFirstUser() must run first");
         }
     }
 
     public static void requireSecondUser() {
         if (secondUserToken == null || secondUserId == null) {
-            throw new SkipException("Second user not available – Bootstrap.ensureSecondUser() likely failed");
+            throw new SkipException("Second user not initialised — Bootstrap.ensureSecondUser() must run first");
         }
     }
 
     public static void requireSession() {
         if (sessionId == null) {
-            throw new SkipException("Session ID not available");
+            throw new SkipException("Session not initialised — Bootstrap.ensureSession() must run first");
         }
     }
 

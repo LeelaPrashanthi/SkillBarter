@@ -28,8 +28,11 @@ public class BaseTest {
 
     @BeforeSuite(alwaysRun = true)
     public void initSpec() {
-        RestAssured.baseURI = ConfigReader.getBaseUrl();
-        // Render's cert chain isn't always in JDK 21's default truststore — relax for tests.
+        String baseUrl = ConfigReader.getBaseUrl();
+        RestAssured.baseURI = baseUrl;
+
+        // Render's cert chain isn't always in JDK 21's default truststore, and corporate
+        // proxies may intercept HTTPS — relax cert validation globally for tests.
         RestAssured.useRelaxedHTTPSValidation();
         RestAssured.config = RestAssuredConfig.config().httpClient(
                 HttpClientConfig.httpClientConfig()
@@ -37,30 +40,26 @@ public class BaseTest {
                         .setParam("http.socket.timeout", ConfigReader.getReadTimeout()));
 
         requestSpec = new RequestSpecBuilder()
-                .setBaseUri(ConfigReader.getBaseUrl())
+                .setBaseUri(baseUrl)
                 .setContentType(ContentType.JSON)
                 .setAccept(ContentType.JSON)
-                .log(LogDetail.URI)
+                .setRelaxedHTTPSValidation()
                 .log(LogDetail.METHOD)
+                .log(LogDetail.URI)
                 .build();
 
-        log.info("Base URI initialised: {}", ConfigReader.getBaseUrl());
+        log.info("API base URL: {}", baseUrl);
     }
 
+    /** Unauthenticated spec — for register / login / public endpoints. */
     protected RequestSpecification spec() {
-        if (requestSpec == null) {
-            initSpec();
-        }
-        return new RequestSpecBuilder()
-                .addRequestSpecification(requestSpec)
-                .build();
+        if (requestSpec == null) initSpec();
+        return RestAssured.given().spec(requestSpec);
     }
 
+    /** Authenticated spec — adds Bearer token header. */
     protected RequestSpecification authSpec(String token) {
-        return new RequestSpecBuilder()
-                .addRequestSpecification(spec())
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
+        return spec().header("Authorization", "Bearer " + token);
     }
 
     protected String getBaseUrl() {

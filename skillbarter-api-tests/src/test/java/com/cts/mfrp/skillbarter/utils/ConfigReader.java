@@ -24,14 +24,10 @@ public class ConfigReader {
         }
     }
 
-    public static String getBaseUrl() { return PROPS.getProperty("base.url"); }
-
-    public static String getTestEmail() { return PROPS.getProperty("test.email"); }
-
-    public static String getTestPassword() { return PROPS.getProperty("test.password"); }
-
-    public static String getSecondUserEmail() { return PROPS.getProperty("second.user.email"); }
-
+    public static String getBaseUrl()            { return PROPS.getProperty("base.url"); }
+    public static String getTestEmail()          { return PROPS.getProperty("test.email"); }
+    public static String getTestPassword()       { return PROPS.getProperty("test.password"); }
+    public static String getSecondUserEmail()    { return PROPS.getProperty("second.user.email"); }
     public static String getSecondUserPassword() { return PROPS.getProperty("second.user.password"); }
 
     public static int getConnectionTimeout() {

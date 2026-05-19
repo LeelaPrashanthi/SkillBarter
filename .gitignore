@@ -1,0 +1,13 @@
+# Maven build output
+target/
+
+# Compiled class files
+*.class
+
+# Maven status / surefire output
+**/maven-archiver/
+**/maven-status/
+**/surefire-reports/
+
+# Logs
+*.log
