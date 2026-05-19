@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -sS -o /dev/null -w \"GET / -> HTTP %{http_code}\\\\n\" https://skill-barter-wine-theta.vercel.app/)",
+      "Bash(curl -sS -o /tmp/auth_probe.txt -w \"POST /api/auth/login \\(empty body\\) -> HTTP %{http_code}\\\\n\" -H \"Content-Type: application/json\" -X POST -d \"{}\" https://skill-barter-wine-theta.vercel.app/api/auth/login)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 package com.cts.mfrp.skillbarter.base;
 
 import com.cts.mfrp.skillbarter.utils.ConfigReader;
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
@@ -24,11 +25,33 @@ public class BaseTest {
     private static RequestSpecification requestSpec;
 
     @BeforeSuite(alwaysRun = true)
-    public void initSpec() { }
+    public void initSpec() {
+        if (requestSpec != null) return;
 
-    protected RequestSpecification spec() { return null; }
+        RestAssured.baseURI = ConfigReader.getBaseUrl();
+        RestAssured.useRelaxedHTTPSValidation();
 
-    protected RequestSpecification authSpec(String token) { return null; }
+        requestSpec = new RequestSpecBuilder()
+                .setBaseUri(ConfigReader.getBaseUrl())
+                .setContentType(ContentType.JSON)
+                .setAccept(ContentType.JSON)
+                .setRelaxedHTTPSValidation()
+                .log(LogDetail.METHOD)
+                .log(LogDetail.URI)
+                .build();
+    }
 
-    protected String getBaseUrl() { return null; }
+    protected RequestSpecification spec() {
+        if (requestSpec == null) initSpec();
+        return new RequestSpecBuilder().addRequestSpecification(requestSpec).build();
+    }
+
+    protected RequestSpecification authSpec(String token) {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(spec())
+                .addHeader("Authorization", "Bearer " + token)
+                .build();
+    }
+
+    protected String getBaseUrl() { return ConfigReader.getBaseUrl(); }
 }

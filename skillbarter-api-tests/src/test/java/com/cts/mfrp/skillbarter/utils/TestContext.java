@@ -1,5 +1,7 @@
 package com.cts.mfrp.skillbarter.utils;
 
+import org.testng.SkipException;
+
 /**
  * TestContext – thread-safe shared state bag for IDs and tokens
  * produced during the test run and consumed by later tests.
@@ -45,11 +47,23 @@ public class TestContext {
     public static String storyId;
 
     // ── Guards ───────────────────────────────────────────────────────────────
-    public static void requireAuth() { }
+    public static void requireAuth() {
+        if (authToken == null || registeredUserId == null) {
+            throw new SkipException("First user/token not seeded — Bootstrap.ensureFirstUser() did not populate TestContext");
+        }
+    }
 
-    public static void requireSecondUser() { }
+    public static void requireSecondUser() {
+        if (secondUserToken == null || secondUserId == null) {
+            throw new SkipException("Second user/token not seeded — Bootstrap.ensureSecondUser() did not populate TestContext");
+        }
+    }
 
-    public static void requireSession() { }
+    public static void requireSession() {
+        if (sessionId == null) {
+            throw new SkipException("Session not seeded — Bootstrap.ensureSession() did not populate TestContext.sessionId");
+        }
+    }
 
     private TestContext() { }
 }
