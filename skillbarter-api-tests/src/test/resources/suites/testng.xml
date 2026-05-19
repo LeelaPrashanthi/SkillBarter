@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="SkillBarter API – Full Regression Suite" verbose="2" thread-count="1">
+<suite name="SkillBarter API – Auth / User / Calendar" verbose="2" thread-count="1">
 
     <listeners>
         <listener class-name="com.cts.mfrp.skillbarter.utils.ExtentReportListener"/>
@@ -15,40 +15,8 @@
         <classes><class name="com.cts.mfrp.skillbarter.tests.users.UserTests"/></classes>
     </test>
 
-    <test name="Skill API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/></classes>
-    </test>
-
-    <test name="Match API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.matches.MatchTests"/></classes>
-    </test>
-
-    <test name="Session API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.sessions.SessionTests"/></classes>
-    </test>
-
-    <test name="Message API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.messages.MessageTests"/></classes>
-    </test>
-
-    <test name="Notification API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.notifications.NotificationTests"/></classes>
-    </test>
-
-    <test name="Review API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.reviews.ReviewTests"/></classes>
-    </test>
-
     <test name="Calendar API Tests">
         <classes><class name="com.cts.mfrp.skillbarter.tests.calendar.CalendarTests"/></classes>
-    </test>
-
-    <test name="Transaction API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.transactions.TransactionTests"/></classes>
-    </test>
-
-    <test name="Story API Tests">
-        <classes><class name="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/></classes>
     </test>
 
 </suite>

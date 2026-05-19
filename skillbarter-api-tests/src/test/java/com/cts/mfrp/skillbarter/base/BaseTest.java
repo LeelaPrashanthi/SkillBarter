@@ -3,6 +3,8 @@ package com.cts.mfrp.skillbarter.base;
 import com.cts.mfrp.skillbarter.utils.ConfigReader;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -29,8 +31,13 @@ public class BaseTest {
         String baseUrl = ConfigReader.getBaseUrl();
         RestAssured.baseURI = baseUrl;
 
-        // Trust all certs — needed for self-signed / corporate-proxy intercepted HTTPS.
+        // Render's cert chain isn't always in JDK 21's default truststore, and corporate
+        // proxies may intercept HTTPS — relax cert validation globally for tests.
         RestAssured.useRelaxedHTTPSValidation();
+        RestAssured.config = RestAssuredConfig.config().httpClient(
+                HttpClientConfig.httpClientConfig()
+                        .setParam("http.connection.timeout", ConfigReader.getConnectionTimeout())
+                        .setParam("http.socket.timeout", ConfigReader.getReadTimeout()));
 
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
@@ -55,5 +62,7 @@ public class BaseTest {
         return spec().header("Authorization", "Bearer " + token);
     }
 
-    protected String getBaseUrl() { return ConfigReader.getBaseUrl(); }
+    protected String getBaseUrl() {
+        return ConfigReader.getBaseUrl();
+    }
 }

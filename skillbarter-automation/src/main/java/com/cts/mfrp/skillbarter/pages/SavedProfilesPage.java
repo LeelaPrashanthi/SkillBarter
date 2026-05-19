@@ -13,8 +13,12 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * Page Object for the Saved Profiles page.
+ * Page Object for the Saved Profiles page (/app/saved-profiles).
  * Covers TC_047 – TC_050 (TS_010).
+ *
+ * Locators are anchored on visible text labels ("Saved Profiles",
+ * "View Profile", "Message", "% match") to stay robust against
+ * React class-name churn between builds.
  */
 public class SavedProfilesPage {
 
@@ -22,19 +26,26 @@ public class SavedProfilesPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    @FindBy(css = "h1, h2, [class*='page-title']")
+    @FindBy(xpath = "//app-saved-profiles//h1[normalize-space()='Saved Profiles'] | //h1[normalize-space()='Saved Profiles']")
     private WebElement pageTitle;
 
-    @FindBy(css = "[class*='saved-card'], [class*='profile-card'], [class*='saved-profile-item']")
-    private List<WebElement> profileCards;
-
-    @FindBy(css = "[class*='view-profile'], a[class*='view-profile'], button[class*='view']")
+    @FindBy(xpath = "//div[contains(@class,'mcard')]//a[normalize-space()='View Profile'] | //div[contains(@class,'mcard')]//button[normalize-space()='View Profile']")
     private List<WebElement> viewProfileBtns;
 
-    @FindBy(css = "button[class*='message'], a[class*='message-btn']")
+    @FindBy(xpath = "//div[contains(@class,'mcard')]//a[normalize-space()='Message'] | //div[contains(@class,'mcard')]//button[normalize-space()='Message']")
     private List<WebElement> messageBtns;
 
-    @FindBy(css = "button[class*='remove'], [class*='unsave'], [class*='remove-saved']")
+    /**
+     * Remove/unsave control isn't visible in the current build. Locator is
+     * intentionally permissive so it will start matching if the UI later
+     * exposes a Remove button, X icon, or aria-labelled control.
+     */
+    @FindBy(xpath =
+            "//button[contains(translate(., 'REMOVUNSAV', 'removunsav'), 'remove') " +
+            "or contains(translate(., 'REMOVUNSAV', 'removunsav'), 'unsave')] " +
+            "| //button[@aria-label and (" +
+            "contains(translate(@aria-label, 'REMOVUNSAV', 'removunsav'), 'remove') " +
+            "or contains(translate(@aria-label, 'REMOVUNSAV', 'removunsav'), 'unsave'))]")
     private List<WebElement> removeBtns;
 
     public SavedProfilesPage(WebDriver driver) {
@@ -49,13 +60,30 @@ public class SavedProfilesPage {
         } catch (Exception e) { return false; }
     }
 
-    public boolean hasProfiles() { return !profileCards.isEmpty(); }
+    public boolean hasProfiles() { return !viewProfileBtns.isEmpty(); }
 
-    public int getProfileCount() { return profileCards.size(); }
+    public int getProfileCount() { return viewProfileBtns.size(); }
 
-    public String getFirstProfileText() {
-        try { return profileCards.get(0).getText(); } catch (Exception e) { return ""; }
+    /**
+     * Polls up to {@code timeoutSeconds} for at least one profile card to render.
+     * Returns true as soon as one is found, false if none appear within the timeout.
+     * Used by tests to distinguish "page rendered slowly" from "account is genuinely empty".
+     */
+    public boolean waitForProfilesToLoad(int timeoutSeconds) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+                    .pollingEvery(Duration.ofMillis(250))
+                    .until(d -> !viewProfileBtns.isEmpty());
+            return true;
+        } catch (Exception e) {
+            log.info("No saved profile cards rendered after {}s wait", timeoutSeconds);
+            return false;
+        }
     }
+
+    public boolean hasRemoveControls() { return !removeBtns.isEmpty(); }
+
+    public int getRemoveCount() { return removeBtns.size(); }
 
     public void clickViewProfileAt(int index) {
         if (index < viewProfileBtns.size()) click(viewProfileBtns.get(index), "View Profile");

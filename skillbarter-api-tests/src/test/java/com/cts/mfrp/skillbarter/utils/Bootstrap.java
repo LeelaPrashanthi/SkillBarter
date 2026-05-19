@@ -3,7 +3,12 @@ package com.cts.mfrp.skillbarter.utils;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -11,18 +16,22 @@ import java.util.Map;
  * Bootstrap – pre-test data seeding helpers.
  *
  * Each ensure* method is idempotent: it registers / logs in the required
- * user only once and stores the resulting token + ID in TestContext.
- * Call these from @BeforeClass in any test class that needs seeded data.
+ * user (or captures the required reference id) once and stores the result
+ * in TestContext for later tests to consume.
  */
 public class Bootstrap {
+
+    private static final Logger log = LogManager.getLogger(Bootstrap.class);
 
     static {
         // Trust all certs in seeding calls too — see BaseTest.initSpec().
         RestAssured.useRelaxedHTTPSValidation();
     }
 
+    // ── Users ────────────────────────────────────────────────────────────────
+
     /** Registers (or logs in) the primary test user and stores token + id in TestContext. */
-    public static void ensureFirstUser() {
+    public static synchronized void ensureFirstUser() {
         if (TestContext.authToken != null && TestContext.registeredUserId != null) return;
 
         String email    = ConfigReader.getTestEmail();
@@ -37,9 +46,9 @@ public class Bootstrap {
                     .when()
                     .post("/api/auth/register")
                     .then().extract().response();
-            System.out.println("[Bootstrap] REGISTER status=" + reg.statusCode() + " body=" + reg.asString());
+            log.info("REGISTER {} → status {}", email, reg.statusCode());
         } catch (Exception e) {
-            System.out.println("[Bootstrap] REGISTER threw: " + e.getMessage());
+            log.warn("REGISTER threw: {}", e.getMessage());
         }
 
         // Now log in to obtain a token.
@@ -51,12 +60,11 @@ public class Bootstrap {
                 .post("/api/auth/login")
                 .then().extract().response();
 
-        System.out.println("[Bootstrap] LOGIN status=" + loginResp.statusCode());
-        System.out.println("[Bootstrap] LOGIN body=" + loginResp.asString());
+        log.info("LOGIN status={}", loginResp.statusCode());
 
         if (loginResp.statusCode() < 200 || loginResp.statusCode() >= 300) {
-            System.out.println("[Bootstrap] Login failed — tests will skip. "
-                + "Check that user '" + email + "' exists on " + ConfigReader.getBaseUrl());
+            log.warn("Login failed — tests will skip. Check that user '{}' exists on {}",
+                    email, ConfigReader.getBaseUrl());
             return;
         }
 
@@ -88,76 +96,12 @@ public class Bootstrap {
 
         TestContext.registeredUserId = uid == null ? null : String.valueOf(uid);
 
-        System.out.println("[Bootstrap] Extracted token=" + (token == null ? "NULL" : "***present***")
-                + " userId=" + TestContext.registeredUserId);
+        log.info("First user ready: token={} userId={}",
+                token == null ? "NULL" : "***present***",
+                TestContext.registeredUserId);
     }
 
-    /** After login, try common endpoints to retrieve the current user's numeric id. */
-    private static Object lookupUserIdAfterLogin(String token, String email) {
-        // 1) Common "current user" endpoints.
-        String[] meEndpoints = {
-                "/api/users/me",
-                "/api/auth/me",
-                "/api/me",
-                "/api/user/me",
-                "/api/users/profile",
-                "/api/auth/profile"
-        };
-        for (String ep : meEndpoints) {
-            try {
-                Response r = RestAssured.given().relaxedHTTPSValidation()
-                        .baseUri(ConfigReader.getBaseUrl())
-                        .header("Authorization", "Bearer " + token)
-                        .when().get(ep)
-                        .then().extract().response();
-                if (r.statusCode() == 200) {
-                    Object id = firstNonNull(
-                            r.path("data.userId"), r.path("userId"),
-                            r.path("data.id"),     r.path("id"));
-                    if (id != null) {
-                        System.out.println("[Bootstrap] Resolved userId=" + id + " via " + ep);
-                        return id;
-                    }
-                }
-            } catch (Exception ignored) {}
-        }
-
-        // 2) Fallback — list all users and match by email.
-        try {
-            Response r = RestAssured.given().relaxedHTTPSValidation()
-                    .baseUri(ConfigReader.getBaseUrl())
-                    .header("Authorization", "Bearer " + token)
-                    .when().get("/api/users")
-                    .then().extract().response();
-            if (r.statusCode() == 200) {
-                List<Map<String, Object>> users = extractList(r);
-                if (users != null) {
-                    for (Map<String, Object> u : users) {
-                        if (u == null) continue;
-                        Object userEmail = u.get("email");
-                        if (email.equalsIgnoreCase(String.valueOf(userEmail))) {
-                            Object id = u.get("userId") != null ? u.get("userId") : u.get("id");
-                            if (id != null) {
-                                System.out.println("[Bootstrap] Resolved userId=" + id + " by searching /api/users");
-                                return id;
-                            }
-                        }
-                    }
-                    System.out.println("[Bootstrap] /api/users returned " + users.size()
-                            + " users but none matched email=" + email);
-                }
-            } else {
-                System.out.println("[Bootstrap] /api/users status=" + r.statusCode());
-            }
-        } catch (Exception e) {
-            System.out.println("[Bootstrap] /api/users lookup threw: " + e.getMessage());
-        }
-
-        System.out.println("[Bootstrap] Could not resolve userId — tests requiring it will skip.");
-        return null;
-    }
-
-    public static void ensureSecondUser() {
+    public static synchronized void ensureSecondUser() {
         if (TestContext.secondUserToken != null && TestContext.secondUserId != null) return;
 
         String email    = ConfigReader.getSecondUserEmail();
@@ -184,16 +128,83 @@ public class Bootstrap {
         if (r.statusCode() < 200 || r.statusCode() >= 300) return;
 
         TestContext.secondUserToken = firstNonNull(r.path("data.token"), r.path("token"));
-        Object uid = firstNonNull(r.path("data.user.userId"), r.path("data.userId"), r.path("user.userId"), r.path("userId"));
+        Object uid = firstNonNull(r.path("data.user.userId"), r.path("data.userId"),
+                                  r.path("user.userId"), r.path("userId"));
         TestContext.secondUserId = uid == null ? null : String.valueOf(uid);
     }
+
+    /** After login, try common endpoints to retrieve the current user's numeric id. */
+    private static Object lookupUserIdAfterLogin(String token, String email) {
+        // 1) Common "current user" endpoints.
+        String[] meEndpoints = {
+                "/api/users/me",
+                "/api/auth/me",
+                "/api/me",
+                "/api/user/me",
+                "/api/users/profile",
+                "/api/auth/profile"
+        };
+        for (String ep : meEndpoints) {
+            try {
+                Response r = RestAssured.given().relaxedHTTPSValidation()
+                        .baseUri(ConfigReader.getBaseUrl())
+                        .header("Authorization", "Bearer " + token)
+                        .when().get(ep)
+                        .then().extract().response();
+                if (r.statusCode() == 200) {
+                    Object id = firstNonNull(
+                            r.path("data.userId"), r.path("userId"),
+                            r.path("data.id"),     r.path("id"));
+                    if (id != null) {
+                        log.info("Resolved userId={} via {}", id, ep);
+                        return id;
+                    }
+                }
+            } catch (Exception ignored) {}
+        }
+
+        // 2) Fallback — list all users and match by email.
+        try {
+            Response r = RestAssured.given().relaxedHTTPSValidation()
+                    .baseUri(ConfigReader.getBaseUrl())
+                    .header("Authorization", "Bearer " + token)
+                    .when().get("/api/users")
+                    .then().extract().response();
+            if (r.statusCode() == 200) {
+                List<Map<String, Object>> users = extractList(r);
+                if (users != null) {
+                    for (Map<String, Object> u : users) {
+                        if (u == null) continue;
+                        Object userEmail = u.get("email");
+                        if (email.equalsIgnoreCase(String.valueOf(userEmail))) {
+                            Object id = u.get("userId") != null ? u.get("userId") : u.get("id");
+                            if (id != null) {
+                                log.info("Resolved userId={} by searching /api/users", id);
+                                return id;
+                            }
+                        }
+                    }
+                    log.warn("/api/users returned {} users but none matched email={}", users.size(), email);
+                }
+            } else {
+                log.warn("/api/users status={}", r.statusCode());
+            }
+        } catch (Exception e) {
+            log.warn("/api/users lookup threw: {}", e.getMessage());
+        }
+
+        log.warn("Could not resolve userId — tests requiring it will skip.");
+        return null;
+    }
+
+    // ── Skills ───────────────────────────────────────────────────────────────
 
     /**
      * Captures one existing skillId from /api/skills and one userSkillId
      * already associated with the primary user (if any). We don't create
      * skills here — the catalog is server-managed.
      */
-    public static void ensureSkill() {
+    public static synchronized void ensureSkill() {
         if (TestContext.skillId != null && TestContext.userSkillId != null) return;
         ensureFirstUser();
 
@@ -212,7 +223,7 @@ public class Bootstrap {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("[Bootstrap] /api/skills lookup threw: " + e.getMessage());
+                log.warn("/api/skills lookup threw: {}", e.getMessage());
             }
         }
 
@@ -234,11 +245,15 @@ public class Bootstrap {
                     }
                 }
             } catch (Exception e) {
-                System.out.println("[Bootstrap] /api/user-skills lookup threw: " + e.getMessage());
+                log.warn("/api/user-skills lookup threw: {}", e.getMessage());
             }
         }
     }
-    public static void ensureMatch()         { /* no-op for now */ }
+
+    // ── Sessions ─────────────────────────────────────────────────────────────
+
+    public static void ensureMatch() { /* no-op for now */ }
+
     /**
      * Captures the first existing sessionId where the primary user is the
      * mentor. We don't create a session here — POST /api/sessions needs a
@@ -246,7 +261,7 @@ public class Bootstrap {
      * across environments. Tests fall back to SkipException if nothing
      * was captured.
      */
-    public static void ensureSession() {
+    public static synchronized void ensureSession() {
         ensureFirstUser();
         if (TestContext.authToken == null || TestContext.registeredUserId == null) return;
         if (TestContext.sessionId != null) return;
@@ -284,17 +299,20 @@ public class Bootstrap {
                     return;
                 }
             } catch (Exception e) {
-                System.out.println("[Bootstrap] " + p + " threw: " + e.getMessage());
+                log.warn("{} threw: {}", p, e.getMessage());
             }
         }
     }
-    public static void ensureMessage()       { /* no-op for now */ }
+
+    public static void ensureMessage() { /* no-op for now */ }
+
+    // ── Notifications & Reviews ──────────────────────────────────────────────
 
     /**
      * Captures the first existing notificationId for the primary user, if any.
      * Notifications are usually server-generated, so we don't create one — we just look.
      */
-    public static void ensureNotification() {
+    public static synchronized void ensureNotification() {
         ensureFirstUser();
         if (TestContext.authToken == null || TestContext.registeredUserId == null) return;
         if (TestContext.notificationId != null) return;
@@ -321,7 +339,8 @@ public class Bootstrap {
      * the no-op ensureSession() doesn't provide. Instead we read whatever reviews
      * already exist for the seeded user so later tests have a real id to work with.
      */
-    public static void ensureReview() {
+    @SuppressWarnings("unchecked")
+    public static synchronized void ensureReview() {
         ensureFirstUser();
         if (TestContext.authToken == null || TestContext.registeredUserId == null) return;
         if (TestContext.reviewId != null) return;
@@ -352,9 +371,109 @@ public class Bootstrap {
             TestContext.reviewSessionId = String.valueOf(session.get("sessionId"));
         }
     }
-    public static void ensureCalendarEvent() { /* no-op for now */ }
-    public static void ensureTransaction()   { /* no-op for now */ }
-    public static void ensureStory()         { /* no-op for now */ }
+
+    // ── Calendar ─────────────────────────────────────────────────────────────
+
+    private static volatile boolean calendarReady = false;
+
+    public static synchronized void ensureCalendarEvent() {
+        if (calendarReady) return;
+        ensureFirstUser();
+        if (TestContext.authToken == null || TestContext.registeredUserId == null) {
+            log.warn("Cannot seed calendar event – first user not ready");
+            return;
+        }
+
+        String future = LocalDateTime.now().plusDays(7)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+
+        List<Map<String, Object>> payloads = Arrays.asList(
+                PayloadBuilder.createCalendarEventPayload(
+                        TestContext.registeredUserId, future, "Seeded API test event"),
+                PayloadBuilder.createCalendarEventPayloadFlat(
+                        TestContext.registeredUserId, future, "Seeded API test event"),
+                PayloadBuilder.createCalendarEventPayloadUserRaw(
+                        TestContext.registeredUserId, future, "Seeded API test event"),
+                PayloadBuilder.createCalendarEventPayloadNoUser(
+                        future, "Seeded API test event")
+        );
+
+        Response r = null;
+        for (Map<String, Object> payload : payloads) {
+            r = RestAssured.given()
+                    .header("Authorization", "Bearer " + TestContext.authToken)
+                    .contentType(ContentType.JSON)
+                    .body(payload)
+                    .post("/api/calendar");
+            if (r.statusCode() >= 200 && r.statusCode() < 300) break;
+        }
+
+        if (r != null && r.statusCode() >= 200 && r.statusCode() < 300) {
+            TestContext.calendarEventId = r.jsonPath().getString("id");
+            log.info("Calendar event seeded via POST: {}", TestContext.calendarEventId);
+        } else {
+            log.warn("Calendar POST failed → {} body {}. Falling back to existing event lookup.",
+                    r == null ? "null" : r.statusCode(),
+                    r == null ? "n/a" : r.asString());
+            // 1) Look at the registered user's own calendar first.
+            String found = findEventForUser(TestContext.authToken, TestContext.registeredUserId);
+            // 2) If empty, walk every user via GET /api/users and check each one.
+            if (found == null) found = scanAllUsersForAnyEvent(TestContext.authToken);
+            if (found != null) {
+                TestContext.calendarEventId = found;
+                log.info("Reusing existing calendar event id={}", found);
+            } else {
+                log.warn("No existing calendar events found for any user — downstream tests will skip");
+            }
+        }
+        calendarReady = true;
+    }
+
+    private static String findEventForUser(String token, String userId) {
+        if (userId == null) return null;
+        Response r = RestAssured.given()
+                .header("Authorization", "Bearer " + token)
+                .get("/api/calendar/user/" + userId);
+        if (r.statusCode() != 200) return null;
+        for (String f : new String[]{"id", "_id", "uuid"}) {
+            try {
+                String v = r.jsonPath().getString("[0]." + f);
+                if (v != null && !v.isEmpty()) return v;
+            } catch (Exception ignored) { }
+        }
+        return null;
+    }
+
+    private static String scanAllUsersForAnyEvent(String token) {
+        Response users = RestAssured.given()
+                .header("Authorization", "Bearer " + token)
+                .get("/api/users");
+        if (users.statusCode() != 200) return null;
+        List<Object> ids = null;
+        for (String f : new String[]{"id", "_id", "userId", "uuid"}) {
+            try {
+                List<Object> got = users.jsonPath().getList(f);
+                if (got != null && !got.isEmpty()) { ids = got; break; }
+            } catch (Exception ignored) { }
+        }
+        if (ids == null) return null;
+        for (Object idObj : ids) {
+            if (idObj == null) continue;
+            String found = findEventForUser(token, String.valueOf(idObj));
+            if (found != null) {
+                log.info("Found existing calendar event via user {}", idObj);
+                return found;
+            }
+        }
+        return null;
+    }
+
+    // ── Other no-op stubs ────────────────────────────────────────────────────
+
+    public static void ensureTransaction() { /* no-op for now */ }
+    public static void ensureStory()       { /* no-op for now */ }
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
 
     @SafeVarargs
     private static <T> T firstNonNull(T... vals) {
