@@ -106,43 +106,4 @@ public class SavedProfilesTest extends BaseTest {
             "Message button did not navigate to a chat / messenger flow. URL: " + urlAfter
         );
     }
-
-    // @Test(testName = "TC_050", description = "Saved profiles persist across sessions and can be removed",
-    //       groups = {"saved-profiles", "regression"}, priority = 50, retryAnalyzer = RetryAnalyzer.class)
-    // public void tc050_savedProfilesPersistAndCanBeRemoved() {
-    //     if (!savedProfilesPage.waitForProfilesToLoad(10)) {
-    //         throw new SkipException("No saved profiles rendered after 10s — TC_050 requires at least one.");
-    //     }
-
-    //     int initialCount = savedProfilesPage.getProfileCount();
-
-    //     // Persistence: refresh and confirm the same set is still rendered
-    //     driver.navigate().refresh();
-    //     wait.until(ExpectedConditions.urlContains("saved-profiles"));
-    //     Assert.assertTrue(
-    //         savedProfilesPage.isPageLoaded(),
-    //         "Saved Profiles page failed to reload after refresh."
-    //     );
-    //     Assert.assertEquals(
-    //         savedProfilesPage.getProfileCount(), initialCount,
-    //         "Saved profiles did not persist across page refresh."
-    //     );
-
-    //     // Removal: only attempt if the current build exposes a Remove control on the card
-    //     if (!savedProfilesPage.hasRemoveControls()) {
-    //         throw new SkipException(
-    //             "No Remove/unsave control rendered on Saved Profile cards — "
-    //             + "persistence verified, but removal feature not exposed in the current UI build."
-    //         );
-    //     }
-    //     savedProfilesPage.clickRemoveAt(0);
-    //     try {
-    //         wait.until(d -> savedProfilesPage.getProfileCount() < initialCount);
-    //     } catch (Exception e) {
-    //         Assert.fail(
-    //             "Profile count did not decrease after clicking Remove. "
-    //             + "Initial: " + initialCount + ", current: " + savedProfilesPage.getProfileCount()
-    //         );
-    //     }
-    // }
 }

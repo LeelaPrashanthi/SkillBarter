@@ -55,8 +55,12 @@ public class UserTests extends BaseTest {
 
         if (login.statusCode() != 200) return;
 
-        disposableToken  = login.jsonPath().getString("token");
-        disposableUserId = login.jsonPath().getString("id");
+        String token = login.jsonPath().getString("token");
+        if (token == null) token = login.jsonPath().getString("accessToken");
+        if (token == null) return;
+
+        disposableToken  = token;
+        disposableUserId = Bootstrap.lookupUserIdByEmail(email, token);
     }
 
     // ── GET /api/users ────────────────────────────────────────────────────────
@@ -350,7 +354,10 @@ public class UserTests extends BaseTest {
                 .post("/api/auth/login");
 
         if (login.statusCode() != 200) return null;
-        return login.jsonPath().getString("id");
+        String token = login.jsonPath().getString("token");
+        if (token == null) token = login.jsonPath().getString("accessToken");
+        if (token == null) return null;
+        return Bootstrap.lookupUserIdByEmail(email, token);
     }
 
     private static File writeTinyPng() throws IOException {

@@ -108,6 +108,21 @@ public class CommunityPage {
         } catch (Exception e) { return false; }
     }
 
+    /**
+     * Waits up to 15s for the Share Your Story form to close. Used by tests
+     * that need a Selenium-native signal that the Post Story submit cycle
+     * has finished — so assertions like "count unchanged" or "story present"
+     * don't fire mid-flight. Returns true if the form closed, false on timeout.
+     */
+    public boolean waitForStoryFormClosed() {
+        try {
+            return wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                    By.xpath("//*[contains(@class,'story-form')]")));
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public int getCancelButtonCountInStoryForm() {
         try {
             wait.until(ExpectedConditions.visibilityOf(storyForm));

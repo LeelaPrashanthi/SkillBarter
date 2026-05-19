@@ -45,7 +45,7 @@ public class ReviewTests extends BaseTest {
     // ── POST /api/reviews ─────────────────────────────────────────────────────
 
     @Test(priority = 1, description = "POST /api/reviews with valid payload returns 201 and review object",
-          groups = {"reviews", "smoke", "regression"}, retryAnalyzer = RetryAnalyzer.class)
+          groups = {"reviews", "smoke", "regression"})
     public void submitReview_validPayload_returns201() {
         TestContext.requireAuth();
         if (TestContext.reviewSessionId == null || TestContext.reviewReviewerId == null) {
@@ -352,8 +352,14 @@ public class ReviewTests extends BaseTest {
     public void getAverageRating_validUser_returnsNumericAverage() {
         TestContext.requireAuth();
 
+        // Query a user we know has reviews (the reviewee captured during seed)
+        // so the average is non-null. Falling back to the seeded user only when
+        // no reviewed user is available — that case will be a legitimate failure.
+        String target = TestContext.reviewRevieweeId != null
+                ? TestContext.reviewRevieweeId : userId;
+
         Response r = authSpec(token)
-                .when().get("/api/reviews/reviewee/" + userId + "/average")
+                .when().get("/api/reviews/reviewee/" + target + "/average")
                 .then().extract().response();
 
         Assert.assertEquals(r.statusCode(), 200, "Expected 200. Body: " + r.asString());
@@ -367,7 +373,7 @@ public class ReviewTests extends BaseTest {
         double avg = ((Number) data).doubleValue();
         Assert.assertTrue(avg >= 0.0 && avg <= 5.0,
             "Average rating should be in [0, 5]. Got: " + avg);
-        log.info("Average rating for user {} = {}", userId, avg);
+        log.info("Average rating for user {} = {}", target, avg);
     }
 
     @Test(priority = 12, description = "GET /api/reviews/reviewee/{id}/average for user with no reviews returns 0 or null",
@@ -444,17 +450,24 @@ public class ReviewTests extends BaseTest {
     public void deleteReview_byReviewer_returns200Or204() {
         TestContext.requireAuth();
 
-        // Fetch the latest review for the seeded user so we don't disturb the
-        // one captured during bootstrap (priority-9 and 13 still need it).
-        Response list = authSpec(token)
-                .when().get("/api/reviews/reviewee/" + userId)
-                .then().extract().response();
-
-        List<Map<String, Object>> data = list.path("data");
-        if (data == null || data.size() < 2) {
-            throw new SkipException("Not enough reviews available to safely delete one without affecting other tests");
+        // Priorities 9 and 13 have already run by this point — safe to target
+        // the seeded reviewId directly. Cross-user deletes typically return 403,
+        // which is also accepted below.
+        Object id;
+        if (TestContext.reviewId != null) {
+            id = TestContext.reviewId;
+        } else {
+            String revieweeForLookup = TestContext.reviewRevieweeId != null
+                    ? TestContext.reviewRevieweeId : userId;
+            Response list = authSpec(token)
+                    .when().get("/api/reviews/reviewee/" + revieweeForLookup)
+                    .then().extract().response();
+            List<Map<String, Object>> data = list.path("data");
+            if (data == null || data.isEmpty()) {
+                throw new SkipException("No review available to delete");
+            }
+            id = data.get(data.size() - 1).get("reviewId");
         }
-        Object id = data.get(data.size() - 1).get("reviewId");
 
         Response r = authSpec(token)
                 .when().delete("/api/reviews/" + id)

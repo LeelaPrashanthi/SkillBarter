@@ -25,7 +25,7 @@
       <span class="top-banner-title-font">Test results</span>
       <button id="button" class="button">Switch Retro Theme</button> <!-- button -->
       <br/>
-      <span class="top-banner-font-1">1 suite, 7 failed tests</span>
+      <span class="top-banner-font-1">1 suite</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -39,7 +39,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" panel-name="suite-Surefire_suite" class="navigator-link">
-              <span class="suite-name border-failed">Surefire suite</span>
+              <span class="suite-name border-skipped">Surefire suite</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -92,51 +92,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">20 methods, 7 failed,   13 passed</span>
+                    <span class="method-stats">14 methods,  1 skipped,  13 passed</span>
                   </li>
                   <li>
-                    <span class="method-list-title failed">Failed methods</span>
-                    <span class="show-or-hide-methods failed">
-                      <a href="#" panel-name="suite-Surefire_suite" class="hide-methods failed suite-Surefire_suite"> (hide)</a> <!-- hide-methods failed suite-Surefire_suite -->
-                      <a href="#" panel-name="suite-Surefire_suite" class="show-methods failed suite-Surefire_suite"> (show)</a> <!-- show-methods failed suite-Surefire_suite -->
+                    <span class="method-list-title skipped">Skipped methods</span>
+                    <span class="show-or-hide-methods skipped">
+                      <a href="#" panel-name="suite-Surefire_suite" class="hide-methods skipped suite-Surefire_suite"> (hide)</a> <!-- hide-methods skipped suite-Surefire_suite -->
+                      <a href="#" panel-name="suite-Surefire_suite" class="show-methods skipped suite-Surefire_suite"> (show)</a> <!-- show-methods skipped suite-Surefire_suite -->
                     </span>
-                    <div class="method-list-content failed suite-Surefire_suite">
+                    <div class="method-list-content skipped suite-Surefire_suite">
                       <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="createStory_noAuth_returns401">createStory_noAuth_returns401</a> <!-- method navigator-link -->
+                        <img src="skipped.png" width="3%"/>
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="addUserSkill_duplicate_returns4xx">addUserSkill_duplicate_returns4xx</a> <!-- method navigator-link -->
                       </span>
                       <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="deleteStory_differentUser_returns403">deleteStory_differentUser_returns403</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="deleteStory_nonExistentId_returns404">deleteStory_nonExistentId_returns404</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getAllStories_noAuth_returns401">getAllStories_noAuth_returns401</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getStoryById_nonExistentId_returns404">getStoryById_nonExistentId_returns404</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="updateStory_differentUser_returns403">updateStory_differentUser_returns403</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img src="failed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="updateStory_nonExistentId_returns404">updateStory_nonExistentId_returns404</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                    </div> <!-- method-list-content failed suite-Surefire_suite -->
+                    </div> <!-- method-list-content skipped suite-Surefire_suite -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -147,67 +117,67 @@
                     <div class="method-list-content passed suite-Surefire_suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="createStory_missingContent_returns400">createStory_missingContent_returns400</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="addUserSkill_learnFlag_returns201">addUserSkill_learnFlag_returns201</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="createStory_missingTitle_returns400">createStory_missingTitle_returns400</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="addUserSkill_missingUserId_returns400">addUserSkill_missingUserId_returns400</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="createStory_validPayload_returns201">createStory_validPayload_returns201</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="addUserSkill_noAuth_returns401">addUserSkill_noAuth_returns401</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="createStory_withMediaUrl_returns201">createStory_withMediaUrl_returns201</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="addUserSkill_teachFlag_returns201">addUserSkill_teachFlag_returns201</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="deleteStory_byAuthor_returns200Or204">deleteStory_byAuthor_returns200Or204</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getAllSkills_noAuth_returns401">getAllSkills_noAuth_returns401</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getAllStories_returnsListNewestFirst">getAllStories_returnsListNewestFirst</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getAllSkills_withAuth_returns200AndList">getAllSkills_withAuth_returns200AndList</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getStoriesByUser_noStories_returnsEmptyList">getStoriesByUser_noStories_returnsEmptyList</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getSkillsByCategory_unknownId_returnsEmptyOrNotFound">getSkillsByCategory_unknownId_returnsEmptyOrNotFound</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getStoriesByUser_validUser_returnsList">getStoriesByUser_validUser_returnsList</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getSkillsByCategory_validId_returnsSkills">getSkillsByCategory_validId_returnsSkills</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="getStoryById_existingId_returns200">getStoryById_existingId_returns200</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getUserSkills_existingUser_returnsList">getUserSkills_existingUser_returnsList</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="searchStories_missingKeyword_returns400">searchStories_missingKeyword_returns400</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="getUserSkills_noSkills_returnsEmptyList">getUserSkills_noSkills_returnsEmptyList</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="searchStories_noMatch_returnsEmptyList">searchStories_noMatch_returnsEmptyList</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="searchSkills_missingQueryParam_returns400">searchSkills_missingQueryParam_returns400</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="searchStories_validKeyword_returnsMatches">searchStories_validKeyword_returnsMatches</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="searchSkills_noMatch_returnsEmptyList">searchSkills_noMatch_returnsEmptyList</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.stories.StoryTests" class="method navigator-link" hash-for-method="updateStory_validPayload_returns200">updateStory_validPayload_returns200</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Surefire_suite" title="com.cts.mfrp.skillbarter.tests.skills.SkillTests" class="method navigator-link" hash-for-method="searchSkills_validQuery_returnsMatches">searchSkills_validQuery_returnsMatches</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Surefire_suite -->
@@ -222,347 +192,149 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-Surefire_suite" class="panel Surefire_suite">
-          <div class="suite-Surefire_suite-class-failed">
+          <div class="suite-Surefire_suite-class-skipped">
             <div class="main-panel-header rounded-window-top">
-              <img src="failed.png"/>
-              <span class="class-name">com.cts.mfrp.skillbarter.tests.stories.StoryTests</span>
+              <img src="skipped.png"/>
+              <span class="class-name">com.cts.mfrp.skillbarter.tests.skills.SkillTests</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="createStory_noAuth_returns401">
-                  </a> <!-- createStory_noAuth_returns401 -->
-                  <span class="method-name">createStory_noAuth_returns401</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;401&gt; but was &lt;201&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:263)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.createStory_noAuth_returns401(StoryTests.java:103)
+                  <a name="addUserSkill_duplicate_returns4xx">
+                  </a> <!-- addUserSkill_duplicate_returns4xx -->
+                  <span class="method-name">addUserSkill_duplicate_returns4xx</span>
+                  <div class="stack-trace">org.testng.SkipException: User has no existing skills — can&apos;t test duplicate
+	at com.cts.mfrp.skillbarter.tests.skills.SkillTests.addUserSkill_duplicate_returns4xx(SkillTests.java:269)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
+... Removed 30 stack frames
 </div> <!-- stack-trace -->
                   <em>
-(POST /api/stories without auth returns 401)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="deleteStory_differentUser_returns403">
-                  </a> <!-- deleteStory_differentUser_returns403 -->
-                  <span class="method-name">deleteStory_differentUser_returns403</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;403&gt; but was &lt;204&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.deleteStory_differentUser_returns403(StoryTests.java:312)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(DELETE /api/stories/{id} by different user returns 403)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="deleteStory_nonExistentId_returns404">
-                  </a> <!-- deleteStory_nonExistentId_returns404 -->
-                  <span class="method-name">deleteStory_nonExistentId_returns404</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;404&gt; but was &lt;500&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.deleteStory_nonExistentId_returns404(StoryTests.java:322)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(DELETE /api/stories/{id} for non-existent id returns 404)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="getAllStories_noAuth_returns401">
-                  </a> <!-- getAllStories_noAuth_returns401 -->
-                  <span class="method-name">getAllStories_noAuth_returns401</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;401&gt; but was &lt;200&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.getAllStories_noAuth_returns401(StoryTests.java:145)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(GET /api/stories without auth returns 401)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="getStoryById_nonExistentId_returns404">
-                  </a> <!-- getStoryById_nonExistentId_returns404 -->
-                  <span class="method-name">getStoryById_nonExistentId_returns404</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;404&gt; but was &lt;500&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.getStoryById_nonExistentId_returns404(StoryTests.java:171)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(GET /api/stories/{id} for non-existent id returns 404)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="updateStory_differentUser_returns403">
-                  </a> <!-- updateStory_differentUser_returns403 -->
-                  <span class="method-name">updateStory_differentUser_returns403</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;403&gt; but was &lt;200&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.updateStory_differentUser_returns403(StoryTests.java:274)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(PUT /api/stories/{id} by different user returns 403)                  </em>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="updateStory_nonExistentId_returns404">
-                  </a> <!-- updateStory_nonExistentId_returns404 -->
-                  <span class="method-name">updateStory_nonExistentId_returns404</span>
-                  <div class="stack-trace">java.lang.AssertionError: 1 expectation failed.
-Expected status code &lt;404&gt; but was &lt;500&gt;.
-
-	at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-	at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-	at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-	at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-	at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-	at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-	at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-	at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-	at com.cts.mfrp.skillbarter.tests.stories.StoryTests.updateStory_nonExistentId_returns404(StoryTests.java:285)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-... Removed 36 stack frames
-</div> <!-- stack-trace -->
-                  <em>
-(PUT /api/stories/{id} for non-existent id returns 404)                  </em>
+(POST /api/user-skills with duplicate entry returns 4xx)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
-          </div> <!-- suite-Surefire_suite-class-failed -->
+          </div> <!-- suite-Surefire_suite-class-skipped -->
           <div class="suite-Surefire_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">com.cts.mfrp.skillbarter.tests.stories.StoryTests</span>
+              <span class="class-name">com.cts.mfrp.skillbarter.tests.skills.SkillTests</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="createStory_missingContent_returns400">
-                  </a> <!-- createStory_missingContent_returns400 -->
-                  <span class="method-name">createStory_missingContent_returns400</span>
+                  <a name="addUserSkill_learnFlag_returns201">
+                  </a> <!-- addUserSkill_learnFlag_returns201 -->
+                  <span class="method-name">addUserSkill_learnFlag_returns201</span>
                   <em>
-(POST /api/stories with missing content returns 400)                  </em>
+(POST /api/user-skills with learn=true adds skill to learn list)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="createStory_missingTitle_returns400">
-                  </a> <!-- createStory_missingTitle_returns400 -->
-                  <span class="method-name">createStory_missingTitle_returns400</span>
+                  <a name="addUserSkill_missingUserId_returns400">
+                  </a> <!-- addUserSkill_missingUserId_returns400 -->
+                  <span class="method-name">addUserSkill_missingUserId_returns400</span>
                   <em>
-(POST /api/stories with missing title returns 400)                  </em>
+(POST /api/user-skills with missing userId returns 400)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="createStory_validPayload_returns201">
-                  </a> <!-- createStory_validPayload_returns201 -->
-                  <span class="method-name">createStory_validPayload_returns201</span>
+                  <a name="addUserSkill_noAuth_returns401">
+                  </a> <!-- addUserSkill_noAuth_returns401 -->
+                  <span class="method-name">addUserSkill_noAuth_returns401</span>
                   <em>
-(POST /api/stories with valid user, title, content returns 201 and story object)                  </em>
+(POST /api/user-skills without auth returns 401)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="createStory_withMediaUrl_returns201">
-                  </a> <!-- createStory_withMediaUrl_returns201 -->
-                  <span class="method-name">createStory_withMediaUrl_returns201</span>
+                  <a name="addUserSkill_teachFlag_returns201">
+                  </a> <!-- addUserSkill_teachFlag_returns201 -->
+                  <span class="method-name">addUserSkill_teachFlag_returns201</span>
                   <em>
-(POST /api/stories with optional mediaUrl returns 201)                  </em>
+(POST /api/user-skills with teach=true adds skill to profile and returns 201)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="deleteStory_byAuthor_returns200Or204">
-                  </a> <!-- deleteStory_byAuthor_returns200Or204 -->
-                  <span class="method-name">deleteStory_byAuthor_returns200Or204</span>
+                  <a name="getAllSkills_noAuth_returns401">
+                  </a> <!-- getAllSkills_noAuth_returns401 -->
+                  <span class="method-name">getAllSkills_noAuth_returns401</span>
                   <em>
-(DELETE /api/stories/{id} by author returns 200 or 204)                  </em>
+(GET /api/skills without token returns 401)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="getAllStories_returnsListNewestFirst">
-                  </a> <!-- getAllStories_returnsListNewestFirst -->
-                  <span class="method-name">getAllStories_returnsListNewestFirst</span>
+                  <a name="getAllSkills_withAuth_returns200AndList">
+                  </a> <!-- getAllSkills_withAuth_returns200AndList -->
+                  <span class="method-name">getAllSkills_withAuth_returns200AndList</span>
                   <em>
-(GET /api/stories returns all stories ordered by newest first)                  </em>
+(GET /api/skills returns 200 and non-empty skill list)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="getStoriesByUser_noStories_returnsEmptyList">
-                  </a> <!-- getStoriesByUser_noStories_returnsEmptyList -->
-                  <span class="method-name">getStoriesByUser_noStories_returnsEmptyList</span>
+                  <a name="getSkillsByCategory_unknownId_returnsEmptyOrNotFound">
+                  </a> <!-- getSkillsByCategory_unknownId_returnsEmptyOrNotFound -->
+                  <span class="method-name">getSkillsByCategory_unknownId_returnsEmptyOrNotFound</span>
                   <em>
-(GET /api/stories/user/{userId} for user with no stories returns empty list)                  </em>
+(GET /api/skills/category/{id} with unknown id returns empty list or 404)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="getStoriesByUser_validUser_returnsList">
-                  </a> <!-- getStoriesByUser_validUser_returnsList -->
-                  <span class="method-name">getStoriesByUser_validUser_returnsList</span>
+                  <a name="getSkillsByCategory_validId_returnsSkills">
+                  </a> <!-- getSkillsByCategory_validId_returnsSkills -->
+                  <span class="method-name">getSkillsByCategory_validId_returnsSkills</span>
                   <em>
-(GET /api/stories/user/{userId} returns all stories by that user)                  </em>
+(GET /api/skills/category/{id} returns skills for that category)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="getStoryById_existingId_returns200">
-                  </a> <!-- getStoryById_existingId_returns200 -->
-                  <span class="method-name">getStoryById_existingId_returns200</span>
+                  <a name="getUserSkills_existingUser_returnsList">
+                  </a> <!-- getUserSkills_existingUser_returnsList -->
+                  <span class="method-name">getUserSkills_existingUser_returnsList</span>
                   <em>
-(GET /api/stories/{id} for existing story returns 200 and story details)                  </em>
+(GET /api/user-skills/{userId} returns all skills for that user)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="searchStories_missingKeyword_returns400">
-                  </a> <!-- searchStories_missingKeyword_returns400 -->
-                  <span class="method-name">searchStories_missingKeyword_returns400</span>
+                  <a name="getUserSkills_noSkills_returnsEmptyList">
+                  </a> <!-- getUserSkills_noSkills_returnsEmptyList -->
+                  <span class="method-name">getUserSkills_noSkills_returnsEmptyList</span>
                   <em>
-(GET /api/stories/search without keyword param returns 400)                  </em>
+(GET /api/user-skills/{userId} for user with no skills returns empty list)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="searchStories_noMatch_returnsEmptyList">
-                  </a> <!-- searchStories_noMatch_returnsEmptyList -->
-                  <span class="method-name">searchStories_noMatch_returnsEmptyList</span>
+                  <a name="searchSkills_missingQueryParam_returns400">
+                  </a> <!-- searchSkills_missingQueryParam_returns400 -->
+                  <span class="method-name">searchSkills_missingQueryParam_returns400</span>
                   <em>
-(GET /api/stories/search?keyword=X with no match returns empty list)                  </em>
+(GET /api/skills/search without query param returns 400)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="searchStories_validKeyword_returnsMatches">
-                  </a> <!-- searchStories_validKeyword_returnsMatches -->
-                  <span class="method-name">searchStories_validKeyword_returnsMatches</span>
+                  <a name="searchSkills_noMatch_returnsEmptyList">
+                  </a> <!-- searchSkills_noMatch_returnsEmptyList -->
+                  <span class="method-name">searchSkills_noMatch_returnsEmptyList</span>
                   <em>
-(GET /api/stories/search?keyword=X returns stories matching title keyword)                  </em>
+(GET /api/skills/search?query=X with no match returns empty list)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
               <div class="method">
                 <div class="method-content">
-                  <a name="updateStory_validPayload_returns200">
-                  </a> <!-- updateStory_validPayload_returns200 -->
-                  <span class="method-name">updateStory_validPayload_returns200</span>
+                  <a name="searchSkills_validQuery_returnsMatches">
+                  </a> <!-- searchSkills_validQuery_returnsMatches -->
+                  <span class="method-name">searchSkills_validQuery_returnsMatches</span>
                   <em>
-(PUT /api/stories/{id} with updated title and content returns 200)                  </em>
+(GET /api/skills/search?query=X returns matching skills)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -578,7 +350,7 @@ Expected status code &lt;404&gt; but was &lt;500&gt;.
 &lt;suite name=&quot;Surefire suite&quot; verbose=&quot;0&quot;&gt;
   &lt;test thread-count=&quot;5&quot; name=&quot;Surefire test&quot; verbose=&quot;0&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;com.cts.mfrp.skillbarter.tests.stories.StoryTests&quot;/&gt;
+      &lt;class name=&quot;com.cts.mfrp.skillbarter.tests.skills.SkillTests&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Surefire test --&gt;
 &lt;/suite&gt; &lt;!-- Surefire suite --&gt;
@@ -606,83 +378,119 @@ Expected status code &lt;404&gt; but was &lt;500&gt;.
               <span class="test-group-name">regression</span>
               <br/>
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_missingContent_returns400</span>
+                <span class="method-in-group-name">addUserSkill_duplicate_returns4xx</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_missingTitle_returns400</span>
+                <span class="method-in-group-name">addUserSkill_learnFlag_returns201</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_noAuth_returns401</span>
+                <span class="method-in-group-name">addUserSkill_missingUserId_returns400</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_validPayload_returns201</span>
+                <span class="method-in-group-name">addUserSkill_noAuth_returns401</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_withMediaUrl_returns201</span>
+                <span class="method-in-group-name">addUserSkill_teachFlag_returns201</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_byAuthor_returns200Or204</span>
+                <span class="method-in-group-name">getAllSkills_noAuth_returns401</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_differentUser_returns403</span>
+                <span class="method-in-group-name">getAllSkills_withAuth_returns200AndList</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_nonExistentId_returns404</span>
+                <span class="method-in-group-name">getSkillsByCategory_unknownId_returnsEmptyOrNotFound</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getAllStories_noAuth_returns401</span>
+                <span class="method-in-group-name">getSkillsByCategory_validId_returnsSkills</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getAllStories_returnsListNewestFirst</span>
+                <span class="method-in-group-name">getUserSkills_existingUser_returnsList</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getStoriesByUser_noStories_returnsEmptyList</span>
+                <span class="method-in-group-name">getUserSkills_noSkills_returnsEmptyList</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getStoriesByUser_validUser_returnsList</span>
+                <span class="method-in-group-name">searchSkills_missingQueryParam_returns400</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getStoryById_existingId_returns200</span>
+                <span class="method-in-group-name">searchSkills_noMatch_returnsEmptyList</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getStoryById_nonExistentId_returns404</span>
+                <span class="method-in-group-name">searchSkills_validQuery_returnsMatches</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+            <div class="test-group">
+              <span class="test-group-name">skills</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">addUserSkill_duplicate_returns4xx</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_missingKeyword_returns400</span>
+                <span class="method-in-group-name">addUserSkill_learnFlag_returns201</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_noMatch_returnsEmptyList</span>
+                <span class="method-in-group-name">addUserSkill_missingUserId_returns400</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_validKeyword_returnsMatches</span>
+                <span class="method-in-group-name">addUserSkill_noAuth_returns401</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_differentUser_returns403</span>
+                <span class="method-in-group-name">addUserSkill_teachFlag_returns201</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_nonExistentId_returns404</span>
+                <span class="method-in-group-name">getAllSkills_noAuth_returns401</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_validPayload_returns200</span>
+                <span class="method-in-group-name">getAllSkills_withAuth_returns200AndList</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">getSkillsByCategory_unknownId_returnsEmptyOrNotFound</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">getSkillsByCategory_validId_returnsSkills</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">getUserSkills_existingUser_returnsList</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">getUserSkills_noSkills_returnsEmptyList</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">searchSkills_missingQueryParam_returns400</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">searchSkills_noMatch_returnsEmptyList</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">searchSkills_validQuery_returnsMatches</span>
                 <br/>
               </div> <!-- method-in-group -->
             </div> <!-- test-group -->
@@ -690,95 +498,11 @@ Expected status code &lt;404&gt; but was &lt;500&gt;.
               <span class="test-group-name">smoke</span>
               <br/>
               <div class="method-in-group">
-                <span class="method-in-group-name">createStory_validPayload_returns201</span>
+                <span class="method-in-group-name">addUserSkill_teachFlag_returns201</span>
                 <br/>
               </div> <!-- method-in-group -->
               <div class="method-in-group">
-                <span class="method-in-group-name">getAllStories_returnsListNewestFirst</span>
-                <br/>
-              </div> <!-- method-in-group -->
-            </div> <!-- test-group -->
-            <div class="test-group">
-              <span class="test-group-name">stories</span>
-              <br/>
-              <div class="method-in-group">
-                <span class="method-in-group-name">createStory_missingContent_returns400</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">createStory_missingTitle_returns400</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">createStory_noAuth_returns401</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">createStory_validPayload_returns201</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">createStory_withMediaUrl_returns201</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_byAuthor_returns200Or204</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_differentUser_returns403</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">deleteStory_nonExistentId_returns404</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getAllStories_noAuth_returns401</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getAllStories_returnsListNewestFirst</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getStoriesByUser_noStories_returnsEmptyList</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getStoriesByUser_validUser_returnsList</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getStoryById_existingId_returns200</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">getStoryById_nonExistentId_returns404</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_missingKeyword_returns400</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_noMatch_returnsEmptyList</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">searchStories_validKeyword_returnsMatches</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_differentUser_returns403</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_nonExistentId_returns404</span>
-                <br/>
-              </div> <!-- method-in-group -->
-              <div class="method-in-group">
-                <span class="method-in-group-name">updateStory_validPayload_returns200</span>
+                <span class="method-in-group-name">getAllSkills_withAuth_returns200AndList</span>
                 <br/>
               </div> <!-- method-in-group -->
             </div> <!-- test-group -->
@@ -798,92 +522,68 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(20);
+data.addRows(14);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'updateStory_validPayload_returns200')
-data.setCell(0, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(0, 3, 4829);
+data.setCell(0, 1, 'addUserSkill_teachFlag_returns201')
+data.setCell(0, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(0, 3, 21311);
 data.setCell(1, 0, 1)
-data.setCell(1, 1, 'deleteStory_differentUser_returns403')
-data.setCell(1, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(1, 3, 4684);
+data.setCell(1, 1, 'addUserSkill_learnFlag_returns201')
+data.setCell(1, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(1, 3, 18114);
 data.setCell(2, 0, 2)
-data.setCell(2, 1, 'updateStory_differentUser_returns403')
-data.setCell(2, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(2, 3, 4567);
+data.setCell(2, 1, 'addUserSkill_missingUserId_returns400')
+data.setCell(2, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(2, 3, 3054);
 data.setCell(3, 0, 3)
-data.setCell(3, 1, 'deleteStory_byAuthor_returns200Or204')
-data.setCell(3, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(3, 3, 4469);
+data.setCell(3, 1, 'getAllSkills_withAuth_returns200AndList')
+data.setCell(3, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(3, 3, 2799);
 data.setCell(4, 0, 4)
-data.setCell(4, 1, 'searchStories_validKeyword_returnsMatches')
-data.setCell(4, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(4, 3, 4322);
+data.setCell(4, 1, 'getAllSkills_noAuth_returns401')
+data.setCell(4, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(4, 3, 2730);
 data.setCell(5, 0, 5)
-data.setCell(5, 1, 'createStory_validPayload_returns201')
-data.setCell(5, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(5, 3, 2860);
+data.setCell(5, 1, 'addUserSkill_duplicate_returns4xx')
+data.setCell(5, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(5, 3, 1636);
 data.setCell(6, 0, 6)
-data.setCell(6, 1, 'getStoryById_existingId_returns200')
-data.setCell(6, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(6, 3, 2453);
+data.setCell(6, 1, 'getSkillsByCategory_validId_returnsSkills')
+data.setCell(6, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(6, 3, 1311);
 data.setCell(7, 0, 7)
-data.setCell(7, 1, 'createStory_withMediaUrl_returns201')
-data.setCell(7, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(7, 3, 2410);
+data.setCell(7, 1, 'searchSkills_noMatch_returnsEmptyList')
+data.setCell(7, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(7, 3, 1079);
 data.setCell(8, 0, 8)
-data.setCell(8, 1, 'getStoriesByUser_validUser_returnsList')
-data.setCell(8, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(8, 3, 2408);
+data.setCell(8, 1, 'searchSkills_validQuery_returnsMatches')
+data.setCell(8, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(8, 3, 1079);
 data.setCell(9, 0, 9)
-data.setCell(9, 1, 'getAllStories_returnsListNewestFirst')
-data.setCell(9, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(9, 3, 2332);
+data.setCell(9, 1, 'getUserSkills_noSkills_returnsEmptyList')
+data.setCell(9, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(9, 3, 1064);
 data.setCell(10, 0, 10)
-data.setCell(10, 1, 'getStoriesByUser_noStories_returnsEmptyList')
-data.setCell(10, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(10, 3, 2306);
+data.setCell(10, 1, 'getUserSkills_existingUser_returnsList')
+data.setCell(10, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(10, 3, 1031);
 data.setCell(11, 0, 11)
-data.setCell(11, 1, 'getStoryById_nonExistentId_returns404')
-data.setCell(11, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(11, 3, 2282);
+data.setCell(11, 1, 'getSkillsByCategory_unknownId_returnsEmptyOrNotFound')
+data.setCell(11, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(11, 3, 1026);
 data.setCell(12, 0, 12)
-data.setCell(12, 1, 'searchStories_noMatch_returnsEmptyList')
-data.setCell(12, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(12, 3, 2250);
+data.setCell(12, 1, 'searchSkills_missingQueryParam_returns400')
+data.setCell(12, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(12, 3, 788);
 data.setCell(13, 0, 13)
-data.setCell(13, 1, 'createStory_noAuth_returns401')
-data.setCell(13, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(13, 3, 2102);
-data.setCell(14, 0, 14)
-data.setCell(14, 1, 'getAllStories_noAuth_returns401')
-data.setCell(14, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(14, 3, 2002);
-data.setCell(15, 0, 15)
-data.setCell(15, 1, 'deleteStory_nonExistentId_returns404')
-data.setCell(15, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(15, 3, 1754);
-data.setCell(16, 0, 16)
-data.setCell(16, 1, 'updateStory_nonExistentId_returns404')
-data.setCell(16, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(16, 3, 1622);
-data.setCell(17, 0, 17)
-data.setCell(17, 1, 'searchStories_missingKeyword_returns400')
-data.setCell(17, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(17, 3, 864);
-data.setCell(18, 0, 18)
-data.setCell(18, 1, 'createStory_missingContent_returns400')
-data.setCell(18, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(18, 3, 713);
-data.setCell(19, 0, 19)
-data.setCell(19, 1, 'createStory_missingTitle_returns400')
-data.setCell(19, 2, 'com.cts.mfrp.skillbarter.tests.stories.StoryTests')
-data.setCell(19, 3, 709);
+data.setCell(13, 1, 'addUserSkill_noAuth_returns401')
+data.setCell(13, 2, 'com.cts.mfrp.skillbarter.tests.skills.SkillTests')
+data.setCell(13, 3, 643);
 window.suiteTableData['Surefire_suite']= { tableData: data, tableDiv: 'times-div-Surefire_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 51 seconds</span>
+              <span class="suite-total-time">Total running time: 57 seconds</span>
               <div id="times-div-Surefire_suite">
               </div> <!-- times-div-Surefire_suite -->
             </div> <!-- times-div -->
@@ -909,108 +609,70 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">com.cts.mfrp.skillbarter.tests.stories.StoryTests</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">com.cts.mfrp.skillbarter.tests.skills.SkillTests</div> <!-- chronological-class-name -->
               <div class="configuration-suite before">
                 <span class="method-name">initSpec</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="configuration-class before">
                 <span class="method-name">seed</span>
-                <span class="method-start">954 ms</span>
+                <span class="method-start">680 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
-                <span class="method-name">createStory_validPayload_returns201</span>
-                <span class="method-start">19637 ms</span>
+                <span class="method-name">getAllSkills_withAuth_returns200AndList</span>
+                <span class="method-start">9955 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">createStory_missingTitle_returns400</span>
-                <span class="method-start">22518 ms</span>
+                <span class="method-name">getAllSkills_noAuth_returns401</span>
+                <span class="method-start">12766 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">createStory_missingContent_returns400</span>
-                <span class="method-start">23231 ms</span>
+                <span class="method-name">searchSkills_validQuery_returnsMatches</span>
+                <span class="method-start">15497 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">createStory_noAuth_returns401</span>
-                <span class="method-start">23946 ms</span>
+                <span class="method-name">searchSkills_noMatch_returnsEmptyList</span>
+                <span class="method-start">16577 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">createStory_withMediaUrl_returns201</span>
-                <span class="method-start">26068 ms</span>
+                <span class="method-name">searchSkills_missingQueryParam_returns400</span>
+                <span class="method-start">17657 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">getAllStories_returnsListNewestFirst</span>
-                <span class="method-start">28481 ms</span>
+                <span class="method-name">getSkillsByCategory_validId_returnsSkills</span>
+                <span class="method-start">18446 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">getAllStories_noAuth_returns401</span>
-                <span class="method-start">30816 ms</span>
+                <span class="method-name">getSkillsByCategory_unknownId_returnsEmptyOrNotFound</span>
+                <span class="method-start">19758 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">getStoryById_existingId_returns200</span>
-                <span class="method-start">32823 ms</span>
+                <span class="method-name">addUserSkill_teachFlag_returns201</span>
+                <span class="method-start">20785 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">getStoryById_nonExistentId_returns404</span>
-                <span class="method-start">35279 ms</span>
+                <span class="method-name">addUserSkill_learnFlag_returns201</span>
+                <span class="method-start">42097 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">getStoriesByUser_validUser_returnsList</span>
-                <span class="method-start">37565 ms</span>
+                <span class="method-name">addUserSkill_duplicate_returns4xx</span>
+                <span class="method-start">60213 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">getStoriesByUser_noStories_returnsEmptyList</span>
-                <span class="method-start">39976 ms</span>
+                <span class="method-name">addUserSkill_missingUserId_returns400</span>
+                <span class="method-start">61850 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">searchStories_validKeyword_returnsMatches</span>
-                <span class="method-start">42285 ms</span>
+                <span class="method-name">addUserSkill_noAuth_returns401</span>
+                <span class="method-start">64905 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">searchStories_noMatch_returnsEmptyList</span>
-                <span class="method-start">46610 ms</span>
+                <span class="method-name">getUserSkills_existingUser_returnsList</span>
+                <span class="method-start">65549 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">searchStories_missingKeyword_returns400</span>
-                <span class="method-start">48863 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <span class="method-name">updateStory_validPayload_returns200</span>
-                <span class="method-start">49730 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">updateStory_differentUser_returns403</span>
-                <span class="method-start">54563 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">updateStory_nonExistentId_returns404</span>
-                <span class="method-start">59134 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <span class="method-name">deleteStory_byAuthor_returns200Or204</span>
-                <span class="method-start">60760 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">deleteStory_differentUser_returns403</span>
-                <span class="method-start">65235 ms</span>
-              </div> <!-- test-method -->
-              <div class="test-method">
-                <img src="failed.png">
-                </img>
-                <span class="method-name">deleteStory_nonExistentId_returns404</span>
-                <span class="method-start">69923 ms</span>
+                <span class="method-name">getUserSkills_noSkills_returnsEmptyList</span>
+                <span class="method-start">66582 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

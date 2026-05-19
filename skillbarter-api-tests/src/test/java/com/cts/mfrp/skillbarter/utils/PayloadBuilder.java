@@ -48,12 +48,28 @@ public class PayloadBuilder {
         return body;
     }
 
+    public static Map<String, Object> updatePasswordPayload(String oldPassword, String newPassword) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("oldPassword", oldPassword);
+        body.put("newPassword", newPassword);
+        return body;
+    }
+
     // ── Skills ────────────────────────────────────────────────────────────────
     public static Map<String, Object> userSkillPayload(String userId, String skillId, boolean teach) {
         Map<String, Object> body = new HashMap<>();
         body.put("userId", userId);
         body.put("skillId", skillId);
         body.put("teach", teach);
+        return body;
+    }
+
+    public static Map<String, Object> userSkillPayload(String userId, String skillId, boolean teach, boolean learn) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("userId", userId);
+        body.put("skillId", skillId);
+        body.put("teach", teach);
+        body.put("learn", learn);
         return body;
     }
 

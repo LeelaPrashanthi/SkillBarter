@@ -3,19 +3,13 @@
 <suite name="Failed suite [Surefire suite]" verbose="0">
   <test thread-count="5" name="Surefire test(failed)" verbose="0">
     <classes>
-      <class name="com.cts.mfrp.skillbarter.tests.stories.StoryTests">
+      <class name="com.cts.mfrp.skillbarter.tests.skills.SkillTests">
         <methods>
-          <include name="createStory_noAuth_returns401"/>
-          <include name="getAllStories_noAuth_returns401"/>
-          <include name="updateStory_differentUser_returns403"/>
-          <include name="deleteStory_differentUser_returns403"/>
-          <include name="getStoryById_nonExistentId_returns404"/>
-          <include name="deleteStory_nonExistentId_returns404"/>
-          <include name="initSpec"/>
-          <include name="updateStory_nonExistentId_returns404"/>
           <include name="seed"/>
+          <include name="initSpec"/>
+          <include name="addUserSkill_duplicate_returns4xx"/>
         </methods>
-      </class> <!-- com.cts.mfrp.skillbarter.tests.stories.StoryTests -->
+      </class> <!-- com.cts.mfrp.skillbarter.tests.skills.SkillTests -->
     </classes>
   </test> <!-- Surefire test(failed) -->
 </suite> <!-- Failed suite [Surefire suite] -->

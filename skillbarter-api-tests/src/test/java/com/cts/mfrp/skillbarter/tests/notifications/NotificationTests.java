@@ -40,7 +40,7 @@ public class NotificationTests extends BaseTest {
     // ── GET /api/notifications/user/{userId} ──────────────────────────────────
 
     @Test(priority = 1, description = "GET /api/notifications/user/{userId} returns all notifications for the user",
-          groups = {"notifications", "smoke", "regression"}, retryAnalyzer = RetryAnalyzer.class)
+          groups = {"notifications", "smoke", "regression"})
     public void getAllNotifications_validUser_returnsList() {
         TestContext.requireAuth();
 
@@ -67,7 +67,7 @@ public class NotificationTests extends BaseTest {
     }
 
     @Test(priority = 2, description = "GET /api/notifications/user/{userId} for user with no notifications returns empty list",
-          groups = {"notifications", "regression"}, retryAnalyzer = RetryAnalyzer.class)
+          groups = {"notifications", "regression"})
     public void getAllNotifications_noNotifications_returnsEmptyList() {
         TestContext.requireAuth();
 

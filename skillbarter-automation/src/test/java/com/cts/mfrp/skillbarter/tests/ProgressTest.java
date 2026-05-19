@@ -7,9 +7,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -25,39 +27,35 @@ public class ProgressTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void loginAndOpenProgress() {
-        navigateTo(AppConstants.BASE_URL);
+        // Direct-form login (same pattern as CalendarTest/NotificationsTest) —
+        // skips the homepage CTA probe-click, which is brittle to label/class
+        // changes between builds.
+        navigateTo(AppConstants.SIGNIN_URL);
 
-        List<WebElement> entryBtns = driver.findElements(By.xpath(
-                "//a[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')] "
-                + "| //button[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')]"));
-        for (WebElement btn : entryBtns) {
-            try { if (btn.isDisplayed()) { btn.click(); break; } } catch (Exception ignored) {}
-        }
+        WebDriverWait loginWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement emailField = loginWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//input[@type='email']")));
+        WebElement passwordField = driver.findElement(By.xpath("//input[@type='password']"));
 
-        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='email' or @name='email']")));
+        emailField.clear();
         emailField.sendKeys(AppConstants.VALID_EMAIL);
-
-        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='password' or @name='password']")));
+        passwordField.clear();
         passwordField.sendKeys(AppConstants.VALID_PASSWORD);
+        passwordField.sendKeys(Keys.ENTER);
 
-        try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
-        } catch (Exception ignored) {
-            passwordField.sendKeys(Keys.RETURN);
-        }
+        loginWait.until(ExpectedConditions.urlContains("dashboard"));
 
-        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("signin")));
+        // Navigate directly to the Progress URL instead of hunting for a
+        // sidebar link — survives sidebar markup churn.
+        navigateTo(AppConstants.PROGRESS_URL);
 
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//a[contains(@href,'progress')]"))).click();
-
-        wait.until(ExpectedConditions.urlContains("progress"));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//*[contains(text(),'Level')] | //*[contains(text(),'XP')]")));
+        WebDriverWait pageWait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        pageWait.until(ExpectedConditions.urlContains("progress"));
+        // Wait for any progress-page anchor element (XP / Level / Activity)
+        // to render. Some builds hydrate this section 15-20s after URL change.
+        pageWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//*[contains(text(),'Level')] | //*[contains(text(),'XP')] "
+                       + "| //*[contains(text(),'Activity')]")));
 
         progressPage = new ProgressPage(driver);
     }
@@ -65,49 +63,41 @@ public class ProgressTest extends BaseTest {
     @Test(testName = "TC_069", description = "Print XP")
     public void tc069_xpDisplayed() {
         System.out.println("XP: " + progressPage.getXpText());
-        pause();
     }
 
     @Test(testName = "TC_070", description = "Print Your Level")
     public void tc070_yourLevelDisplayed() {
         System.out.println("Your Level: " + progressPage.getLevelText());
-        pause();
     }
 
     @Test(testName = "TC_071", description = "Print Activity")
     public void tc071_activitiesDisplayed() {
         System.out.println("Activity: " + progressPage.getActivityText());
-        pause();
     }
 
     @Test(testName = "TC_072", description = "Print Total Sessions")
     public void tc072_totalSessionsDisplayed() {
         System.out.println("Total Sessions: " + progressPage.getTotalSessionsText());
-        pause();
     }
 
     @Test(testName = "TC_073", description = "Print Completed")
     public void tc073_completedDisplayed() {
         System.out.println("Completed: " + progressPage.getCompletedText());
-        pause();
     }
 
     @Test(testName = "TC_074", description = "Print Completion Rate")
     public void tc074_completionRateDisplayed() {
         System.out.println("Completion Rate: " + progressPage.getCompletionRateText());
-        pause();
     }
 
     @Test(testName = "TC_075", description = "Print Ratings")
     public void tc075_ratingsDisplayed() {
         System.out.println("Ratings: " + progressPage.getRatingsText());
-        pause();
     }
 
     @Test(testName = "TC_076", description = "Print Reviews Received")
     public void tc076_reviewsReceivedDisplayed() {
         System.out.println("Reviews Received: " + progressPage.getReviewsReceivedText());
-        pause();
     }
 
     @Test(testName = "TC_077", description = "Print badges count, each badge text and status")
@@ -115,7 +105,6 @@ public class ProgressTest extends BaseTest {
         List<String> badges = progressPage.getBadgeTexts();
         if (badges.isEmpty()) {
             System.out.println("Badges: no badges");
-            pause();
             return;
         }
         int enabled = 0;
@@ -127,17 +116,11 @@ public class ProgressTest extends BaseTest {
             String status = progressPage.isBadgeEnabled(badges.get(i)) ? "[Enabled]" : "[Locked]";
             System.out.println("  [" + (i + 1) + "] " + status + " " + badges.get(i));
         }
-        pause();
     }
 
     @Test(testName = "TC_078", description = "Print Next Goals")
     public void tc078_nextGoalsDisplayed() {
         System.out.println("Next Goals: " + progressPage.getNextGoalsText());
-        pause();
     }
 
-    /** 2-second pause so the element stays visible on screen. */
-    private void pause() {
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-    }
 }

@@ -7,11 +7,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.time.Duration;
 
 /**
  * Test class for Notifications Panel.
@@ -25,35 +26,29 @@ public class NotificationsTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void loginAndOpenPanel() {
-        navigateTo(AppConstants.BASE_URL);
+        // Direct-form login (no Sign In / Get Started probe-click). Same
+        // pattern as CalendarTest — resilient to homepage CTA copy/class
+        // churn between builds.
+        navigateTo(AppConstants.SIGNIN_URL);
 
-        List<WebElement> entryBtns = driver.findElements(By.xpath(
-                "//a[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')] "
-                + "| //button[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')]"));
-        for (WebElement btn : entryBtns) {
-            try { if (btn.isDisplayed()) { btn.click(); break; } } catch (Exception ignored) {}
-        }
+        WebDriverWait loginWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement emailField = loginWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//input[@type='email']")));
+        WebElement passwordField = driver.findElement(By.xpath("//input[@type='password']"));
 
-        WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='email' or @name='email']")));
+        emailField.clear();
         emailField.sendKeys(AppConstants.VALID_EMAIL);
-
-        WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='password' or @name='password']")));
+        passwordField.clear();
         passwordField.sendKeys(AppConstants.VALID_PASSWORD);
+        passwordField.sendKeys(Keys.ENTER);
 
-        try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
-        } catch (Exception ignored) {
-            passwordField.sendKeys(Keys.RETURN);
-        }
-
-        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("signin")));
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        loginWait.until(ExpectedConditions.urlContains("dashboard"));
 
         notifPage = new NotificationsPage(driver);
+        // Bell lives in the top bar — wait for it before any test body runs.
+        // The dashboard topbar hydrates a few seconds after the URL changes.
+        new WebDriverWait(driver, Duration.ofSeconds(30))
+                .until(d -> notifPage.isBellVisible());
     }
 
     @Test(testName = "TC_041", description = "Notification bell icon is visible in the top bar")
@@ -64,8 +59,7 @@ public class NotificationsTest extends BaseTest {
     @Test(testName = "TC_042", description = "Notifications panel opens and shows notification count")
     public void tc042_notificationCountDisplayed() {
         notifPage.openPanel();
-        try { Thread.sleep(1500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-
+        // Wait for the panel to actually render rather than sleeping blindly.
         Assert.assertTrue(notifPage.isPanelVisible(), "Notification panel did not open");
         System.out.println("Notification count: " + notifPage.getNotificationCount());
     }
@@ -73,7 +67,8 @@ public class NotificationsTest extends BaseTest {
     @Test(testName = "TC_043", description = "Clicking a notification removes it (or marks it read)")
     public void tc043_notificationDeletesOnClick() {
         notifPage.openPanel();
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // Wait for the panel to render before reading from it.
+        Assert.assertTrue(notifPage.isPanelVisible(), "Notification panel did not open");
 
         int countBefore = notifPage.getNotificationCount();
         if (countBefore == 0) {
@@ -84,19 +79,20 @@ public class NotificationsTest extends BaseTest {
 
         notifPage.clickFirstNotification();
 
-        // Poll for up to 5s for any change: count drop, first-text change, or unread class removed.
-        boolean changed = false;
-        long deadline = System.currentTimeMillis() + 5000;
-        while (System.currentTimeMillis() < deadline) {
-            try { Thread.sleep(300); } catch (InterruptedException e) { Thread.currentThread().interrupt(); break; }
-
-            int countAfter = notifPage.getNotificationCount();
-            if (countAfter < countBefore) { changed = true; break; }
-
-            String firstAfter = notifPage.getFirstNotificationText();
-            if (!textBefore.isEmpty() && !textBefore.equals(firstAfter)) { changed = true; break; }
-
-            if (wasUnread && !notifPage.isFirstNotificationUnread()) { changed = true; break; }
+        // Replaces the old sleep-based polling loop with a single WebDriverWait
+        // that re-evaluates the same change conditions every 300ms for up to 5s.
+        boolean changed;
+        try {
+            changed = new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .pollingEvery(Duration.ofMillis(300))
+                    .until(d -> {
+                        if (notifPage.getNotificationCount() < countBefore) return true;
+                        String firstAfter = notifPage.getFirstNotificationText();
+                        if (!textBefore.isEmpty() && !textBefore.equals(firstAfter)) return true;
+                        return wasUnread && !notifPage.isFirstNotificationUnread();
+                    });
+        } catch (Exception timeout) {
+            changed = false;
         }
 
         Assert.assertTrue(
@@ -109,15 +105,26 @@ public class NotificationsTest extends BaseTest {
     @Test(testName = "TC_044", description = "If notifications are present, click Mark all read")
     public void tc044_markAllAsReadClearsNotifications() {
         notifPage.openPanel();
-        try { Thread.sleep(1500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // Wait for the panel to render before reading the count.
+        Assert.assertTrue(notifPage.isPanelVisible(), "Notification panel did not open");
 
-        if (notifPage.getNotificationCount() == 0) {
+        int countBefore = notifPage.getNotificationCount();
+        if (countBefore == 0) {
             throw new org.testng.SkipException("No notifications present — skipping TC_044");
         }
 
         notifPage.clickMarkAllRead();
 
-        // Visible pause so the cleared state stays on screen before the test ends.
-        try { Thread.sleep(5000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // Wait for the unread state to actually clear (count drops OR first
+        // item is no longer unread). Replaces a 5s "visible pause" sleep.
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .pollingEvery(Duration.ofMillis(300))
+                    .until(d -> notifPage.getNotificationCount() < countBefore
+                             || !notifPage.isFirstNotificationUnread());
+        } catch (Exception ignored) {
+            // Best-effort wait — assertion-free here matches the original test's intent
+            // (TC_044 just exercises the click; it asserted nothing post-click).
+        }
     }
 }

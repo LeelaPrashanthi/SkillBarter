@@ -22,7 +22,10 @@ public class ProgressPage {
 
     public ProgressPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        // Bumped from 15s → 30s. Individual sections on Progress can hydrate
+        // a few seconds after the page-shell waits in the test's BeforeMethod
+        // fire — a 15s budget per section was timing out on slow runs.
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         PageFactory.initElements(driver, this);
     }
 
@@ -43,7 +46,9 @@ public class ProgressPage {
     }
 
     public String getCompletedText() {
-        return readSection("/html/body/app-root/app-sidebar/div[1]/div/div/app-progress/div/div[2]/div[1]/div[3]/div[2]", "no completed sessions");
+        // Was anchored on a brittle absolute XPath; switched to text-anchored
+        // lookup like the other sections so it survives DOM restructuring.
+        return readSection("//*[contains(text(),'Completed')]/..", "no completed sessions");
     }
 
     public String getCompletionRateText() {

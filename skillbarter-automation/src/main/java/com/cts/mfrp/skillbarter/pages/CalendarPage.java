@@ -107,7 +107,11 @@ public class CalendarPage {
 
     public CalendarPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        // Bumped from 15s → 40s. The calendar page can take 20+ seconds to
+        // hydrate on slow builds, so clicks via the click() helper need a
+        // longer clickability budget — otherwise tab clicks silently fail
+        // and the tests skip on an empty session list.
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(40));
         PageFactory.initElements(driver, this);
     }
 
@@ -127,6 +131,39 @@ public class CalendarPage {
         } catch (Exception e) {
             log.warn("Calendar page didn't become ready within {}s", timeoutSeconds);
             return false;
+        }
+    }
+
+    /**
+     * Session cards (.sitem) are populated by an async fetch that can take up
+     * to ~20s on slow builds — separate from the page-shell readiness covered
+     * by {@link #waitForPageReady(int)}. Call this after switching tabs
+     * (Upcoming/History) and before asserting on counts or action buttons,
+     * so TC_072/073/074 don't read an empty list and skip themselves.
+     *
+     * Bypasses the global 10s implicit wait while polling, otherwise each
+     * "is the list empty?" probe would block for 10s and the loop would
+     * only get ~3 chances inside a 30s budget. Implicit wait is restored
+     * before returning.
+     *
+     * Returns true if at least one session card appeared, false on timeout.
+     */
+    public boolean waitForSessionsLoaded(int timeoutSeconds) {
+        org.openqa.selenium.By sitemBy =
+                org.openqa.selenium.By.xpath("//div[contains(@class,'sitem')]");
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(0));
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+                    .pollingEvery(Duration.ofMillis(500))
+                    .ignoring(Exception.class)
+                    .until(d -> !d.findElements(sitemBy).isEmpty());
+            return true;
+        } catch (Exception e) {
+            log.warn("No session cards appeared within {}s on the active tab", timeoutSeconds);
+            return false;
+        } finally {
+            driver.manage().timeouts().implicitlyWait(
+                    Duration.ofSeconds(com.cts.mfrp.skillbarter.constants.AppConstants.IMPLICIT_WAIT));
         }
     }
 

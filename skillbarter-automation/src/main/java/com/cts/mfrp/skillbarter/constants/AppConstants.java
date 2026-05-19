@@ -45,8 +45,8 @@ public class AppConstants {
     public static final String SHEET_COMMUNITY = "CommunityData";
 
     // ── Valid Test Credentials ────────────────────────────────────────────────
-    public static final String VALID_EMAIL    = "hello3@cognizant.com";
-    public static final String VALID_PASSWORD = "cog@123";
+    public static final String VALID_EMAIL    = "testing@gmail.com";
+    public static final String VALID_PASSWORD = "testing";
 
     // ── Titles & Headings ────────────────────────────────────────────────────
     public static final String DASHBOARD_TITLE    = "Dashboard";

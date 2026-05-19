@@ -122,47 +122,51 @@ public class BaseTest {
     // ── Driver factory ────────────────────────────────────────────────────────
 
     private WebDriver createDriver(String browser, boolean headless) {
-        return switch (browser.toLowerCase()) {
-            case AppConstants.BROWSER_FIREFOX -> {
-                WebDriverManager.firefoxdriver().setup();
-                FirefoxOptions opts = new FirefoxOptions();
-                if (headless) opts.addArguments("--headless");
-                yield new FirefoxDriver(opts);
-            }
-            case AppConstants.BROWSER_EDGE -> {
-                WebDriverManager.edgedriver().setup();
-                EdgeOptions opts = new EdgeOptions();
-                if (headless) opts.addArguments("--headless");
-                yield new EdgeDriver(opts);
-            }
-            default -> {
-                WebDriverManager.chromedriver().setup();
-                ChromeOptions opts = new ChromeOptions();
-                if (headless) opts.addArguments("--headless=new");
-                opts.addArguments(
-                        "--no-sandbox",
-                        "--disable-dev-shm-usage",
-                        "--disable-gpu",
-                        "--window-size=1920,1080",
-                        // Kill Chrome's password-leak and password-save popups
-                        // that interrupt automated logins.
-                        "--disable-features=PasswordLeakDetection,PasswordCheck,AutofillServerCommunication",
-                        "--disable-save-password-bubble",
-                        "--disable-blink-features=AutomationControlled");
+        // NOTE: written in classic if-else form rather than a switch expression
+        // so this compiles cleanly even when IntelliJ's project language level
+        // is below 14 (some teammates have hit "Arrow in case statement
+        // supported from Java 14 onwards only" on fresh checkouts).
+        String b = browser == null ? "" : browser.toLowerCase();
 
-                Map<String, Object> prefs = new HashMap<>();
-                prefs.put("credentials_enable_service", false);
-                prefs.put("profile.password_manager_enabled", false);
-                prefs.put("profile.password_manager_leak_detection", false);
-                prefs.put("autofill.profile_enabled", false);
-                opts.setExperimentalOption("prefs", prefs);
+        if (AppConstants.BROWSER_FIREFOX.equals(b)) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions opts = new FirefoxOptions();
+            if (headless) opts.addArguments("--headless");
+            return new FirefoxDriver(opts);
+        }
+        if (AppConstants.BROWSER_EDGE.equals(b)) {
+            WebDriverManager.edgedriver().setup();
+            EdgeOptions opts = new EdgeOptions();
+            if (headless) opts.addArguments("--headless");
+            return new EdgeDriver(opts);
+        }
 
-                // Silence the "Chrome is being controlled by automated software" infobar.
-                opts.setExperimentalOption("excludeSwitches",
-                        new String[]{"enable-automation"});
+        // Default: Chrome
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions opts = new ChromeOptions();
+        if (headless) opts.addArguments("--headless=new");
+        opts.addArguments(
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1920,1080",
+                // Kill Chrome's password-leak and password-save popups
+                // that interrupt automated logins.
+                "--disable-features=PasswordLeakDetection,PasswordCheck,AutofillServerCommunication",
+                "--disable-save-password-bubble",
+                "--disable-blink-features=AutomationControlled");
 
-                yield new ChromeDriver(opts);
-            }
-        };
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("profile.password_manager_leak_detection", false);
+        prefs.put("autofill.profile_enabled", false);
+        opts.setExperimentalOption("prefs", prefs);
+
+        // Silence the "Chrome is being controlled by automated software" infobar.
+        opts.setExperimentalOption("excludeSwitches",
+                new String[]{"enable-automation"});
+
+        return new ChromeDriver(opts);
     }
 }

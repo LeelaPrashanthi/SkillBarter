@@ -36,6 +36,12 @@ public class TestContext {
 
     // ── Review IDs ───────────────────────────────────────────────────────────
     public static String reviewId;
+    public static String reviewSessionId;
+    public static String reviewReviewerId;
+    public static String reviewRevieweeId;
+
+    // ── Password reset ───────────────────────────────────────────────────────
+    public static String resetToken;
 
     // ── Calendar Event IDs ───────────────────────────────────────────────────
     public static String calendarEventId;

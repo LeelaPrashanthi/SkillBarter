@@ -60,11 +60,15 @@ public class CalendarTest extends BaseTest {
         loginWait.until(ExpectedConditions.urlContains("dashboard"));
 
         navigateTo(AppConstants.CALENDAR_URL);
-        wait.until(ExpectedConditions.urlContains("calendar"));
+        // Bumped URL-contains wait too — the global EXPLICIT_WAIT (15s) is
+        // tighter than the observed 20s page load on slow builds.
+        new WebDriverWait(driver, Duration.ofSeconds(60))
+                .until(ExpectedConditions.urlContains("calendar"));
         calendarPage = new CalendarPage(driver);
-        // Calendar page hydrates over ~6–7 seconds; wait for + New Session Request
-        // to appear before any test body runs so we don't read a half-rendered DOM.
-        calendarPage.waitForPageReady(10);
+        // Calendar shell hydrates in ~6–7s on fast runs but can stretch past
+        // 20s on slow builds — give it a generous 60s so + New Session Request
+        // reliably appears before any test body runs.
+        calendarPage.waitForPageReady(60);
     }
 
     // ── TC_066 – Monthly calendar view ──────────────────────────────────────
@@ -152,6 +156,9 @@ public class CalendarTest extends BaseTest {
           groups = {"calendar", "regression"}, priority = 72, retryAnalyzer = RetryAnalyzer.class)
     public void tc072_upcomingSessionShowsCallAndCompleteButtons() {
         calendarPage.clickUpcomingTab();
+        // Session cards arrive via an async fetch (~20s on slow builds).
+        // Wait before counting so we don't skip on a not-yet-rendered list.
+        calendarPage.waitForSessionsLoaded(60);
         if (calendarPage.getUpcomingSessionCount() == 0) {
             throw new SkipException(
                 "No upcoming sessions for this account — TC_072 needs at least one scheduled session."
@@ -171,6 +178,7 @@ public class CalendarTest extends BaseTest {
           groups = {"calendar", "regression"}, priority = 73, retryAnalyzer = RetryAnalyzer.class)
     public void tc073_joinCallTriggersCallFlow() {
         calendarPage.clickUpcomingTab();
+        calendarPage.waitForSessionsLoaded(60);
         if (!calendarPage.hasJoinCallButton()) {
             throw new SkipException("No 'Join Call' button rendered — no upcoming sessions available.");
         }
@@ -202,6 +210,7 @@ public class CalendarTest extends BaseTest {
           groups = {"calendar", "regression"}, priority = 74, retryAnalyzer = RetryAnalyzer.class)
     public void tc074_markCompleteMovesToHistory() {
         calendarPage.clickUpcomingTab();
+        calendarPage.waitForSessionsLoaded(60);
         if (!calendarPage.hasMarkCompleteButton()) {
             throw new SkipException("No 'Mark as Complete' button rendered — no upcoming sessions available.");
         }

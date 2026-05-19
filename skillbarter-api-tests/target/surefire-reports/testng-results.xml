@@ -1,114 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="20" passed="13" failed="7" skipped="0">
+<testng-results ignored="0" total="14" passed="13" failed="0" skipped="1">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-05-19T09:00:18 IST" name="Surefire suite" finished-at="2026-05-19T09:01:28 IST" duration-ms="70778">
+  <suite started-at="2026-05-19T15:26:10 IST" name="Surefire suite" finished-at="2026-05-19T15:27:17 IST" duration-ms="66980">
     <groups>
-      <group name="stories">
-        <method signature="StoryTests.createStory_validPayload_returns201()[pri:1, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_validPayload_returns201" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_missingTitle_returns400()[pri:2, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_missingTitle_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_missingContent_returns400()[pri:3, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_missingContent_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_noAuth_returns401()[pri:4, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_withMediaUrl_returns201()[pri:5, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_withMediaUrl_returns201" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getAllStories_returnsListNewestFirst()[pri:6, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getAllStories_returnsListNewestFirst" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getAllStories_noAuth_returns401()[pri:7, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getAllStories_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoryById_existingId_returns200()[pri:8, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoryById_existingId_returns200" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoryById_nonExistentId_returns404()[pri:9, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoryById_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoriesByUser_validUser_returnsList()[pri:10, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoriesByUser_validUser_returnsList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoriesByUser_noStories_returnsEmptyList()[pri:11, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoriesByUser_noStories_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_validKeyword_returnsMatches()[pri:12, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_validKeyword_returnsMatches" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_noMatch_returnsEmptyList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_noMatch_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_missingKeyword_returns400()[pri:14, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_missingKeyword_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_validPayload_returns200()[pri:15, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_validPayload_returns200" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_differentUser_returns403()[pri:16, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_differentUser_returns403" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_nonExistentId_returns404()[pri:17, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_byAuthor_returns200Or204()[pri:18, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_byAuthor_returns200Or204" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_differentUser_returns403()[pri:19, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_differentUser_returns403" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_nonExistentId_returns404()[pri:20, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-      </group> <!-- stories -->
+      <group name="skills">
+        <method signature="SkillTests.getAllSkills_withAuth_returns200AndList()[pri:1, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getAllSkills_withAuth_returns200AndList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getAllSkills_noAuth_returns401()[pri:2, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getAllSkills_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_validQuery_returnsMatches()[pri:3, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_validQuery_returnsMatches" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_noMatch_returnsEmptyList()[pri:4, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_noMatch_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_missingQueryParam_returns400()[pri:5, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_missingQueryParam_returns400" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getSkillsByCategory_validId_returnsSkills()[pri:6, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getSkillsByCategory_validId_returnsSkills" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getSkillsByCategory_unknownId_returnsEmptyOrNotFound()[pri:7, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getSkillsByCategory_unknownId_returnsEmptyOrNotFound" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_teachFlag_returns201()[pri:8, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_teachFlag_returns201" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_learnFlag_returns201()[pri:9, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_learnFlag_returns201" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_duplicate_returns4xx()[pri:10, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_duplicate_returns4xx" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_missingUserId_returns400()[pri:11, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_missingUserId_returns400" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_noAuth_returns401()[pri:12, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getUserSkills_existingUser_returnsList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getUserSkills_existingUser_returnsList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getUserSkills_noSkills_returnsEmptyList()[pri:14, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getUserSkills_noSkills_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+      </group> <!-- skills -->
       <group name="regression">
-        <method signature="StoryTests.createStory_validPayload_returns201()[pri:1, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_validPayload_returns201" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_missingTitle_returns400()[pri:2, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_missingTitle_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_missingContent_returns400()[pri:3, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_missingContent_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_noAuth_returns401()[pri:4, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.createStory_withMediaUrl_returns201()[pri:5, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_withMediaUrl_returns201" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getAllStories_returnsListNewestFirst()[pri:6, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getAllStories_returnsListNewestFirst" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getAllStories_noAuth_returns401()[pri:7, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getAllStories_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoryById_existingId_returns200()[pri:8, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoryById_existingId_returns200" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoryById_nonExistentId_returns404()[pri:9, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoryById_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoriesByUser_validUser_returnsList()[pri:10, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoriesByUser_validUser_returnsList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getStoriesByUser_noStories_returnsEmptyList()[pri:11, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getStoriesByUser_noStories_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_validKeyword_returnsMatches()[pri:12, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_validKeyword_returnsMatches" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_noMatch_returnsEmptyList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_noMatch_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.searchStories_missingKeyword_returns400()[pri:14, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="searchStories_missingKeyword_returns400" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_validPayload_returns200()[pri:15, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_validPayload_returns200" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_differentUser_returns403()[pri:16, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_differentUser_returns403" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.updateStory_nonExistentId_returns404()[pri:17, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="updateStory_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_byAuthor_returns200Or204()[pri:18, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_byAuthor_returns200Or204" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_differentUser_returns403()[pri:19, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_differentUser_returns403" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.deleteStory_nonExistentId_returns404()[pri:20, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="deleteStory_nonExistentId_returns404" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
+        <method signature="SkillTests.getAllSkills_withAuth_returns200AndList()[pri:1, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getAllSkills_withAuth_returns200AndList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getAllSkills_noAuth_returns401()[pri:2, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getAllSkills_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_validQuery_returnsMatches()[pri:3, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_validQuery_returnsMatches" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_noMatch_returnsEmptyList()[pri:4, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_noMatch_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.searchSkills_missingQueryParam_returns400()[pri:5, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="searchSkills_missingQueryParam_returns400" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getSkillsByCategory_validId_returnsSkills()[pri:6, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getSkillsByCategory_validId_returnsSkills" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getSkillsByCategory_unknownId_returnsEmptyOrNotFound()[pri:7, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getSkillsByCategory_unknownId_returnsEmptyOrNotFound" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_teachFlag_returns201()[pri:8, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_teachFlag_returns201" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_learnFlag_returns201()[pri:9, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_learnFlag_returns201" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_duplicate_returns4xx()[pri:10, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_duplicate_returns4xx" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_missingUserId_returns400()[pri:11, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_missingUserId_returns400" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_noAuth_returns401()[pri:12, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_noAuth_returns401" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getUserSkills_existingUser_returnsList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getUserSkills_existingUser_returnsList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.getUserSkills_noSkills_returnsEmptyList()[pri:14, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getUserSkills_noSkills_returnsEmptyList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
       </group> <!-- regression -->
       <group name="smoke">
-        <method signature="StoryTests.createStory_validPayload_returns201()[pri:1, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="createStory_validPayload_returns201" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
-        <method signature="StoryTests.getAllStories_returnsListNewestFirst()[pri:6, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" name="getAllStories_returnsListNewestFirst" class="com.cts.mfrp.skillbarter.tests.stories.StoryTests"/>
+        <method signature="SkillTests.getAllSkills_withAuth_returns200AndList()[pri:1, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="getAllSkills_withAuth_returns200AndList" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
+        <method signature="SkillTests.addUserSkill_teachFlag_returns201()[pri:8, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" name="addUserSkill_teachFlag_returns201" class="com.cts.mfrp.skillbarter.tests.skills.SkillTests"/>
       </group> <!-- smoke -->
     </groups>
-    <test started-at="2026-05-19T09:00:18 IST" name="Surefire test" finished-at="2026-05-19T09:01:28 IST" duration-ms="70778">
-      <class name="com.cts.mfrp.skillbarter.tests.stories.StoryTests">
-        <test-method is-config="true" signature="initSpec()[pri:0, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:17 IST" name="initSpec" finished-at="2026-05-19T09:00:18 IST" duration-ms="901" status="PASS">
+    <test started-at="2026-05-19T15:26:10 IST" name="Surefire test" finished-at="2026-05-19T15:27:17 IST" duration-ms="66980">
+      <class name="com.cts.mfrp.skillbarter.tests.skills.SkillTests">
+        <test-method is-config="true" signature="initSpec()[pri:0, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:10 IST" name="initSpec" finished-at="2026-05-19T15:26:10 IST" duration-ms="665" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- initSpec -->
-        <test-method is-config="true" signature="seed()[pri:0, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:18 IST" name="seed" finished-at="2026-05-19T09:00:36 IST" duration-ms="18625" status="PASS">
+        <test-method is-config="true" signature="seed()[pri:0, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:10 IST" name="seed" finished-at="2026-05-19T15:26:20 IST" duration-ms="9261" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- seed -->
-        <test-method signature="createStory_validPayload_returns201()[pri:1, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:36 IST" name="createStory_validPayload_returns201" description="POST /api/stories with valid user, title, content returns 201 and story object" finished-at="2026-05-19T09:00:39 IST" duration-ms="2860" status="PASS">
+        <test-method signature="getAllSkills_withAuth_returns200AndList()[pri:1, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:20 IST" name="getAllSkills_withAuth_returns200AndList" description="GET /api/skills returns 200 and non-empty skill list" finished-at="2026-05-19T15:26:23 IST" duration-ms="2799" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createStory_validPayload_returns201 -->
-        <test-method signature="createStory_missingTitle_returns400()[pri:2, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:39 IST" name="createStory_missingTitle_returns400" description="POST /api/stories with missing title returns 400" finished-at="2026-05-19T09:00:40 IST" duration-ms="709" status="PASS">
+        </test-method> <!-- getAllSkills_withAuth_returns200AndList -->
+        <test-method signature="getAllSkills_noAuth_returns401()[pri:2, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:23 IST" name="getAllSkills_noAuth_returns401" description="GET /api/skills without token returns 401" finished-at="2026-05-19T15:26:25 IST" duration-ms="2730" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createStory_missingTitle_returns400 -->
-        <test-method signature="createStory_missingContent_returns400()[pri:3, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:40 IST" name="createStory_missingContent_returns400" description="POST /api/stories with missing content returns 400" finished-at="2026-05-19T09:00:41 IST" duration-ms="713" status="PASS">
+        </test-method> <!-- getAllSkills_noAuth_returns401 -->
+        <test-method signature="searchSkills_validQuery_returnsMatches()[pri:3, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:25 IST" name="searchSkills_validQuery_returnsMatches" description="GET /api/skills/search?query=X returns matching skills" finished-at="2026-05-19T15:26:26 IST" duration-ms="1079" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createStory_missingContent_returns400 -->
-        <test-method signature="createStory_noAuth_returns401()[pri:4, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:41 IST" name="createStory_noAuth_returns401" description="POST /api/stories without auth returns 401" finished-at="2026-05-19T09:00:43 IST" duration-ms="2102" status="FAIL">
-          <exception class="java.lang.AssertionError">
+        </test-method> <!-- searchSkills_validQuery_returnsMatches -->
+        <test-method signature="searchSkills_noMatch_returnsEmptyList()[pri:4, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:26 IST" name="searchSkills_noMatch_returnsEmptyList" description="GET /api/skills/search?query=X with no match returns empty list" finished-at="2026-05-19T15:26:27 IST" duration-ms="1079" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- searchSkills_noMatch_returnsEmptyList -->
+        <test-method signature="searchSkills_missingQueryParam_returns400()[pri:5, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:27 IST" name="searchSkills_missingQueryParam_returns400" description="GET /api/skills/search without query param returns 400" finished-at="2026-05-19T15:26:28 IST" duration-ms="788" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- searchSkills_missingQueryParam_returns400 -->
+        <test-method signature="getSkillsByCategory_validId_returnsSkills()[pri:6, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:28 IST" name="getSkillsByCategory_validId_returnsSkills" description="GET /api/skills/category/{id} returns skills for that category" finished-at="2026-05-19T15:26:30 IST" duration-ms="1311" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSkillsByCategory_validId_returnsSkills -->
+        <test-method signature="getSkillsByCategory_unknownId_returnsEmptyOrNotFound()[pri:7, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:30 IST" name="getSkillsByCategory_unknownId_returnsEmptyOrNotFound" description="GET /api/skills/category/{id} with unknown id returns empty list or 404" finished-at="2026-05-19T15:26:31 IST" duration-ms="1026" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSkillsByCategory_unknownId_returnsEmptyOrNotFound -->
+        <test-method signature="addUserSkill_teachFlag_returns201()[pri:8, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:31 IST" name="addUserSkill_teachFlag_returns201" description="POST /api/user-skills with teach=true adds skill to profile and returns 201" finished-at="2026-05-19T15:26:52 IST" duration-ms="21311" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addUserSkill_teachFlag_returns201 -->
+        <test-method signature="addUserSkill_learnFlag_returns201()[pri:9, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:26:52 IST" name="addUserSkill_learnFlag_returns201" description="POST /api/user-skills with learn=true adds skill to learn list" finished-at="2026-05-19T15:27:10 IST" duration-ms="18114" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addUserSkill_learnFlag_returns201 -->
+        <test-method signature="addUserSkill_duplicate_returns4xx()[pri:10, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:27:10 IST" name="addUserSkill_duplicate_returns4xx" description="POST /api/user-skills with duplicate entry returns 4xx" finished-at="2026-05-19T15:27:12 IST" duration-ms="1636" status="SKIP">
+          <exception class="org.testng.SkipException">
             <message>
-              <![CDATA[1 expectation failed.
-Expected status code <401> but was <201>.
-]]>
+              <![CDATA[User has no existing skills — can't test duplicate]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <401> but was <201>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallConstructor(CallSiteArray.java:57)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:263)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.createStory_noAuth_returns401(StoryTests.java:103)
+              <![CDATA[org.testng.SkipException: User has no existing skills — can't test duplicate
+at com.cts.mfrp.skillbarter.tests.skills.SkillTests.addUserSkill_duplicate_returns4xx(SkillTests.java:269)
 at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
@@ -142,465 +128,27 @@ at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+          </exception> <!-- org.testng.SkipException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createStory_noAuth_returns401 -->
-        <test-method signature="createStory_withMediaUrl_returns201()[pri:5, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:43 IST" name="createStory_withMediaUrl_returns201" description="POST /api/stories with optional mediaUrl returns 201" finished-at="2026-05-19T09:00:45 IST" duration-ms="2410" status="PASS">
+        </test-method> <!-- addUserSkill_duplicate_returns4xx -->
+        <test-method signature="addUserSkill_missingUserId_returns400()[pri:11, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:27:12 IST" name="addUserSkill_missingUserId_returns400" description="POST /api/user-skills with missing userId returns 400" finished-at="2026-05-19T15:27:15 IST" duration-ms="3054" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- createStory_withMediaUrl_returns201 -->
-        <test-method signature="getAllStories_returnsListNewestFirst()[pri:6, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:45 IST" name="getAllStories_returnsListNewestFirst" description="GET /api/stories returns all stories ordered by newest first" finished-at="2026-05-19T09:00:48 IST" duration-ms="2332" status="PASS">
+        </test-method> <!-- addUserSkill_missingUserId_returns400 -->
+        <test-method signature="addUserSkill_noAuth_returns401()[pri:12, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:27:15 IST" name="addUserSkill_noAuth_returns401" description="POST /api/user-skills without auth returns 401" finished-at="2026-05-19T15:27:15 IST" duration-ms="643" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getAllStories_returnsListNewestFirst -->
-        <test-method signature="getAllStories_noAuth_returns401()[pri:7, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:48 IST" name="getAllStories_noAuth_returns401" description="GET /api/stories without auth returns 401" finished-at="2026-05-19T09:00:50 IST" duration-ms="2002" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <401> but was <200>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <401> but was <200>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.getAllStories_noAuth_returns401(StoryTests.java:145)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+        </test-method> <!-- addUserSkill_noAuth_returns401 -->
+        <test-method signature="getUserSkills_existingUser_returnsList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:27:15 IST" name="getUserSkills_existingUser_returnsList" description="GET /api/user-skills/{userId} returns all skills for that user" finished-at="2026-05-19T15:27:16 IST" duration-ms="1031" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getAllStories_noAuth_returns401 -->
-        <test-method signature="getStoryById_existingId_returns200()[pri:8, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:50 IST" name="getStoryById_existingId_returns200" description="GET /api/stories/{id} for existing story returns 200 and story details" finished-at="2026-05-19T09:00:52 IST" duration-ms="2453" status="PASS">
+        </test-method> <!-- getUserSkills_existingUser_returnsList -->
+        <test-method signature="getUserSkills_noSkills_returnsEmptyList()[pri:14, instance:com.cts.mfrp.skillbarter.tests.skills.SkillTests@1608bcbd]" started-at="2026-05-19T15:27:16 IST" name="getUserSkills_noSkills_returnsEmptyList" description="GET /api/user-skills/{userId} for user with no skills returns empty list" finished-at="2026-05-19T15:27:17 IST" duration-ms="1064" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- getStoryById_existingId_returns200 -->
-        <test-method signature="getStoryById_nonExistentId_returns404()[pri:9, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:52 IST" name="getStoryById_nonExistentId_returns404" description="GET /api/stories/{id} for non-existent id returns 404" finished-at="2026-05-19T09:00:54 IST" duration-ms="2282" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <404> but was <500>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <404> but was <500>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.getStoryById_nonExistentId_returns404(StoryTests.java:171)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- getStoryById_nonExistentId_returns404 -->
-        <test-method signature="getStoriesByUser_validUser_returnsList()[pri:10, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:54 IST" name="getStoriesByUser_validUser_returnsList" description="GET /api/stories/user/{userId} returns all stories by that user" finished-at="2026-05-19T09:00:57 IST" duration-ms="2408" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- getStoriesByUser_validUser_returnsList -->
-        <test-method signature="getStoriesByUser_noStories_returnsEmptyList()[pri:11, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:57 IST" name="getStoriesByUser_noStories_returnsEmptyList" description="GET /api/stories/user/{userId} for user with no stories returns empty list" finished-at="2026-05-19T09:00:59 IST" duration-ms="2306" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- getStoriesByUser_noStories_returnsEmptyList -->
-        <test-method signature="searchStories_validKeyword_returnsMatches()[pri:12, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:00:59 IST" name="searchStories_validKeyword_returnsMatches" description="GET /api/stories/search?keyword=X returns stories matching title keyword" finished-at="2026-05-19T09:01:03 IST" duration-ms="4322" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- searchStories_validKeyword_returnsMatches -->
-        <test-method signature="searchStories_noMatch_returnsEmptyList()[pri:13, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:03 IST" name="searchStories_noMatch_returnsEmptyList" description="GET /api/stories/search?keyword=X with no match returns empty list" finished-at="2026-05-19T09:01:06 IST" duration-ms="2250" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- searchStories_noMatch_returnsEmptyList -->
-        <test-method signature="searchStories_missingKeyword_returns400()[pri:14, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:06 IST" name="searchStories_missingKeyword_returns400" description="GET /api/stories/search without keyword param returns 400" finished-at="2026-05-19T09:01:07 IST" duration-ms="864" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- searchStories_missingKeyword_returns400 -->
-        <test-method signature="updateStory_validPayload_returns200()[pri:15, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:07 IST" name="updateStory_validPayload_returns200" description="PUT /api/stories/{id} with updated title and content returns 200" finished-at="2026-05-19T09:01:11 IST" duration-ms="4829" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- updateStory_validPayload_returns200 -->
-        <test-method signature="updateStory_differentUser_returns403()[pri:16, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:11 IST" name="updateStory_differentUser_returns403" description="PUT /api/stories/{id} by different user returns 403" finished-at="2026-05-19T09:01:16 IST" duration-ms="4567" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <403> but was <200>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <403> but was <200>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.updateStory_differentUser_returns403(StoryTests.java:274)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- updateStory_differentUser_returns403 -->
-        <test-method signature="updateStory_nonExistentId_returns404()[pri:17, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:16 IST" name="updateStory_nonExistentId_returns404" description="PUT /api/stories/{id} for non-existent id returns 404" finished-at="2026-05-19T09:01:18 IST" duration-ms="1622" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <404> but was <500>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <404> but was <500>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.updateStory_nonExistentId_returns404(StoryTests.java:285)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- updateStory_nonExistentId_returns404 -->
-        <test-method signature="deleteStory_byAuthor_returns200Or204()[pri:18, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:18 IST" name="deleteStory_byAuthor_returns200Or204" description="DELETE /api/stories/{id} by author returns 200 or 204" finished-at="2026-05-19T09:01:22 IST" duration-ms="4469" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- deleteStory_byAuthor_returns200Or204 -->
-        <test-method signature="deleteStory_differentUser_returns403()[pri:19, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:22 IST" name="deleteStory_differentUser_returns403" description="DELETE /api/stories/{id} by different user returns 403" finished-at="2026-05-19T09:01:27 IST" duration-ms="4684" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <403> but was <204>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <403> but was <204>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.deleteStory_differentUser_returns403(StoryTests.java:312)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- deleteStory_differentUser_returns403 -->
-        <test-method signature="deleteStory_nonExistentId_returns404()[pri:20, instance:com.cts.mfrp.skillbarter.tests.stories.StoryTests@55493582]" started-at="2026-05-19T09:01:27 IST" name="deleteStory_nonExistentId_returns404" description="DELETE /api/stories/{id} for non-existent id returns 404" finished-at="2026-05-19T09:01:28 IST" duration-ms="1754" status="FAIL">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[1 expectation failed.
-Expected status code <404> but was <500>.
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: 1 expectation failed.
-Expected status code <404> but was <500>.
-
-at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
-at org.codehaus.groovy.reflection.CachedConstructor.invoke(CachedConstructor.java:73)
-at org.codehaus.groovy.runtime.callsite.ConstructorSite$ConstructorSiteNoUnwrapNoCoerce.callConstructor(ConstructorSite.java:108)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callConstructor(AbstractCallSite.java:277)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure.validate(ResponseSpecificationImpl.groovy:512)
-at io.restassured.internal.ResponseSpecificationImpl$HamcrestAssertionClosure$validate$1.call(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.validateResponseIfRequired(ResponseSpecificationImpl.groovy:696)
-at io.restassured.internal.ResponseSpecificationImpl.this$2$validateResponseIfRequired(ResponseSpecificationImpl.groovy)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.codehaus.groovy.runtime.callsite.PlainObjectMetaMethodSite.doInvoke(PlainObjectMetaMethodSite.java:43)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite$PogoCachedMethodSiteNoUnwrapNoCoerce.invoke(PogoMetaMethodSite.java:198)
-at org.codehaus.groovy.runtime.callsite.PogoMetaMethodSite.callCurrent(PogoMetaMethodSite.java:62)
-at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:185)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:135)
-at io.restassured.specification.ResponseSpecification$statusCode$0.callCurrent(Unknown Source)
-at io.restassured.internal.ResponseSpecificationImpl.statusCode(ResponseSpecificationImpl.groovy:143)
-at io.restassured.internal.ValidatableResponseOptionsImpl.statusCode(ValidatableResponseOptionsImpl.java:89)
-at com.cts.mfrp.skillbarter.tests.stories.StoryTests.deleteStory_nonExistentId_returns404(StoryTests.java:322)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:819)
-at org.testng.TestRunner.run(TestRunner.java:619)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
-at org.testng.SuiteRunner.run(SuiteRunner.java:336)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
-at org.testng.TestNG.runSuites(TestNG.java:1134)
-at org.testng.TestNG.run(TestNG.java:1101)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- deleteStory_nonExistentId_returns404 -->
-      </class> <!-- com.cts.mfrp.skillbarter.tests.stories.StoryTests -->
+        </test-method> <!-- getUserSkills_noSkills_returnsEmptyList -->
+      </class> <!-- com.cts.mfrp.skillbarter.tests.skills.SkillTests -->
     </test> <!-- Surefire test -->
   </suite> <!-- Surefire suite -->
 </testng-results>

@@ -15,6 +15,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
@@ -29,34 +31,27 @@ public class ProfileCreationTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void openProfileCreationPage() {
-        // 1. Open homepage and click Sign In / Get Started.
-        navigateTo(AppConstants.BASE_URL);
-        clickFirstVisible(By.xpath(
-                "//a[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')] "
-                + "| //button[contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'sign in') "
-                + "or contains(translate(normalize-space(.), 'SIGNINGETSTARD', 'signingetstard'),'get started')]"));
+        // 1. Direct-form login (same pattern as CalendarTest) — no homepage
+        //    CTA probe-click, which was brittle to button label/class churn.
+        navigateTo(AppConstants.SIGNIN_URL);
 
-        // 2. Fill credentials and submit.
-        WebElement email = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='email' or @name='email']")));
+        WebDriverWait loginWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebElement email = loginWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//input[@type='email']")));
+        WebElement pwd = driver.findElement(By.xpath("//input[@type='password']"));
+
+        email.clear();
         email.sendKeys(AppConstants.VALID_EMAIL);
-
-        WebElement pwd = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//input[@type='password' or @name='password']")));
+        pwd.clear();
         pwd.sendKeys(AppConstants.VALID_PASSWORD);
+        pwd.sendKeys(Keys.RETURN);
 
-        try {
-            driver.findElement(By.xpath("//button[@type='submit']")).click();
-        } catch (Exception ignored) {
-            pwd.sendKeys(Keys.RETURN);
-        }
-        wait.until(ExpectedConditions.not(ExpectedConditions.urlContains("signin")));
+        loginWait.until(ExpectedConditions.urlContains("dashboard"));
 
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-
-        // 3. Click the user trigger in the top-right header.
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+        // 2. Open the topbar user dropdown — wait for it to be clickable
+        //    rather than racing it with a fixed sleep.
+        WebDriverWait pageWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        pageWait.until(ExpectedConditions.elementToBeClickable(By.xpath(
                 "//header//*[contains(@class,'user-name') or contains(@class,'username') "
                 + "or contains(@class,'user-profile') or contains(@class,'profile-pic') "
                 + "or contains(@class,'avatar') or (self::button and contains(@class,'user'))] "
@@ -65,11 +60,12 @@ public class ProfileCreationTest extends BaseTest {
                 + "| //*[contains(@class,'topbar') or contains(@class,'navbar')]"
                 + "//*[contains(@class,'user')]"))).click();
 
-        try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-
-        // 4. Click "Profile" / "Go to Profile" in the open dropdown to land on /app/profile.
+        // 3. Click "Profile" / "Go to Profile" inside the open dropdown — lands on /app/profile.
         clickProfileOptionInDropdown();
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
+        // 4. Wait for the profile form to render (Name field anchors the page).
+        pageWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div/label[contains(text(),'Name')]/following::input[1]")));
 
         profilePage = new ProfileCreationPage(driver);
     }
@@ -105,13 +101,26 @@ public class ProfileCreationTest extends BaseTest {
         touchAndClear(By.xpath("//div/label[text()='Profile Description']/following::textarea"));
 
         profilePage.clickContinue();
-        try { Thread.sleep(1500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
 
-        boolean errorVisible = driver.findElements(By.xpath(
+        // Wait up to 5s for EITHER a validation error to render OR the URL to
+        // change. Whichever happens first satisfies the assertion below.
+        By errorLocator = By.xpath(
                 "//*[contains(@class,'error') or contains(@class,'mat-error') "
                 + "or contains(@class,'alert-danger') or contains(@class,'invalid-feedback') "
                 + "or contains(@class,'validation') or @role='alert' or @aria-invalid='true' "
-                + "or contains(translate(normalize-space(.),'REQUIRD','required'),'required')]"))
+                + "or contains(translate(normalize-space(.),'REQUIRD','required'),'required')]");
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(d -> !d.getCurrentUrl().equals(urlBefore)
+                             || d.findElements(errorLocator).stream().anyMatch(e -> {
+                                 try { return e.isDisplayed() && !e.getText().trim().isEmpty(); }
+                                 catch (Exception ignored) { return false; }
+                             }));
+        } catch (Exception ignored) {
+            // Timeout — assertions below still run and will fail with detail.
+        }
+
+        boolean errorVisible = driver.findElements(errorLocator)
                 .stream().anyMatch(e -> {
                     try { return e.isDisplayed() && !e.getText().trim().isEmpty(); }
                     catch (Exception ignored) { return false; }
@@ -127,8 +136,16 @@ public class ProfileCreationTest extends BaseTest {
 
     @Test(testName = "TC_023", description = "Avatar upload attaches file to the input")
     public void tc023_avatarUploadUpdatesPreview() {
-        String avatarPath = Paths.get("C:\\Users\\2480084\\OneDrive - Cognizant\\Pictures\\OIP.webp")
-                                 .toAbsolutePath().toString();
+        // Skip rather than fail when the avatar file isn't on this machine.
+        // The original path was hardcoded to a different user's profile —
+        // this keeps the suite green on any developer's box.
+        Path avatarFile = Paths.get("C:\\Users\\2480084\\OneDrive - Cognizant\\Pictures\\OIP.webp");
+        if (!Files.isRegularFile(avatarFile)) {
+            throw new org.testng.SkipException(
+                "Avatar file not present at " + avatarFile + " — skipping TC_023. "
+                + "Drop any small image at that path (or update tc023) to enable this test.");
+        }
+        String avatarPath = avatarFile.toAbsolutePath().toString();
 
         List<WebElement> fileInputs = driver.findElements(By.xpath("//input[@type='file']"));
         if (fileInputs.isEmpty()) {
@@ -143,7 +160,14 @@ public class ProfileCreationTest extends BaseTest {
                 fileInput);
         fileInput.sendKeys(avatarPath);
 
-        try { Thread.sleep(2000); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        // Wait up to 5s for the browser to attach the file to the input
+        // (files.length > 0). Replaces a blind 2s sleep.
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(d -> {
+                    Long n = (Long) ((JavascriptExecutor) d).executeScript(
+                            "return arguments[0].files ? arguments[0].files.length : 0;", fileInput);
+                    return n != null && n > 0;
+                });
 
         Long fileCount = (Long) js.executeScript("return arguments[0].files ? arguments[0].files.length : 0;", fileInput);
         String fileName = (String) js.executeScript(
@@ -168,13 +192,6 @@ public class ProfileCreationTest extends BaseTest {
     }
 
     // ── HELPERS ──────────────────────────────────────────────────────────────
-
-    /** Clicks the first visible element matching the locator; silent if none. */
-    private void clickFirstVisible(By locator) {
-        for (WebElement el : driver.findElements(locator)) {
-            try { if (el.isDisplayed()) { el.click(); return; } } catch (Exception ignored) {}
-        }
-    }
 
     /** Clicks the "Profile" / "Go to Profile" option inside the open dropdown. */
     private void clickProfileOptionInDropdown() {
@@ -240,12 +257,23 @@ public class ProfileCreationTest extends BaseTest {
 
     /** Clicks the first visible custom-dropdown option after opening it (used by TC_021). */
     private void selectFirstDropdownOption() {
-        try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
-        List<WebElement> options = driver.findElements(By.xpath(
+        By optionLocator = By.xpath(
                 "//*[contains(@class,'dropdown-option') or contains(@class,'mat-option') "
                 + "or contains(@class,'select-option') or @role='option' "
-                + "or (self::li and (contains(@class,'option') or contains(@class,'item')))]"));
-        for (WebElement opt : options) {
+                + "or (self::li and (contains(@class,'option') or contains(@class,'item')))]");
+
+        // Wait up to 5s for any option to render after the dropdown opens.
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(d -> d.findElements(optionLocator).stream().anyMatch(e -> {
+                        try { return e.isDisplayed(); }
+                        catch (Exception ignored) { return false; }
+                    }));
+        } catch (Exception ignored) {
+            // Fall through — empty list will just be a no-op below.
+        }
+
+        for (WebElement opt : driver.findElements(optionLocator)) {
             try {
                 if (opt.isDisplayed()) {
                     opt.click();

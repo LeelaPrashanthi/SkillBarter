@@ -43,14 +43,11 @@ public class BaseTest {
 
     protected RequestSpecification spec() {
         if (requestSpec == null) initSpec();
-        return new RequestSpecBuilder().addRequestSpecification(requestSpec).build();
+        return RestAssured.given().spec(requestSpec);
     }
 
     protected RequestSpecification authSpec(String token) {
-        return new RequestSpecBuilder()
-                .addRequestSpecification(spec())
-                .addHeader("Authorization", "Bearer " + token)
-                .build();
+        return spec().header("Authorization", "Bearer " + token);
     }
 
     protected String getBaseUrl() { return ConfigReader.getBaseUrl(); }

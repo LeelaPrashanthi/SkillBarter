@@ -153,22 +153,79 @@ public class Bootstrap {
         }
     }
 
-    public static void ensureNotification() { }
+    public static void ensureNotification() {
+        if (TestContext.notificationId != null) return;
+        ensureFirstUser();
+        if (TestContext.registeredUserId == null) {
+            log("ensureNotification: skipping — registeredUserId is null");
+            return;
+        }
+
+        Response r = authReq().when().get("/api/notifications/user/" + TestContext.registeredUserId);
+        log("ensureNotification: GET /api/notifications/user/" + TestContext.registeredUserId + " -> " + r.statusCode());
+        if (r.statusCode() != 200) return;
+
+        @SuppressWarnings("unchecked")
+        java.util.List<java.util.Map<String, Object>> data = r.path("data");
+        if (data == null || data.isEmpty()) {
+            log("ensureNotification: user has no notifications — notificationId remains null");
+            return;
+        }
+        Object id = data.get(0).get("notificationId");
+        if (id == null) id = data.get(0).get("id");
+        if (id != null) TestContext.notificationId = id.toString();
+        log("ensureNotification: notificationId=" + TestContext.notificationId);
+    }
 
     public static void ensureReview() {
         if (TestContext.reviewId != null) return;
+        ensureFirstUser();
+        ensureSecondUser();
         ensureSession();
-        if (TestContext.sessionId == null) return;
 
-        Response r = authReq().contentType(ContentType.JSON)
-                .body(PayloadBuilder.submitReviewPayload(
-                        TestContext.registeredUserId, TestContext.secondUserId,
-                        5, "Seed review", TestContext.sessionId))
-                .when().post("/api/reviews");
+        // First attempt: POST a fresh review. Backend may reject (often 500 for
+        // sessions that haven't completed yet) — fall through to the lookup path.
+        if (TestContext.sessionId != null
+                && TestContext.registeredUserId != null
+                && TestContext.secondUserId != null) {
+            Response r = authReq().contentType(ContentType.JSON)
+                    .body(PayloadBuilder.submitReviewPayload(
+                            TestContext.registeredUserId, TestContext.secondUserId,
+                            5, "Seed review", TestContext.sessionId))
+                    .when().post("/api/reviews");
+            log("ensureReview: POST /api/reviews -> " + r.statusCode());
 
-        if (r.statusCode() >= 200 && r.statusCode() < 300) {
-            TestContext.reviewId = extractId(r);
+            if (r.statusCode() >= 200 && r.statusCode() < 300) {
+                TestContext.reviewId = extractId(r);
+                TestContext.reviewSessionId = TestContext.sessionId;
+                TestContext.reviewReviewerId = TestContext.registeredUserId;
+                TestContext.reviewRevieweeId = TestContext.secondUserId;
+                log("ensureReview: created reviewId=" + TestContext.reviewId);
+                return;
+            }
         }
+
+        // Fallback: find an existing review with a session in the DB.
+        for (int i = 1; i <= 30; i++) {
+            Response r = authReq().when().get("/api/reviews/" + i);
+            if (r.statusCode() != 200) continue;
+            Object reviewId = r.path("data.reviewId");
+            Object sessionId = r.path("data.session.sessionId");
+            Object reviewerId = r.path("data.reviewer.userId");
+            Object revieweeId = r.path("data.reviewee.userId");
+            if (reviewId != null && sessionId != null && reviewerId != null) {
+                TestContext.reviewId = reviewId.toString();
+                TestContext.reviewSessionId = sessionId.toString();
+                TestContext.reviewReviewerId = reviewerId.toString();
+                if (revieweeId != null) TestContext.reviewRevieweeId = revieweeId.toString();
+                log("ensureReview: using existing reviewId=" + reviewId
+                        + " session=" + sessionId
+                        + " reviewer=" + reviewerId
+                        + " reviewee=" + revieweeId);
+                return;
+            }
+        }
+        log("ensureReview: no review with session found in id range 1..30");
     }
 
     public static void ensureCalendarEvent() {
@@ -273,7 +330,7 @@ public class Bootstrap {
     }
 
     @SuppressWarnings("unchecked")
-    private static String lookupUserIdByEmail(String email, String token) {
+    public static String lookupUserIdByEmail(String email, String token) {
         Response r = RestAssured.given()
                 .relaxedHTTPSValidation()
                 .baseUri(ConfigReader.getBaseUrl())
