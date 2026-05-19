@@ -73,7 +73,7 @@ public class MatchesTest extends BaseTest {
     //           confirm "Find New Matches" tab is present → click it → if the
     //           empty-state hint shows, click "Browse All Users" → wait up to
     //           35 seconds for user cards to render.
-    @Test(testName = "TC_056b", description = "Find New Matches displays user cards (waits up to 35s for slow load)",
+    @Test(testName = "TC_057", description = "Find New Matches displays user cards (waits up to 35s for slow load)",
           groups = {"matches", "regression"}, priority = 56, retryAnalyzer = RetryAnalyzer.class)
     public void tc056b_findNewMatchesShowsCards() {
 //        Assert.assertTrue(matchesPage.isFindNewMatchesTabVisible(),
@@ -94,7 +94,7 @@ public class MatchesTest extends BaseTest {
     }
 
     // ── TC_056c: every user card has name, email, description, match rate, Connect button ──
-    @Test(testName = "TC_056c", description = "Each user card has name, email, description, match score and Connect button",
+    @Test(testName = "TC_058", description = "Each user card has name, email, description, match score and Connect button",
           groups = {"matches", "regression"}, priority = 56, retryAnalyzer = RetryAnalyzer.class)
     public void tc056c_eachCardHasRequiredFields() {
         matchesPage.clickFindNewMatches();
@@ -122,7 +122,7 @@ public class MatchesTest extends BaseTest {
     }
 
     // ── TC_057: My Matches shows existing connections ────────────────────────
-    @Test(testName = "TC_057", description = "My Matches tab shows existing connections with details",
+    @Test(testName = "TC_059", description = "My Matches tab shows existing connections with details",
           groups = {"matches", "regression"}, priority = 57, retryAnalyzer = RetryAnalyzer.class)
     public void tc057_myMatchesList() {
     // /matches lands on Find New Matches by default — flip to My Matches first.
@@ -143,7 +143,7 @@ public class MatchesTest extends BaseTest {
     //   connections and the scenario isn't reachable (skip). If no cards are
     //   present, an empty-state message must be displayed — pass if the
     //   message is shown, fail otherwise.
-    @Test(testName = "TC_057b", description = "My Matches shows an empty-state message when there are no connections",
+    @Test(testName = "TC_060", description = "My Matches shows an empty-state message when there are no connections",
           groups = {"matches", "regression"}, priority = 57, retryAnalyzer = RetryAnalyzer.class)
     public void tc057b_myMatchesEmptyStateShowsMessage() {
         matchesPage.clickMyMatches();
@@ -171,7 +171,7 @@ public class MatchesTest extends BaseTest {
     //   - match % is non-blank (value can be 0% — the FIELD just must exist)
     //   - connected date is non-blank (date itself varies by connection)
     //   - Message button/link is present
-    @Test(testName = "TC_057c", description = "Each My Matches card has avatar, name, match %, connected date, and Message button",
+    @Test(testName = "TC_061", description = "Each My Matches card has avatar, name, match %, connected date, and Message button",
           groups = {"matches", "regression"}, priority = 57, retryAnalyzer = RetryAnalyzer.class)
     public void tc057c_eachMyMatchCardHasRequiredFields() {
         matchesPage.clickMyMatches();
@@ -225,7 +225,7 @@ public class MatchesTest extends BaseTest {
     // into the search bar and assert the page returns at least one matching
     // card. PASS/FAIL is also written back to the "Actual Result" column of
     // the same row so the spreadsheet itself shows per-row results.
-    @Test(testName = "TC_058", description = "Search filters cards by UserName (data-driven, results written back to xlsx)",
+    @Test(testName = "TC_062", description = "Search filters cards by UserName (data-driven, results written back to xlsx)",
           groups = {"matches", "regression"}, priority = 58, retryAnalyzer = RetryAnalyzer.class,
           dataProvider = "searchTerms")
     public void tc058_searchFiltersByTerm(int rowIndex, String term) {
@@ -259,10 +259,10 @@ public class MatchesTest extends BaseTest {
 //       style message OR all rendered cards are filtered out. FAIL only if cards
 //       remain AND no such message is shown.
 //     Result is written back to xlsx.
-    @Test(testName = "TC_058b", description = "Searching for a non-existent user shows 'No user is found' message (data-driven, results written back to xlsx)",
+    @Test(testName = "TC_063", description = "Searching for a non-existent user shows 'No user is found' message (data-driven, results written back to xlsx)",
           groups = {"matches", "regression"}, priority = 58, retryAnalyzer = RetryAnalyzer.class,
           dataProvider = "noResultsSearchTerms")
-    public void tc058b_searchNoResultsShowsMessage(int rowIndex, String term) {
+    public void tc063_searchNoResultsShowsMessage(int rowIndex, String term) {
 
         String result = "FAIL";
 
@@ -309,10 +309,10 @@ public class MatchesTest extends BaseTest {
         }
     }
 
-    // ── TC_060: Connect button sends a request ───────────────────────────────
-    @Test(testName = "TC_060", description = "Connect button sends connection request to a match",
+    // ── TC_064: Connect button sends a request ───────────────────────────────
+    @Test(testName = "TC_064", description = "Connect button sends connection request to a match",
           groups = {"matches", "regression"}, priority = 60, retryAnalyzer = RetryAnalyzer.class)
-    public void tc060_connectButtonSendsRequest() {
+    public void tc064_connectButtonSendsRequest() {
         matchesPage.clickFindNewMatches();
         if (matchesPage.isHintVisible()) {
             matchesPage.clickBrowseAllUsers();
@@ -340,16 +340,16 @@ public class MatchesTest extends BaseTest {
     //
     // No Find-New-Matches button-state check anymore — that grid is a one-shot
     // suggestions API and doesn't always reflect the new connection right away.
-    @Test(testName = "TC_060b", description = "Connecting to a user increases My Matches card count",
+    @Test(testName = "TC_065", description = "Connecting to a user increases My Matches card count",
           groups = {"matches", "regression"}, priority = 60, retryAnalyzer = RetryAnalyzer.class)
-    public void tc060b_connectReflectsInMyMatchesAndDisablesConnect() {
+    public void tc065_connectReflectsInMyMatchesAndDisablesConnect() {
         // 1) Baseline: count cards on My Matches before doing anything
         matchesPage.clickMyMatches();
         Assert.assertTrue(matchesPage.isMyMatchesActive(),
                 "'My Matches' tab should be active after clicking");
         matchesPage.waitForMyMatchesToLoad(); // returns false on empty — OK, baseline is 0
         int beforeCount = matchesPage.getMyMatchCount();
-        System.out.println("[TC_060b] My Matches BEFORE count = " + beforeCount);
+        System.out.println("[TC_065] My Matches BEFORE count = " + beforeCount);
 
         // 2) Find New Matches: pick a target whose Connect button is still "Connect"
         matchesPage.clickFindNewMatches();

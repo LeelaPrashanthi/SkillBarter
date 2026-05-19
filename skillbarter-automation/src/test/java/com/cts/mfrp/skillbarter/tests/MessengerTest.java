@@ -1,11 +1,7 @@
 package com.cts.mfrp.skillbarter.tests;
 
-import com.cts.mfrp.skillbarter.base.BaseTest;
-import com.cts.mfrp.skillbarter.constants.AppConstants;
-import com.cts.mfrp.skillbarter.pages.MessengerPage;
-import com.cts.mfrp.skillbarter.pages.SignInPage;
-import com.cts.mfrp.skillbarter.utils.ConfigReader;
-import com.cts.mfrp.skillbarter.utils.RetryAnalyzer;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,7 +9,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import com.cts.mfrp.skillbarter.base.BaseTest;
+import com.cts.mfrp.skillbarter.constants.AppConstants;
+import com.cts.mfrp.skillbarter.pages.MessengerPage;
+import com.cts.mfrp.skillbarter.pages.SignInPage;
+import com.cts.mfrp.skillbarter.utils.ConfigReader;
+import com.cts.mfrp.skillbarter.utils.RetryAnalyzer;
 
 /**
  * Test class for the Builtin Messenger.
@@ -47,7 +48,7 @@ public class MessengerTest extends BaseTest {
 
 
     @Test
-    public void tc087_PageTitleValidation(){
+    public void tc057_PageTitleValidation(){
         if(messengerPage.getPageTitle().equals("Messages")){
             Assert.assertTrue(true);
         }
@@ -70,7 +71,7 @@ public class MessengerTest extends BaseTest {
 //        }
 //    }
         @Test
-        public void tc087a_SearchBarPresenceOrNot() {
+        public void tc58_SearchBarPresenceOrNot() {
             Assert.assertTrue(messengerPage.isSearchBarPresent(), "Search bar not present");
 
             messengerPage.searchForInput("Sai");
@@ -81,7 +82,7 @@ public class MessengerTest extends BaseTest {
         }
 
     @Test
-    public void tc087b_SearchingValidation() {
+    public void tc59_SearchingValidation() {
         Assert.assertTrue(messengerPage.isSearchBarPresent(), "Search bar not present");
 
         // Wait up to 40 seconds until all conversations/contacts are listed in the left panel
@@ -121,7 +122,7 @@ public class MessengerTest extends BaseTest {
      * =================================================================== */
     @Test(testName = "TC_061", description = "Conversation list shows avatar, name, preview, timestamp",
           groups = {"messenger", "regression"}, priority = 61, retryAnalyzer = RetryAnalyzer.class)
-    public void tc061_conversationListDisplayed() {
+    public void tc060_conversationListDisplayed() {
         Assert.assertEquals(messengerPage.getPageTitle(), "Messages",
                 "Messenger page title is not 'Messages'");
 
@@ -145,7 +146,7 @@ public class MessengerTest extends BaseTest {
      * =================================================================== */
     @Test(testName = "TC_062", description = "Search filters conversations by keyword",
           groups = {"messenger", "regression"}, priority = 62, retryAnalyzer = RetryAnalyzer.class)
-    public void tc062_searchConversations() {
+    public void tc061_searchConversations() {
         // Wait up to 20 seconds until all conversations/contacts are listed in the left panel
         new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.numberOfElementsToBeMoreThan(
@@ -180,7 +181,7 @@ public class MessengerTest extends BaseTest {
      * =================================================================== */
     @Test(testName = "TC_063", description = "Sending a message in an active chat appears in the thread",
           groups = {"messenger", "regression"}, priority = 63, retryAnalyzer = RetryAnalyzer.class)
-    public void tc063_sendMessageInActiveChat() {
+    public void tc062_sendMessageInActiveChat() {
         // Wait up to 20 seconds until all conversations/contacts are listed in the left panel
         new WebDriverWait(driver, Duration.ofSeconds(20))
                 .until(ExpectedConditions.numberOfElementsToBeMoreThan(
@@ -223,7 +224,7 @@ public class MessengerTest extends BaseTest {
      * =================================================================== */
     @Test(testName = "TC_064", description = "Accept session request from chat",
           groups = {"messenger", "regression"}, priority = 64, retryAnalyzer = RetryAnalyzer.class)
-    public void tc064_acceptSessionRequestFromChat() {
+    public void tc063_acceptSessionRequestFromChat() {
         Assert.assertTrue(messengerPage.areConversationsListed(),
                 "No conversation available to open");
 
@@ -252,7 +253,7 @@ public class MessengerTest extends BaseTest {
      * =================================================================== */
     @Test(testName = "TC_065", description = "Decline session request from chat",
           groups = {"messenger", "regression"}, priority = 65, retryAnalyzer = RetryAnalyzer.class)
-    public void tc065_declineSessionRequestFromChat() {
+    public void tc064_declineSessionRequestFromChat() {
         Assert.assertTrue(messengerPage.areConversationsListed(),
                 "No conversation available to open");
 

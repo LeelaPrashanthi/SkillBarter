@@ -30,7 +30,7 @@ public class AppConstants {
     public static final int SCRIPT_WAIT     = 30;   // seconds
 
     // ── Test Data ────────────────────────────────────────────────────────────
-    public static final String TEST_DATA_PATH  = "src/test/resources/testdata/TestData - Copy.xlsx";
+    public static final String TEST_DATA_PATH  = "src/test/resources/testdata/TestData.xlsx";
     public static final String CONFIG_PATH     = "src/test/resources/config.properties";
 
     // ── Report & Screenshot Paths ─────────────────────────────────────────
