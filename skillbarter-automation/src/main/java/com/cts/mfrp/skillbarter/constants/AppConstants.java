@@ -16,11 +16,11 @@ public class AppConstants {
     public static final String PROFILE_SETUP_URL     = BASE_URL + "profile-setup";
     public static final String MATCHES_URL           = BASE_URL + "app/matches";
     public static final String MESSENGER_URL         = BASE_URL + "messenger";
-    public static final String CALENDAR_URL          = BASE_URL + "calendar";
+    public static final String CALENDAR_URL          = BASE_URL + "app/calendar";
     public static final String PROGRESS_URL          = BASE_URL + "progress";
     public static final String COMMUNITY_URL         = BASE_URL + "app/community";
     public static final String SUBSCRIPTIONS_URL     = BASE_URL + "subscriptions";
-    public static final String SAVED_PROFILES_URL    = BASE_URL + "saved-profiles";
+    public static final String SAVED_PROFILES_URL    = BASE_URL + "app/saved-profiles";
     public static final String USER_PROFILE_URL      = BASE_URL + "profile";
 
     // ── Timeouts ─────────────────────────────────────────────────────────────

@@ -1,48 +1,23 @@
 package com.cts.mfrp.skillbarter.pages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 /**
- * Page Object for the Profile Dropdown Menu component.
- * Covers TC_035 – TC_040 (TS_007).
+ * Page Object for the Profile Dropdown Menu (TC_036 / TC_037 / TC_039).
  */
 public class ProfileDropdownPage {
 
-    private static final Logger log = LogManager.getLogger(ProfileDropdownPage.class);
     private final WebDriver driver;
     private final WebDriverWait wait;
-
-    @FindBy(css = "[class*='profile-dropdown'], [class*='dropdown-menu'], [class*='user-menu']")
-    private WebElement dropdownMenu;
-
-    @FindBy(css = "[class*='dropdown'] a[href*='profile']:not([href*='saved']), " +
-            "[class*='user-menu'] [class*='profile-link']")
-    private WebElement profileOption;
-
-    @FindBy(css = "[class*='dropdown'] a[href*='saved'], " +
-            "[class*='user-menu'] [class*='saved-profile']")
-    private WebElement savedProfilesOption;
-
-    @FindBy(css = "[class*='dropdown'] a[href*='subscription'], " +
-            "[class*='user-menu'] [class*='subscription']")
-    private WebElement subscriptionsOption;
-
-    @FindBy(css = "[class*='dropdown'] button[class*='logout'], " +
-            "[class*='user-menu'] [class*='logout'], [class*='signout']")
-    private WebElement logoutOption;
-
-    @FindBy(css = "body")
-    private WebElement body;
 
     public ProfileDropdownPage(WebDriver driver) {
         this.driver = driver;
@@ -50,46 +25,25 @@ public class ProfileDropdownPage {
         PageFactory.initElements(driver, this);
     }
 
-    public boolean isDropdownOpen() {
-        try {
-            return wait.until(ExpectedConditions.visibilityOf(dropdownMenu)).isDisplayed();
-        } catch (Exception e) { return false; }
+    public void clickProfile() {
+        clickOption("//a[normalize-space()='Profile']");
     }
 
-    public boolean isProfileOptionPresent()        { return isDisplayed(profileOption); }
-    public boolean isSavedProfilesOptionPresent()  { return isDisplayed(savedProfilesOption); }
-    public boolean isSubscriptionsOptionPresent()  { return isDisplayed(subscriptionsOption); }
-    public boolean isLogoutOptionPresent()         { return isDisplayed(logoutOption); }
-
-    public boolean areAllOptionsPresent() {
-        return isProfileOptionPresent() && isSavedProfilesOptionPresent()
-                && isSubscriptionsOptionPresent() && isLogoutOptionPresent();
+    public void clickSavedProfiles() {
+        clickOption("//a[normalize-space()='Saved Profiles']");
     }
 
-    public void clickProfile()        { click(profileOption, "Profile option"); }
-    public void clickSavedProfiles()  { click(savedProfilesOption, "Saved Profiles option"); }
-    public void clickSubscriptions()  { click(subscriptionsOption, "Subscriptions option"); }
-    public void clickLogout()         { click(logoutOption, "Log Out option"); }
+    public void clickLogout() {
+        clickOption("//button[normalize-space()='Log Out']");
+    }
 
-    public void clickOutside() {
+    /** Waits for the option to be clickable, then clicks via Actions (with JS fallback). */
+    private void clickOption(String xpath) {
+        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
         try {
-            // Click on body area away from dropdown
-            body.click();
+            new Actions(driver).moveToElement(el).pause(150).click().perform();
         } catch (Exception e) {
-            log.warn("clickOutside failed: {}", e.getMessage());
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", el);
         }
-    }
-
-    private void click(WebElement el, String name) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(el)).click();
-            log.debug("Clicked: {}", name);
-        } catch (Exception e) {
-            log.warn("Click failed on '{}': {}", name, e.getMessage());
-        }
-    }
-
-    private boolean isDisplayed(WebElement el) {
-        try { return el.isDisplayed(); } catch (Exception e) { return false; }
     }
 }
