@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  SkillBarter Automation – REGRESSION TEST SUITE
+  ═══════════════════════════════════════════════════════════
+  Full coverage across all 14 modules. Runs every @Test tagged with the
+  "regression" group (the default tag on every @Test in this codebase,
+  so this effectively runs ~86 test methods — 89 minus the 3 unannotated
+  @Tests in MessengerTest that have no groups attribute).
+
+  Use this suite for:
+    - Nightly CI runs
+    - Pre-release verification
+    - Post-merge integration checks
+
+  Faster alternatives:
+    - smoke-testng.xml   ~4 tests, sub-1-minute   (commit-time)
+    - sanity-testng.xml  ~50 tests, ~15-25 minutes (build-time)
+
+  Execution mode : SEQUENTIAL (thread-count="1")
+  Use parallel-testng.xml for the stateless subset run in parallel.
+-->
+<suite name="SkillBarter – Regression Suite" verbose="2" thread-count="1">
+
+    <listeners>
+        <listener class-name="com.cts.mfrp.skillbarter.utils.ExtentReportListener"/>
+    </listeners>
+
+    <!-- The "regression" group filter is the actual selector. Every @Test in
+         every class listed below carries groups={..., "regression", ...}, so
+         this scope picks them all up. Adding a new @Test without the
+         "regression" tag will exclude it from this suite — intentional. -->
+    <test name="Full Regression" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <groups>
+            <run>
+                <include name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <!-- Module 1  — Home Page (TC_001-007) -->
+            <class name="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+            <!-- Module 2  — Sign In (TC_008-013) -->
+            <class name="com.cts.mfrp.skillbarter.tests.SignInTest"/>
+            <!-- Module 3  — Sign Up (TC_014-019) -->
+            <class name="com.cts.mfrp.skillbarter.tests.SignUpTest"/>
+            <!-- Module 4  — Profile Creation (TC_020-023) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileCreationTest"/>
+            <!-- Module 5  — Dashboard (TC_024-032) -->
+            <class name="com.cts.mfrp.skillbarter.tests.DashboardTest"/>
+            <!-- Module 6  — Profile Dropdown (TC_033-035) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileDropdownTest"/>
+            <!-- Module 7  — Notifications (TC_036-039) -->
+            <class name="com.cts.mfrp.skillbarter.tests.NotificationsTest"/>
+            <!-- Module 8  — User Profile (TC_040-043) -->
+            <class name="com.cts.mfrp.skillbarter.tests.UserProfileTest"/>
+            <!-- Module 9  — Saved Profiles (TC_044-046) -->
+            <class name="com.cts.mfrp.skillbarter.tests.SavedProfilesTest"/>
+            <!-- Module 10 — Matches (TC_047-056) -->
+            <class name="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+            <!-- Module 11 — Messenger (TC_057-061) -->
+            <class name="com.cts.mfrp.skillbarter.tests.MessengerTest"/>
+            <!-- Module 12 — Calendar (TC_062-068) -->
+            <class name="com.cts.mfrp.skillbarter.tests.CalendarTest"/>
+            <!-- Module 13 — Progress (TC_069-078) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProgressTest"/>
+            <!-- Module 14 — Community (TC_079-086) -->
+            <class name="com.cts.mfrp.skillbarter.tests.CommunityTest"/>
+        </classes>
+    </test>
+
+</suite>

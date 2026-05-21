@@ -42,7 +42,7 @@ public class SavedProfilesTest extends BaseTest {
         savedProfilesPage.waitForProfilesToLoad(10);
     }
 
-    @Test(testName = "TC_047", description = "Saved Profiles page loads dynamically with profile cards",
+    @Test(testName = "TC_044", description = "Saved Profiles page loads dynamically with profile cards",
           groups = {"saved-profiles", "regression"}, priority = 47, retryAnalyzer = RetryAnalyzer.class)
     public void tc047_savedProfilesLoadDynamically() {
         Assert.assertTrue(
@@ -59,7 +59,7 @@ public class SavedProfilesTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_048", description = "View Profile from Saved Profiles opens detailed profile page",
+    @Test(testName = "TC_045", description = "View Profile from Saved Profiles opens detailed profile page",
           groups = {"saved-profiles", "regression"}, priority = 48, retryAnalyzer = RetryAnalyzer.class)
     public void tc048_viewProfileFromSavedProfiles() {
         if (!savedProfilesPage.waitForProfilesToLoad(10)) {
@@ -81,7 +81,7 @@ public class SavedProfilesTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_049", description = "Message button from Saved Profiles opens chat",
+    @Test(testName = "TC_046", description = "Message button from Saved Profiles opens chat",
           groups = {"saved-profiles", "regression"}, priority = 49, retryAnalyzer = RetryAnalyzer.class)
     public void tc049_messageFromSavedProfiles() {
         if (!savedProfilesPage.waitForProfilesToLoad(10)) {

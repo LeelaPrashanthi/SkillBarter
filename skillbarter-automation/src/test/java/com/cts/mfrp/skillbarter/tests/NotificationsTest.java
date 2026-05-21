@@ -51,12 +51,13 @@ public class NotificationsTest extends BaseTest {
                 .until(d -> notifPage.isBellVisible());
     }
 
-    @Test(testName = "TC_041", description = "Notification bell icon is visible in the top bar")
+    @Test(testName = "TC_036", description = "Notification bell icon is visible in the top bar",
+          groups = {"notifications", "smoke", "regression"})
     public void tc041_notificationIconAvailable() {
         Assert.assertTrue(notifPage.isBellVisible(), "Notification bell icon is not visible");
     }
 
-    @Test(testName = "TC_042", description = "Notifications panel opens and shows notification count")
+    @Test(testName = "TC_037", description = "Notifications panel opens and shows notification count")
     public void tc042_notificationCountDisplayed() {
         notifPage.openPanel();
         // Wait for the panel to actually render rather than sleeping blindly.
@@ -64,7 +65,7 @@ public class NotificationsTest extends BaseTest {
         System.out.println("Notification count: " + notifPage.getNotificationCount());
     }
 
-    @Test(testName = "TC_043", description = "Clicking a notification removes it (or marks it read)")
+    @Test(testName = "TC_038", description = "Clicking a notification removes it (or marks it read)")
     public void tc043_notificationDeletesOnClick() {
         notifPage.openPanel();
         // Wait for the panel to render before reading from it.
@@ -102,7 +103,7 @@ public class NotificationsTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_044", description = "If notifications are present, click Mark all read")
+    @Test(testName = "TC_039", description = "If notifications are present, click Mark all read")
     public void tc044_markAllAsReadClearsNotifications() {
         notifPage.openPanel();
         // Wait for the panel to render before reading the count.

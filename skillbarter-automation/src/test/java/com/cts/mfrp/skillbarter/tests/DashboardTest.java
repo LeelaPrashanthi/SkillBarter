@@ -40,14 +40,14 @@ public class DashboardTest extends BaseTest {
                 "Dashboard did not finish loading after login (topbar/sidebar/SP badge not visible).");
     }
 
-    @Test(testName = "TC_026", description = "Dashboard loads after login with sidebar and SP counter visible",
+    @Test(testName = "TC_024", description = "Dashboard loads after login with sidebar and SP counter visible",
           groups = {"dashboard", "smoke", "regression"}, priority = 26)
     public void tc026_dashboardLoadsAfterLogin() {
         Assert.assertTrue(dashboardPage.isSidebarVisible(),
                 "Sidebar not visible on dashboard");
     }
 
-    @Test(testName = "TC_027", description = "Schedule a Session CTA opens session creation/booking flow",
+    @Test(testName = "TC_025", description = "Schedule a Session CTA opens session creation/booking flow",
           groups = {"dashboard", "regression"}, priority = 27)
     public void tc027_scheduleSessionOpensFlow() {
         dashboardPage.clickScheduleSession();
@@ -55,28 +55,28 @@ public class DashboardTest extends BaseTest {
                 "Did not navigate to calendar/booking flow. URL: " + getCurrentUrl());
     }
 
-    @Test(testName = "TC_028", description = "Matches section shows Top Matches heading and a 'see all' link",
+    @Test(testName = "TC_026", description = "Matches section shows Top Matches heading and a 'see all' link",
           groups = {"dashboard", "regression"}, priority = 28)
     public void tc028_matchesSectionDisplaysProfiles() {
         Assert.assertTrue(dashboardPage.isTopMatchesSectionVisible(),
                 "'Top Matches' heading not visible");
     }
 
-    @Test(testName = "TC_029", description = "Calendar section shows monthly view with today highlighted",
+    @Test(testName = "TC_027", description = "Calendar section shows monthly view with today highlighted",
           groups = {"dashboard", "regression"}, priority = 29)
     public void tc029_calendarSectionMonthlyView() {
         Assert.assertTrue(dashboardPage.isTodayHighlighted(),
                 "Today's date is not highlighted in the mini calendar");
     }
 
-    @Test(testName = "TC_030", description = "Skill Points counter is displayed and shows numeric value",
+    @Test(testName = "TC_028", description = "Skill Points counter is displayed and shows numeric value",
           groups = {"dashboard", "regression"}, priority = 30)
     public void tc030_skillPointsCounterDisplayed() {
         Assert.assertTrue(dashboardPage.spValueIsNumeric(),
                 "SP value does not match '<number> SP' pattern. Got: '" + dashboardPage.getSpValue() + "'");
     }
 
-    @Test(testName = "TC_031", description = "Sidebar items navigate to Matches, Calendar, Progress, Community modules",
+    @Test(testName = "TC_029", description = "Sidebar items navigate to Matches, Calendar, Progress, Community modules",
           groups = {"dashboard", "regression"}, priority = 31)
     public void tc031_sidebarNavigationWorks() {
         // Each click + WebDriverWait below throws TimeoutException if the
@@ -108,14 +108,14 @@ public class DashboardTest extends BaseTest {
                 "Sidebar navigation did not end at Community. URL: " + getCurrentUrl());
     }
 
-    @Test(testName = "TC_032", description = "Nav bar SP indicator is visible and shows current balance",
+    @Test(testName = "TC_030", description = "Nav bar SP indicator is visible and shows current balance",
           groups = {"nav-bar", "regression"}, priority = 32)
     public void tc032_spIndicatorAndPlusIcon() {
         Assert.assertTrue(dashboardPage.spValueIsNumeric(),
                 "SP indicator does not show a numeric balance. Got: '" + dashboardPage.getSpValue() + "'");
     }
 
-    @Test(testName = "TC_033", description = "Notification bell is visible and opens notifications panel when clicked",
+    @Test(testName = "TC_031", description = "Notification bell is visible and opens notifications panel when clicked",
           groups = {"nav-bar", "regression"}, priority = 33)
     public void tc033_notificationBellOpensPanel() {
         dashboardPage.clickNotificationBell();
@@ -123,7 +123,7 @@ public class DashboardTest extends BaseTest {
                 "Notification panel did not open after clicking the bell");
     }
 
-    @Test(testName = "TC_034", description = "Clicking user profile in nav bar opens dropdown with menu items",
+    @Test(testName = "TC_032", description = "Clicking user profile in nav bar opens dropdown with menu items",
           groups = {"nav-bar", "regression"}, priority = 34)
     public void tc034_profileDropdownInNavBar() {
         dashboardPage.clickUserButton();

@@ -6,31 +6,30 @@
   ═══════════════════════════════════════════════════════════
   Parallel strategy  : tests   (each <test> block runs in its own thread)
   Thread count       : 4       (adjust to match available CPU cores)
-  Groups suitable for parallel: smoke, regression (stateless read-only tests)
 
-  RULES applied here:
-    ✅  Stateless / read-only modules run in parallel
-        (Home, SignIn, SignUp, ProfileCreation, Dashboard, Matches,
-         Calendar, Progress, Community, Subscriptions, Non-Functional)
+  ONLY stateless / read-only modules are included here. Each <test> block
+  spawns its own WebDriver instance, so they can safely execute concurrently.
 
-    ⛔  Stateful / session-mutating modules run SEQUENTIALLY in isolation:
-        - ProfileDropdown (logout step invalidates session)
-        - UserProfile     (writes to DB)
-        - SavedProfiles   (removes records)
-        - Messenger       (sends messages / accepts requests)
-        - Transaction E2E (multi-step flows, DB mutations)
-        - Notifications   (bell-click state)
+  STATEFUL modules (Notifications, ProfileDropdown, UserProfile, SavedProfiles,
+  Messenger, TransactionFlow) are intentionally EXCLUDED from this suite.
+  Reason: they log out / mutate DB / accept-decline requests — running them
+  concurrently against the same backend produces flaky failures. Run them via
+  the master testng.xml in a sequential pass.
+
+  TestNG note: a per-<test> `parallel="false"` attribute is NOT valid syntax
+  (allowed values: methods, tests, classes, instances). To actually serialise
+  a block, you must either remove it from a parallel suite or chain suites
+  via <suite-files>. This file takes the first approach.
   ═══════════════════════════════════════════════════════════
 -->
-<suite name="SkillBarter – Parallel Suite" verbose="2"
+<suite name="SkillBarter – Parallel Suite (stateless only)" verbose="2"
        parallel="tests" thread-count="4">
 
     <listeners>
         <listener class-name="com.cts.mfrp.skillbarter.utils.ExtentReportListener"/>
     </listeners>
 
-    <!-- ─── PARALLEL BLOCK ──────────────────────────────────────────────── -->
-
+    <!-- ─── Module 1 — Home Page (TC_001-007) ─────────────────────────────── -->
     <test name="[P] Home Page Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -38,6 +37,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 2 — Sign In (TC_008-013) ───────────────────────────────── -->
     <test name="[P] Sign In Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -45,6 +45,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 3 — Sign Up (TC_014-019) ───────────────────────────────── -->
     <test name="[P] Sign Up Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -52,6 +53,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 4 — Profile Creation (TC_020-023) ──────────────────────── -->
     <test name="[P] Profile Creation Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -59,6 +61,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 5 — Dashboard (TC_024-032) ─────────────────────────────── -->
     <test name="[P] Dashboard Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -66,6 +69,8 @@
         </classes>
     </test>
 
+
+    <!-- ─── Module 11 — Matches (TC_052-056) ──────────────────────────────── -->
     <test name="[P] Matches Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -73,6 +78,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 13 — Calendar (TC_062-068) ─────────────────────────────── -->
     <test name="[P] Calendar Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -80,6 +86,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 14 — Progress (TC_069-078) ─────────────────────────────── -->
     <test name="[P] Progress Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -87,6 +94,7 @@
         </classes>
     </test>
 
+    <!-- ─── Module 15 — Community (TC_079-086) ────────────────────────────── -->
     <test name="[P] Community Tests">
         <parameter name="browser" value="chrome"/>
         <classes>
@@ -94,63 +102,15 @@
         </classes>
     </test>
 
-    <test name="[P] Subscriptions Tests">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.SubscriptionsTest"/>
-        </classes>
-    </test>
 
-    <test name="[P] Non-Functional Tests">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.NonFunctionalTest"/>
-        </classes>
-    </test>
-
-    <!-- ─── SEQUENTIAL BLOCK (stateful / mutating) ───────────────────────── -->
-    <!-- These run one at a time; parallel="false" is implicit per <test> here -->
-
-    <test name="[S] Notifications Tests" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.NotificationsTest"/>
-        </classes>
-    </test>
-
-    <test name="[S] Profile Dropdown Tests" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.ProfileDropdownTest"/>
-        </classes>
-    </test>
-
-    <test name="[S] User Profile Tests" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.UserProfileTest"/>
-        </classes>
-    </test>
-
-    <test name="[S] Saved Profiles Tests" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.SavedProfilesTest"/>
-        </classes>
-    </test>
-
-    <test name="[S] Messenger Tests" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.MessengerTest"/>
-        </classes>
-    </test>
-
-    <test name="[S] Transaction Flow E2E" parallel="false">
-        <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="com.cts.mfrp.skillbarter.tests.TransactionFlowTest"/>
-        </classes>
-    </test>
+    <!--
+      Stateful modules excluded (run via master testng.xml):
+        Module 6  — ProfileDropdown   (logout invalidates session)
+        Module 7  — Notifications     (bell-click + mark-all-read mutate state)
+        Module 8  — UserProfile       (writes profile changes)
+        Module 9  — SavedProfiles     (removes records)
+        Module 12 — Messenger         (sends messages / accepts requests)
+        Module 17 — TransactionFlow   (multi-step E2E DB mutations)
+    -->
 
 </suite>

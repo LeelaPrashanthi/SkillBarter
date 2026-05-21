@@ -49,7 +49,7 @@ public class UserProfileTest extends BaseTest {
                 "User Profile page failed to load after login. Current URL: " + driver.getCurrentUrl());
     }
 
-    @Test(testName = "TC_043", description = "Editing and saving profile updates the information",
+    @Test(testName = "TC_040", description = "Editing and saving profile updates the information",
             groups = {"user-profile", "regression"}, priority = 43, retryAnalyzer = RetryAnalyzer.class)
     public void tc043_editAndSaveProfile() {
         userProfilePage.editProfile(
@@ -64,7 +64,7 @@ public class UserProfileTest extends BaseTest {
                 "Expected a save confirmation after editing profile, but none was shown.");
     }
 
-    @Test(testName = "TC_044", description = "Change Avatar uploads new image and updates preview",
+    @Test(testName = "TC_041", description = "Change Avatar uploads new image and updates preview",
             groups = {"user-profile", "regression"}, priority = 44, retryAnalyzer = RetryAnalyzer.class)
     public void tc044_changeAvatarUpdatesPreview() {
         String imagePath = new File("src/test/resources/testdata/test_avatar.png").getAbsolutePath();
@@ -79,7 +79,7 @@ public class UserProfileTest extends BaseTest {
                 "Expected an avatar-upload confirmation message, but none was shown.");
     }
 
-    @Test(testName = "TC_045", description = "User dropdown Profile link opens the profile page",
+    @Test(testName = "TC_042", description = "User dropdown Profile link opens the profile page",
             groups = {"user-profile", "regression"}, priority = 45, retryAnalyzer = RetryAnalyzer.class)
     public void tc045_viewPublicProfile() {
         // NOTE: TC_045 doc says "View My Public Profile" but live app's topbar
@@ -94,7 +94,7 @@ public class UserProfileTest extends BaseTest {
                 "Profile page did not load after using the dropdown link.");
     }
 
-    @Test(testName = "TC_046", description = "Save Profile is disabled when mandatory Name field is empty",
+    @Test(testName = "TC_043", description = "Save Profile is disabled when mandatory Name field is empty",
             groups = {"user-profile", "regression"}, priority = 46, retryAnalyzer = RetryAnalyzer.class)
     public void tc046_emptyMandatoryFieldShowsError() {
         // App uses Angular form validation: when Name is empty (mandatory field),

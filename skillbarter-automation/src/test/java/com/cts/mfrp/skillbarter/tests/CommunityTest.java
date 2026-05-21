@@ -50,14 +50,14 @@ public class CommunityTest extends BaseTest {
         communityPage = new CommunityPage(driver);
     }
 
-    @Test(testName = "TC_074", description = "Community page shows user stories with name, title, content",
+    @Test(testName = "TC_079", description = "Community page shows user stories with name, title, content",
           groups = {"community", "regression"}, priority = 1)
     public void tc074_userStoriesDisplayed() {
         Assert.assertTrue(communityPage.areStoriesDisplayed(),
                 "No story cards rendered on Community page");
     }
 
-    @Test(testName = "TC_082", description = "Share Your Story opens form and submits story",
+    @Test(testName = "TC_080", description = "Share Your Story opens form and submits story",
           groups = {"community", "regression"}, priority = 75)
     public void tc082_shareYourStory() {
         String uniqueTitle = "Auto Story " + UUID.randomUUID().toString().substring(0, 8);
@@ -73,14 +73,14 @@ public class CommunityTest extends BaseTest {
                 "Submitted story not found in feed: " + uniqueTitle);
     }
 
-    @Test(testName = "TC_083", description = "Top Contributors section shows user names with XP",
+    @Test(testName = "TC_081", description = "Top Contributors section shows user names with XP",
           groups = {"community", "regression"}, priority = 76)
     public void tc083_topContributorsDisplayed() {
         Assert.assertTrue(communityPage.isTopContributorsSectionVisible(),
                 "Top Contributors section not visible");
     }
 
-    @Test(testName = "TC_085",
+    @Test(testName = "TC_082",
           description = "BUG: Story with only spaces and dots is accepted and posted; expected content-quality validation error",
           groups = {"community", "regression", "bug"}, priority = 78)
     public void tc085_storyWithOnlySpacesAndDotsShouldBeRejected() {
@@ -100,7 +100,7 @@ public class CommunityTest extends BaseTest {
                 "BUG: Junk-title story appears in feed: '" + junkTitle + "'");
     }
 
-    @Test(testName = "TC_086",
+    @Test(testName = "TC_083",
           description = "BUG: Story with only numeric input in title and content is accepted; expected content-quality validation error",
           groups = {"community", "regression", "bug"}, priority = 86)
     public void tc086_storyWithOnlyNumbersShouldBeRejected() {
@@ -118,7 +118,7 @@ public class CommunityTest extends BaseTest {
                 "BUG: All-numeric story appears in feed: '" + numericTitle + "'");
     }
 
-    @Test(testName = "TC_087",
+    @Test(testName = "TC_084",
           description = "BUG: Share Your Story form renders two Cancel buttons; expected exactly one",
           groups = {"community", "regression", "bug"}, priority = 87)
     public void tc087_shareStoryFormHasDuplicateCancelButton() {
@@ -131,7 +131,7 @@ public class CommunityTest extends BaseTest {
                 "BUG: Expected exactly 1 Cancel button in the story form");
     }
 
-    @Test(testName = "TC_088",
+    @Test(testName = "TC_085",
           description = "Edit option on a user-created story card opens the edit form and saves changes",
           groups = {"community", "regression"}, priority = 88)
     public void tc088_editOwnStoryWorks() {
@@ -162,7 +162,7 @@ public class CommunityTest extends BaseTest {
                 "Edited story title not reflected in feed: " + updated);
     }
 
-    @Test(testName = "TC_089",
+    @Test(testName = "TC_086",
           description = "Delete option on a user-created story card removes the story from the community feed",
           groups = {"community", "regression"}, priority = 89)
     public void tc089_deleteOwnStoryWorks() {

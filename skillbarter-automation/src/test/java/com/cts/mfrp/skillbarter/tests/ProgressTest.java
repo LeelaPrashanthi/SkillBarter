@@ -27,9 +27,6 @@ public class ProgressTest extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void loginAndOpenProgress() {
-        // Direct-form login (same pattern as CalendarTest/NotificationsTest) —
-        // skips the homepage CTA probe-click, which is brittle to label/class
-        // changes between builds.
         navigateTo(AppConstants.SIGNIN_URL);
 
         WebDriverWait loginWait = new WebDriverWait(driver, Duration.ofSeconds(30));
@@ -45,14 +42,13 @@ public class ProgressTest extends BaseTest {
 
         loginWait.until(ExpectedConditions.urlContains("dashboard"));
 
-        // Navigate directly to the Progress URL instead of hunting for a
-        // sidebar link — survives sidebar markup churn.
-        navigateTo(AppConstants.PROGRESS_URL);
-
+        // Click the sidebar Progress link — its href comes from the live page,
+        // so we don't have to guess whether the route is /progress or /app/progress.
         WebDriverWait pageWait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        pageWait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//a[contains(@href,'progress')]"))).click();
+
         pageWait.until(ExpectedConditions.urlContains("progress"));
-        // Wait for any progress-page anchor element (XP / Level / Activity)
-        // to render. Some builds hydrate this section 15-20s after URL change.
         pageWait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//*[contains(text(),'Level')] | //*[contains(text(),'XP')] "
                        + "| //*[contains(text(),'Activity')]")));
@@ -60,7 +56,8 @@ public class ProgressTest extends BaseTest {
         progressPage = new ProgressPage(driver);
     }
 
-    @Test(testName = "TC_069", description = "Print XP")
+    @Test(testName = "TC_069", description = "Print XP",
+          groups = {"progress", "smoke", "regression"})
     public void tc069_xpDisplayed() {
         System.out.println("XP: " + progressPage.getXpText());
     }

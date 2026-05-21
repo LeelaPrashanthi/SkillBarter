@@ -97,6 +97,10 @@ public class BaseTest {
         navigateTo(AppConstants.DASHBOARD_URL);
     }
 
+    protected void navigateToMatches() {
+        navigateTo(AppConstants.MATCHES_URL);
+    }
+
     protected String getCurrentUrl() {
         return driver.getCurrentUrl();
     }

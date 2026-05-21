@@ -76,7 +76,7 @@ public class  SignInTest extends BaseTest {
 
 
 
-    @Test(testName = "TC_012", description = "Clicking Sign Up link from Sign In page navigates to registration",
+    @Test(testName = "TC_011", description = "Clicking Sign Up link from Sign In page navigates to registration",
           groups = {"sign-in", "regression"}, priority = 12, retryAnalyzer = RetryAnalyzer.class)
     public void tc012_navigateToSignUpFromSignIn() {
         Assert.assertTrue(
@@ -94,7 +94,7 @@ public class  SignInTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_013", description = "Invalid email format shows validation error on Sign In",
+    @Test(testName = "TC_012", description = "Invalid email format shows validation error on Sign In",
           groups = {"sign-in", "regression"}, priority = 13, retryAnalyzer = RetryAnalyzer.class)
     public void tc013_emailFormatValidation() {
         signInPage.enterEmail("not-an-email");
@@ -117,7 +117,7 @@ public class  SignInTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_014", description = "Submitting empty email and password fields shows required field error",
+    @Test(testName = "TC_013", description = "Submitting empty email and password fields shows required field error",
           groups = {"sign-in", "regression"}, priority = 14, retryAnalyzer = RetryAnalyzer.class)
     public void tc014_emptyFieldsValidation() {
         signInPage.clickSignIn();

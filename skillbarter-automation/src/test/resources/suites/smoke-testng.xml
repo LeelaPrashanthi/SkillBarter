@@ -3,8 +3,14 @@
 
 <!--
   SkillBarter Automation – SMOKE TEST SUITE
-  Quick health-check: TC_001, TC_002, TC_007, TC_008, TC_026, TC_031
-  Runs in ~3–5 minutes.
+  ═══════════════════════════════════════════════════════════
+  Quick health-check that runs only methods tagged groups={..., "smoke", ...}.
+  Intended duration : ~3–5 minutes
+  Currently covers  : TC_001 (home loads), TC_008 (valid login),
+                      TC_024 (dashboard loads after login)
+                      Any additional @Test you tag with "smoke" will be
+                      automatically picked up here — no XML edit needed.
+  Sequential        : thread-count="1" to avoid flakiness during smoke runs.
 -->
 <suite name="SkillBarter – Smoke Suite" verbose="1" thread-count="1">
 
@@ -14,15 +20,46 @@
 
     <test name="Smoke Tests" preserve-order="true">
         <parameter name="browser" value="chrome"/>
+
+        <!-- The group filter is the actual smoke selector. Listing every
+             class below means new @Test methods tagged "smoke" are picked up
+             automatically without an XML edit. -->
         <groups>
             <run>
                 <include name="smoke"/>
             </run>
         </groups>
+
         <classes>
+            <!-- Module 1 — Home Page (TC_001-007) -->
             <class name="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+            <!-- Module 2 — Sign In (TC_008-013) -->
             <class name="com.cts.mfrp.skillbarter.tests.SignInTest"/>
+            <!-- Module 3 — Sign Up (TC_014-019) -->
+            <class name="com.cts.mfrp.skillbarter.tests.SignUpTest"/>
+            <!-- Module 4 — Profile Creation (TC_020-023) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileCreationTest"/>
+            <!-- Module 5 — Dashboard (TC_024-032) -->
             <class name="com.cts.mfrp.skillbarter.tests.DashboardTest"/>
+            <!-- Module 6 — Profile Dropdown (TC_033-035) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProfileDropdownTest"/>
+            <!-- Module 7 — Notifications (TC_036-039) -->
+            <class name="com.cts.mfrp.skillbarter.tests.NotificationsTest"/>
+            <!-- Module 8 — User Profile (TC_040-043) -->
+            <class name="com.cts.mfrp.skillbarter.tests.UserProfileTest"/>
+            <!-- Module 9 — Saved Profiles (TC_044-046) -->
+            <class name="com.cts.mfrp.skillbarter.tests.SavedProfilesTest"/>
+            <!-- Module 11 — Matches (TC_052-056) -->
+            <class name="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+            <!-- Module 12 — Messenger (TC_057-061) -->
+            <class name="com.cts.mfrp.skillbarter.tests.MessengerTest"/>
+            <!-- Module 13 — Calendar (TC_062-068) -->
+            <class name="com.cts.mfrp.skillbarter.tests.CalendarTest"/>
+            <!-- Module 14 — Progress (TC_069-078) -->
+            <class name="com.cts.mfrp.skillbarter.tests.ProgressTest"/>
+            <!-- Module 15 — Community (TC_079-086) -->
+            <class name="com.cts.mfrp.skillbarter.tests.CommunityTest"/>
+
         </classes>
     </test>
 

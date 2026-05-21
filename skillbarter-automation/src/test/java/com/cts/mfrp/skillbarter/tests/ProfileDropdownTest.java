@@ -58,7 +58,7 @@ public class ProfileDropdownTest extends BaseTest {
         dropdownPage = new ProfileDropdownPage(driver);
     }
 
-    @Test(testName = "TC_036", description = "Profile option navigates to profile page")
+    @Test(testName = "TC_033", description = "Profile option navigates to profile page")
     public void tc036_profileOptionRedirects() {
         String urlBefore = getCurrentUrl();
         dropdownPage.clickProfile();
@@ -73,7 +73,7 @@ public class ProfileDropdownTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_037", description = "Saved Profiles option redirects to saved list")
+    @Test(testName = "TC_034", description = "Saved Profiles option redirects to saved list")
     public void tc037_savedProfilesOptionRedirects() {
         String urlBefore = getCurrentUrl();
         dropdownPage.clickSavedProfiles();
@@ -91,7 +91,7 @@ public class ProfileDropdownTest extends BaseTest {
         );
     }
 
-    @Test(testName = "TC_039", description = "Log Out terminates session and redirects to Sign In")
+    @Test(testName = "TC_035", description = "Log Out terminates session and redirects to Sign In")
     public void tc039_logOutTerminatesSession() {
         dropdownPage.clickLogout();
 

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  SkillBarter Automation – SANITY TEST SUITE
+  ═══════════════════════════════════════════════════════════
+  Mid-tier test suite between SMOKE (~4 tests, sub-1-minute) and
+  FULL REGRESSION (~92 tests, sub-suite covers every page).
+
+  Scope: critical user-journey modules. Every @Test in these classes runs.
+    1. HomePage         — landing page must render
+    2. SignIn           — must be able to log in
+    3. SignUp           — must be able to register
+    4. Dashboard        — primary landing experience post-login
+    5. Matches          — primary feature (skill matching)
+    6. Calendar         — session scheduling
+    7. Progress         — gamification / XP
+
+  Stateful modules (ProfileDropdown logout, UserProfile writes, Messenger
+  sends, TransactionFlow E2E) are intentionally excluded — they belong in
+  full regression.
+
+  Execution mode : SEQUENTIAL (thread-count="1") for stability.
+  Estimated run  : 15–25 minutes depending on backend latency.
+-->
+<suite name="SkillBarter – Sanity Suite" verbose="2" thread-count="1">
+
+    <listeners>
+        <listener class-name="com.cts.mfrp.skillbarter.utils.ExtentReportListener"/>
+    </listeners>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 1 – HOME PAGE  (TC_001 – TC_007)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Home Page Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.HomePageTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 2 – SIGN IN  (TC_008 – TC_013)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Sign In Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SignInTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 3 – SIGN UP  (TC_014 – TC_019)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Sign Up Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.SignUpTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 5 – DASHBOARD + NAV BAR  (TC_024 – TC_032)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Dashboard Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.DashboardTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 10 – MATCHES  (TC_047 – TC_056)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Matches Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.MatchesTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 12 – CALENDAR  (TC_062 – TC_068)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Calendar Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.CalendarTest"/>
+        </classes>
+    </test>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         MODULE 13 – PROGRESS  (TC_069 – TC_078)
+    ══════════════════════════════════════════════════════════════ -->
+    <test name="Progress Tests" preserve-order="true">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.cts.mfrp.skillbarter.tests.ProgressTest"/>
+        </classes>
+    </test>
+
+    <!--
+      EXCLUDED from sanity (run via testng.xml full regression):
+        Module 4  — ProfileCreation   (post-signup flow, rare path)
+        Module 6  — ProfileDropdown   (logout invalidates session)
+        Module 7  — Notifications     (depends on existing notifs)
+        Module 8  — UserProfile       (writes profile changes)
+        Module 9  — SavedProfiles     (saved-list management)
+        Module 11 — Messenger         (sends messages, stateful)
+        Module 14 — Community         (story CRUD, slow)
+    -->
+
+</suite>

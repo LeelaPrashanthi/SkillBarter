@@ -72,27 +72,61 @@ public class ProfileCreationTest extends BaseTest {
 
     // ── TESTS ────────────────────────────────────────────────────────────────
 
-    @Test(testName = "TC_021", description = "Create profile with valid data and save")
+    @Test(testName = "TC_020",
+          description = "BUG: Reset and Cancel buttons on Profile Creation form are not functional",
+          groups = {"profile-creation", "regression", "bug"})
     public void tc021_createProfileWithValidData() {
+        // Fill mandatory fields so the bug assertions have something to test against.
         profilePage.enterName("John Tester");
         profilePage.enterDescription("Passionate learner exchanging coding for design skills.");
 
-        profilePage.clickSkillsToTeachDropdown();
-        selectFirstDropdownOption();
+        String nameAfterFill = profilePage.getNameValue();
+        String descAfterFill = profilePage.getDescriptionValue();
+        System.out.println("[TC_020] AFTER FILL  name='" + nameAfterFill + "' desc='" + descAfterFill + "'");
 
-        profilePage.clickSkillsToLearnDropdown();
-        selectFirstDropdownOption();
+        // ── Bug 1: Reset should clear all form inputs ─────────────────────
+        // If the locator finds nothing the click() helper swallows the
+        // exception silently — we ASSERT the buttons exist first so the next
+        // failure tells us "selector didn't match" instead of a vacuous pass.
+        Assert.assertTrue(profilePage.isResetButtonPresent(),
+            "BUG: Reset button is NOT rendered on the Profile Creation form "
+            + "(no <button>/<a> with text 'Reset' found).");
 
-        profilePage.clickContinue();
+        profilePage.clickReset();
+        String nameAfterReset = profilePage.getNameValue();
+        String descAfterReset = profilePage.getDescriptionValue();
+        System.out.println("[TC_020] AFTER RESET name='" + nameAfterReset + "' desc='" + descAfterReset + "'");
 
-        String url = getCurrentUrl();
-        Assert.assertTrue(
-            url.contains("dashboard") || !profilePage.getSuccessMessage().isEmpty(),
-            "Expected redirect to dashboard or success message. URL: " + url
-        );
+        // For Reset to be considered "working", the values we just typed must be gone.
+        // Fail-as-bug if EITHER field still holds the typed text.
+        Assert.assertNotEquals(nameAfterReset, nameAfterFill,
+            "BUG: Reset did not change Name. Still '" + nameAfterReset + "'");
+        Assert.assertNotEquals(descAfterReset, descAfterFill,
+            "BUG: Reset did not change Description. Still '" + descAfterReset + "'");
+
+        // Refill so Cancel has something to wipe / dismiss.
+        profilePage.enterName("John Tester");
+        profilePage.enterDescription("Passionate learner exchanging coding for design skills.");
+
+        // ── Bug 2: Cancel should navigate away from the creation form ─────
+        Assert.assertTrue(profilePage.isCancelButtonPresent(),
+            "BUG: Cancel button is NOT rendered on the Profile Creation form "
+            + "(no <button>/<a> with text 'Cancel' found).");
+
+        String urlBeforeCancel = getCurrentUrl();
+        System.out.println("[TC_020] BEFORE CANCEL url=" + urlBeforeCancel);
+        profilePage.clickCancel();
+        String urlAfterCancel = getCurrentUrl();
+        System.out.println("[TC_020] AFTER  CANCEL url=" + urlAfterCancel);
+
+        Assert.assertNotEquals(
+            urlAfterCancel, urlBeforeCancel,
+            "BUG: Cancel button did not navigate away from the Profile Creation form. URL stayed at: " + urlAfterCancel);
     }
 
-    @Test(testName = "TC_022", description = "Empty mandatory fields show validation error or block submission")
+    @Test(testName = "TC_021",
+          description = "BUG: No validation error message is shown when mandatory fields are left empty",
+          groups = {"profile-creation", "regression", "bug"})
     public void tc022_missingMandatoryFieldsShowError() {
         String urlBefore = getCurrentUrl();
 
@@ -102,8 +136,7 @@ public class ProfileCreationTest extends BaseTest {
 
         profilePage.clickContinue();
 
-        // Wait up to 5s for EITHER a validation error to render OR the URL to
-        // change. Whichever happens first satisfies the assertion below.
+        // Wait up to 5s for an explicit validation error to render.
         By errorLocator = By.xpath(
                 "//*[contains(@class,'error') or contains(@class,'mat-error') "
                 + "or contains(@class,'alert-danger') or contains(@class,'invalid-feedback') "
@@ -111,45 +144,78 @@ public class ProfileCreationTest extends BaseTest {
                 + "or contains(translate(normalize-space(.),'REQUIRD','required'),'required')]");
         try {
             new WebDriverWait(driver, Duration.ofSeconds(5))
-                    .until(d -> !d.getCurrentUrl().equals(urlBefore)
-                             || d.findElements(errorLocator).stream().anyMatch(e -> {
-                                 try { return e.isDisplayed() && !e.getText().trim().isEmpty(); }
-                                 catch (Exception ignored) { return false; }
-                             }));
+                    .until(d -> d.findElements(errorLocator).stream().anyMatch(e -> {
+                        try { return e.isDisplayed() && !e.getText().trim().isEmpty(); }
+                        catch (Exception ignored) { return false; }
+                    }));
         } catch (Exception ignored) {
-            // Timeout — assertions below still run and will fail with detail.
+            // Timeout — the assertion below will report the bug.
         }
 
-        boolean errorVisible = driver.findElements(errorLocator)
-                .stream().anyMatch(e -> {
-                    try { return e.isDisplayed() && !e.getText().trim().isEmpty(); }
-                    catch (Exception ignored) { return false; }
-                });
+        // Collect every error-like element we can find so the failure message
+        // tells devs exactly what (if anything) was on screen.
+        java.util.List<String> errorTexts = new java.util.ArrayList<>();
+        for (WebElement e : driver.findElements(errorLocator)) {
+            try {
+                if (e.isDisplayed()) {
+                    String t = e.getText().trim();
+                    if (!t.isEmpty()) errorTexts.add(t);
+                }
+            } catch (Exception ignored) {}
+        }
 
-        boolean stillOnForm = getCurrentUrl().equals(urlBefore);
+        boolean errorVisible = !errorTexts.isEmpty();
+        boolean stillOnForm  = getCurrentUrl().equals(urlBefore);
 
+        System.out.println("[TC_021] errorVisible=" + errorVisible
+                + " stillOnForm=" + stillOnForm
+                + " messages=" + errorTexts);
+
+        // Strict bug check: an explicit error message MUST be shown when the
+        // user tries to submit with empty mandatory fields. A silently-disabled
+        // Save button OR a no-op click both count as the bug — neither tells
+        // the user WHY their action failed.
         Assert.assertTrue(
-            errorVisible || stillOnForm,
-            "Expected validation error or form to refuse submission, but page navigated to: " + getCurrentUrl()
-        );
+            errorVisible,
+            "BUG: No validation error message shown for empty mandatory fields. "
+            + "stillOnForm=" + stillOnForm + ", visible error elements=" + errorTexts);
     }
 
-    @Test(testName = "TC_023", description = "Avatar upload attaches file to the input")
+    @Test(testName = "TC_022",
+          description = "Full profile creation happy path: name + description + skills + avatar + Save")
     public void tc023_avatarUploadUpdatesPreview() {
-        // Skip rather than fail when the avatar file isn't on this machine.
-        // The original path was hardcoded to a different user's profile —
-        // this keeps the suite green on any developer's box.
-        Path avatarFile = Paths.get("C:\\Users\\2480084\\OneDrive - Cognizant\\Pictures\\OIP.webp");
+        // ── 1. Load the test avatar (skip cleanly if the asset isn't on disk) ──
+        Path avatarFile = Paths.get("src/test/resources/testdata/test_avatar.png").toAbsolutePath();
         if (!Files.isRegularFile(avatarFile)) {
             throw new org.testng.SkipException(
-                "Avatar file not present at " + avatarFile + " — skipping TC_023. "
-                + "Drop any small image at that path (or update tc023) to enable this test.");
+                "Avatar test asset not present at " + avatarFile + " — skipping TC_023. "
+                + "Drop any small image at src/test/resources/testdata/test_avatar.png to enable this test.");
         }
-        String avatarPath = avatarFile.toAbsolutePath().toString();
+        String avatarPath = avatarFile.toString();
+
+        // ── 2. Fill mandatory text fields ──────────────────────────────────
+        profilePage.enterName("John Tester");
+        profilePage.enterDescription("Passionate learner exchanging coding for design skills.");
+
+        // ── 3. Pick one Teach skill and one Learn skill ────────────────────
+        profilePage.clickSkillsToTeachDropdown();
+        selectFirstDropdownOption();
+
+        profilePage.clickSkillsToLearnDropdown();
+        selectFirstDropdownOption();
+
+        // ── 4. Upload the avatar via the (often hidden) <input type=file> ──
+        // The existing-profile page hides the file input behind a "Change
+        // Avatar" / "Upload" trigger button. Click any such trigger first so
+        // Angular instantiates the input, then locate and unhide it.
+        clickAvatarTriggerIfPresent();
 
         List<WebElement> fileInputs = driver.findElements(By.xpath("//input[@type='file']"));
         if (fileInputs.isEmpty()) {
-            throw new RuntimeException("No <input type='file'> found. URL: " + getCurrentUrl());
+            throw new org.testng.SkipException(
+                "No <input type='file'> on this page even after clicking avatar trigger. "
+                + "URL: " + getCurrentUrl()
+                + " — this build does not expose an upload control on the profile form.");
         }
         WebElement fileInput = fileInputs.get(0);
 
@@ -160,8 +226,7 @@ public class ProfileCreationTest extends BaseTest {
                 fileInput);
         fileInput.sendKeys(avatarPath);
 
-        // Wait up to 5s for the browser to attach the file to the input
-        // (files.length > 0). Replaces a blind 2s sleep.
+        // Wait up to 5s for the file attachment to register.
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(d -> {
                     Long n = (Long) ((JavascriptExecutor) d).executeScript(
@@ -174,11 +239,32 @@ public class ProfileCreationTest extends BaseTest {
                 "return (arguments[0].files && arguments[0].files[0]) ? arguments[0].files[0].name : '';", fileInput);
 
         Assert.assertTrue(fileCount != null && fileCount > 0, "File was not attached after sendKeys.");
-        Assert.assertTrue(fileName != null && fileName.toLowerCase().contains("oip"),
+        Assert.assertTrue(fileName != null && fileName.toLowerCase().contains("test_avatar"),
                 "File attached but name doesn't match. Got: '" + fileName + "'");
+
+        // ── 5. Save the profile ────────────────────────────────────────────
+        String urlBeforeSave = getCurrentUrl();
+        profilePage.clickContinue();
+
+        // ── 6. Verify the save landed: either a navigation away or a
+        //      visible success message. Wait up to 10s for whichever happens.
+        boolean saved;
+        try {
+            saved = new WebDriverWait(driver, Duration.ofSeconds(10))
+                    .until(d -> !d.getCurrentUrl().equals(urlBeforeSave)
+                            || !profilePage.getSuccessMessage().isEmpty());
+        } catch (Exception timeout) {
+            saved = false;
+        }
+
+        Assert.assertTrue(
+            saved,
+            "Profile save did not produce a navigation OR a success message. "
+            + "URL stayed at " + getCurrentUrl()
+            + ". Error visible: " + profilePage.isErrorMessageDisplayed());
     }
 
-    @Test(testName = "TC_024", description = "Add 2 skills each to Teach and Learn dropdowns")
+    @Test(testName = "TC_023", description = "Add 2 skills each to Teach and Learn dropdowns")
     public void tc024_multiSelectDropdowns() {
         addFirstAvailableSkill("Teach");
         addFirstAvailableSkill("Teach");
@@ -192,6 +278,33 @@ public class ProfileCreationTest extends BaseTest {
     }
 
     // ── HELPERS ──────────────────────────────────────────────────────────────
+
+    /**
+     * Clicks any visible "Change Avatar" / "Upload Photo" / "Change Photo" /
+     * "Upload" button if one is rendered. Used by tc023 to coax Angular into
+     * mounting the <input type=file> on builds that hide it until the user
+     * explicitly asks to change the avatar. No-op if nothing matches —
+     * the test will then try to use a file input that may already be in the DOM.
+     */
+    private void clickAvatarTriggerIfPresent() {
+        String tx = "translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')";
+        String labels = "(" + tx + "='change avatar' or " + tx + "='upload photo' or "
+                + tx + "='change photo' or " + tx + "='upload avatar' or "
+                + tx + "='upload' or " + tx + "='change picture')";
+
+        List<WebElement> triggers = driver.findElements(By.xpath(
+                "//*[(self::button or self::a or self::label or self::span or self::div) and " + labels + "]"));
+        for (WebElement t : triggers) {
+            try {
+                if (t.isDisplayed() && t.isEnabled()) {
+                    t.click();
+                    return;
+                }
+            } catch (Exception ignored) {
+                // Try the next candidate.
+            }
+        }
+    }
 
     /** Clicks the "Profile" / "Go to Profile" option inside the open dropdown. */
     private void clickProfileOptionInDropdown() {

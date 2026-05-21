@@ -73,8 +73,8 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_066 – Monthly calendar view ──────────────────────────────────────
 
-    @Test(testName = "TC_066", description = "Monthly calendar view displayed with date selection",
-          groups = {"calendar", "regression"}, priority = 66, retryAnalyzer = RetryAnalyzer.class)
+    @Test(testName = "TC_062", description = "Monthly calendar view displayed with date selection",
+          groups = {"calendar", "smoke", "regression"}, priority = 66, retryAnalyzer = RetryAnalyzer.class)
     public void tc066_monthlyCalendarView() {
         Assert.assertTrue(
             getCurrentUrl().contains("calendar"),
@@ -98,7 +98,7 @@ public class CalendarTest extends BaseTest {
     // ── TC_067 – Tabs (Upcoming / History) ──────────────────────────────────
     // Note: the original description mentioned a Requests tab, but the current
     // UI build only exposes Upcoming and History. Test covers what exists.
-    @Test(testName = "TC_067", description = "Upcoming and History tabs show correct sessions",
+    @Test(testName = "TC_063", description = "Upcoming and History tabs show correct sessions",
           groups = {"calendar", "regression"}, priority = 67, retryAnalyzer = RetryAnalyzer.class)
     public void tc067_sessionTabs() {
         calendarPage.clickUpcomingTab();
@@ -112,7 +112,7 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_068 – New Session Request opens form ─────────────────────────────
 
-    @Test(testName = "TC_068", description = "New Session Request button opens session creation form",
+    @Test(testName = "TC_064", description = "New Session Request button opens session creation form",
           groups = {"calendar", "regression"}, priority = 68, retryAnalyzer = RetryAnalyzer.class)
     public void tc068_newSessionRequestFormOpens() {
         calendarPage.clickNewSessionRequest();
@@ -124,7 +124,7 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_069 – Submit empty form ──────────────────────────────────────────
 
-    @Test(testName = "TC_069", description = "Submitting Create Request with no match/skill/date is blocked",
+    @Test(testName = "TC_065", description = "Submitting Create Request with no match/skill/date is blocked",
           groups = {"calendar", "regression"}, priority = 69, retryAnalyzer = RetryAnalyzer.class)
     public void tc069_submitEmptyFormIsBlocked() {
         calendarPage.clickNewSessionRequest();
@@ -152,7 +152,7 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_072 – New session has Join Call & Mark as Complete buttons ──────
 
-    @Test(testName = "TC_072", description = "New upcoming session shows Join Call and Mark as Complete actions",
+    @Test(testName = "TC_066", description = "New upcoming session shows Join Call and Mark as Complete actions",
           groups = {"calendar", "regression"}, priority = 72, retryAnalyzer = RetryAnalyzer.class)
     public void tc072_upcomingSessionShowsCallAndCompleteButtons() {
         calendarPage.clickUpcomingTab();
@@ -174,7 +174,7 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_073 – Join Call triggers a call action ──────────────────────────
 
-    @Test(testName = "TC_073", description = "Join Call on an upcoming session triggers the call flow",
+    @Test(testName = "TC_067", description = "Join Call on an upcoming session triggers the call flow",
           groups = {"calendar", "regression"}, priority = 73, retryAnalyzer = RetryAnalyzer.class)
     public void tc073_joinCallTriggersCallFlow() {
         calendarPage.clickUpcomingTab();
@@ -206,7 +206,7 @@ public class CalendarTest extends BaseTest {
 
     // ── TC_074 – Mark as Complete moves session to History ─────────────────
 
-    @Test(testName = "TC_074", description = "Mark as Complete moves the session to History with 'Completed' status",
+    @Test(testName = "TC_068", description = "Mark as Complete moves the session to History with 'Completed' status",
           groups = {"calendar", "regression"}, priority = 74, retryAnalyzer = RetryAnalyzer.class)
     public void tc074_markCompleteMovesToHistory() {
         calendarPage.clickUpcomingTab();
